@@ -3,10 +3,22 @@
 
 using namespace std;
 
+<<<<<<< HEAD
  void API::check(Object l)
+=======
+bool is_const_object(Object l)
+{
+    return (l == API::object_nil || l == API::object_t || l == API::object_f);
+}
+
+void API::check(Object l)
+>>>>>>> 4977197174b13fa30ce1a5a7bc8eba9353c1ab90
 {
     assert(l != 0);
-    l->check();
+    if(!is_const_object(l))
+    {
+        l->check();
+    }
 }
 
 // Constants
@@ -27,9 +39,55 @@ using namespace std;
     return API::object_t;
 }
 
+<<<<<<< HEAD
 Object API::f()
+=======
+ API::Object f()
+>>>>>>> 4977197174b13fa30ce1a5a7bc8eba9353c1ab90
 {
     return API::object_f;
+}
+
+// Type testers
+
+ bool API::numberp(Object l)
+{
+    check(l);
+    if(!is_const_object(l))
+    {
+        return l->get_type() == Cell::NUMBER;
+    }
+}
+
+ bool API::stringp(Object l)
+{
+    check(l);
+    if(!is_const_object(l))
+    {
+        return l->get_type() == Cell::STRING;
+    }
+}
+
+ bool API::symbolp(Object l)
+{
+    check(l);
+    if(!is_const_object(l))
+    {
+        return l->get_type() == Cell::SYMBOL;
+    }
+}
+
+ bool API::listp(Object l)
+{
+    check(l);
+    if(null(l))
+    {
+        return true;
+    }
+    if(!is_const_object(l))
+    {
+        return l->get_type() == Cell::PAIR;
+    }
 }
 
 // List Operators
@@ -38,8 +96,8 @@ Object API::f()
 {
     API::check(a);
     API::check(l);
-    assert(API::null(l) || l->get_type() == Cell::type::PAIR);
-    return new Cell_pair(a,l);
+    assert(listp(l));
+    return new Cell_pair(*a,*l);
 }
 
  Object API::car(Object l)
@@ -57,7 +115,42 @@ Object API::f()
     return l->Cell_pair::get_cdr();
 }
 
- Object API::number_to_object (int n)
+ bool API::eq(Object a, Object b)
+{
+    API::check(a);
+    API::check(b);
+    if(is_const_object(a) || is_const_object(b))
+    {
+        if(API::null(a) && API::null(b))
+        {
+            return true;
+        }
+        if(a == API::object_t && b == API::object_t)
+        {
+            return true;
+        }
+        if(a == API::object_f && b == API::object_f)
+        {
+            return true;
+        }
+        return false
+    }
+    else
+    {
+        assert(a->get_type() == b->get_type());
+        if(l->get_type() == Cell::PAIR)
+        {
+            return API::eq(a->get_car(),b->get_car()) && API::eq(a->get_cdr(),b->get_cdr());
+        }
+        else
+        {
+            return (a->get_contents() == b->get_contents());
+        }
+    }
+
+// Object conversion
+
+static Object API::number_to_object (int n)
 {
     Cell_number::Cell_number (n);
 }
