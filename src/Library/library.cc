@@ -1,0 +1,72 @@
+#include "globals.hh"
+#include "library.hh"
+#include "API.hh"
+#include <iostream>
+
+void check(Object l) {API::check(l);}
+
+Object nil() {return API::nil();}
+
+bool null(Object l) {return API::null(l);}
+Object t() {return API::t();}
+Object f() {return API::f();}
+
+Object cons(Object a, Object l) {return API::cons(a,l);}
+Object car(Object l) {return API::car(l);}
+Object cdr(Object l) {return API::cdr(l);}
+bool eq(Object a, Object b) {return API::eq(a,b);}
+
+bool numberp(Object l) {return API::numberp(l);}
+bool stringp(Object l) {return API::stringp(l);}
+bool symbolp(Object l) {return API::symbolp(l);}
+bool boolp(Object l) {return API::boolp(l);}
+bool listp(Object l) {return API::listp(l);}
+
+Object number_to_object(int n) {return API::number_to_object(n);}
+Object string_to_object(std::string s) {return API::string_to_object(s);}
+Object symbol_to_object(std::string s) {return API::symbol_to_object(s);}
+Object bool_to_object(bool b) {return API::bool_to_object(b);}
+
+int object_to_number(Object l) {return API::object_to_number(l);}
+std::string object_to_string(Object l) {return API::object_to_string(l);}
+bool object_to_bool(Object l) {return API::object_to_bool(l);}
+
+std::ostream& print_object_aux(std::ostream& s, Object l)
+{
+    if (numberp(l))
+    {
+        int n = object_to_number(l);
+        s << n << " ";
+    }
+    else if (stringp(l) || symbolp(l))
+    {
+        std::string st = object_to_string(l);
+        s << st << " ";
+    }
+    else if (boolp(l))
+    {
+        bool b = object_to_bool(l);
+        if (b)
+        {
+            s << "#t ";
+        }
+        else
+        {
+            s << "#f ";
+        }
+    }
+    else if (!null(l))
+    {
+        print_object_aux(s, API::car(l));
+        print_object_aux(s, API::cdr(l));
+    }
+    return s;
+}
+
+std::ostream& print_object (std::ostream& s, Object l)
+{
+    s << "(" ;
+    print_object_aux(s,l);
+    s << ")" << std::endl;
+    return s;
+}
