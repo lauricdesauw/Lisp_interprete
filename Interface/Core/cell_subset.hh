@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "cell.hh"
 
 class API;
 
@@ -9,7 +10,7 @@ class Cell_number : public Cell {
     private:
         int contents;
 
-    private:
+    public:
         Cell_number(int n);
         type get_type() const override;
         int get_contents() const;
@@ -23,7 +24,7 @@ class Cell_string : public Cell {
     private:
         std::string contents;
 
-    private:
+    public:
         Cell_string(std::string s);
         type get_type() const override;
         std::string get_contents() const;
@@ -37,7 +38,7 @@ class Cell_symbol : public Cell {
     private:
         std::string contents;
 
-    private:
+    public:
         Cell_symbol(std::string s);
         type get_type() const override;
         std::string get_contents() const;
@@ -52,7 +53,7 @@ class Cell_pair : public Cell {
         Cell *car;
         Cell *cdr;
 
-    private:
+    public:
         Cell_pair(Cell *_car, Cell *_cdr);
         type get_type() const override;
         Cell *get_car() const;
