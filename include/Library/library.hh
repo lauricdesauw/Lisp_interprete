@@ -38,11 +38,10 @@ std::ostream& operator<<(std::ostream& s, Object l);
 
 // Derived function
 
+Object car(Object l, int n);
+Object cdr(Object l, int n);
 Object cadr(Object l);
 Object cddr(Object l);
-Object caddr(Object l);
-Object cdddr(Object l);
-Object cadddr(Object l);
 
 Object list2(Object l1, Object l2);
 

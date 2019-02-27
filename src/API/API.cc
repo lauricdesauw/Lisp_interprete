@@ -134,10 +134,8 @@ bool API::eq(Object a, Object b)
         assert(a->get_type() == b->get_type());
         if(a->get_type() == Cell::type::PAIR)
         {
-            return API::eq(((Cell_pair*)a)->get_car(),
-                            ((Cell_pair*)b)->get_car()) &&
-                        API::eq(((Cell_pair*)a)->get_cdr(),
-                                ((Cell_pair*)b)->get_cdr());
+            return (((Cell_pair*)a)->get_car() == ((Cell_pair*)b)->get_car() &&
+                   ((Cell_pair*)a)->get_cdr() == ((Cell_pair*)b)->get_cdr());
         }
         else if (a->get_type() == Cell::type::NUMBER)
         {
