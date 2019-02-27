@@ -138,4 +138,49 @@ void API::check(Object l)
             return (a->get_contents() == b->get_contents());
         }
     }
+
+// Object conversion
+
+static Object API::number_to_object (int n)
+{
+    Cell_number::Cell_number (n);
+}
+
+static Object API::string_to_object (std::string s)
+{
+    Cell_string::Cell_string(s);
+}
+
+static Object API::symbol_to_object (std::string s)
+{
+    Cell_symbol::Cell_symbol(s);
+}
+
+static Object API::bool_to_object (bool b)
+{
+    if b {t();}
+    else {f();}
+}
+
+static int API::object_to_number (Object l)
+{
+    API::check(l);
+    assert(numberp(l));
+    return (l.get_contents());
+}
+
+static std::string API::object_to_string (Object l)
+{
+    API::check(l);
+    assert(stringp(l));
+    return (l.get_contents());
+}
+
+static bool API::object_to_bool (Object l)
+{
+    API::check(l);
+    assert (l == object_t | l == object_f);
+    if (l == object_t) {return true;}
+    else {return false;}
+>>>>>>> a1545d4e7a262435d46629bdb9591ffbead7e29a
 }
