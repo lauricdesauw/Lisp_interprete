@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool is_const_object(Object l)
+bool API::is_const_object(Object l)
 {
     return (l == API::object_nil || l == API::object_t || l == API::object_f);
 }
@@ -47,7 +47,7 @@ Object API::f()
     check(l);
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::NUMBER;
+        return l->get_type() == Cell::type::NUMBER;
     }
 }
 
@@ -56,7 +56,7 @@ Object API::f()
     check(l);
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::STRING;
+        return l->get_type() == Cell::type::STRING;
     }
 }
 
@@ -65,7 +65,7 @@ Object API::f()
     check(l);
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::SYMBOL;
+        return l->get_type() == Cell::type::SYMBOL;
     }
 }
 
@@ -78,7 +78,7 @@ Object API::f()
     }
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::PAIR;
+        return l->get_type() == Cell::type::PAIR;
     }
 }
 
@@ -89,14 +89,14 @@ Object API::f()
     API::check(a);
     API::check(l);
     assert(listp(l));
-    return new Cell_pair(*a,*l);
+    return new Cell_pair(a,l);
 }
 
  Object API::car(Object l)
 {
     API::check(l);
     assert(l->get_type() == Cell::type::PAIR);
-    return l->Cell_pair::get_car();
+    return ((Cell_pair*)l)->Cell_pair::get_car();
 }
 
 
@@ -104,7 +104,7 @@ Object API::f()
 {
     API::check(l);
     assert(l->get_type() == Cell::type::PAIR);
-    return l->Cell_pair::get_cdr();
+    return ((Cell_pair*)l)->Cell_pair::get_cdr();
 }
 
  bool API::eq(Object a, Object b)
@@ -125,18 +125,22 @@ Object API::f()
         {
             return true;
         }
-        return false
+        return false;
     }
     else
     {
         assert(a->get_type() == b->get_type());
-        if(l->get_type() == Cell::PAIR)
+        if(a->get_type() == Cell::type::PAIR)
         {
-            return API::eq(a->get_car(),b->get_car()) && API::eq(a->get_cdr(),b->get_cdr());
+            return API::eq(((Cell_pair*)a)->get_car(),
+                            ((Cell_pair*)b)->get_car()) &&
+                        API::eq(((Cell_pair*)a)->get_cdr(),
+                                ((Cell_pair*)b)->get_cdr());
         }
-        else
+        else if (a->get_type() == Cell::type::NUMBER)
         {
-            return (a->get_contents() == b->get_contents());
+            return (((Cell_number*)a)->get_contents() ==
+                ((Cell_number*)b)->get_contents());
         }
     }
 
