@@ -107,3 +107,9 @@ std::ostream& print_object (std::ostream& s, Object l)
     s << ")" << std::endl;
     return s;
 }
+
+std::ostream& operator<<(std::ostream& s, Object l)
+{
+    print_object(s,l);
+    return s;
+}
