@@ -42,8 +42,6 @@ void Toplevel::go(bool use_prompt)
         Object curr_obj = read_object();
         print_type(std::cout,curr_obj);
         std::cout << curr_obj;
-        std::cout << std::endl;om
+        std::cout << std::endl;
     }
 }
-
-
