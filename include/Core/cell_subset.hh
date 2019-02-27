@@ -61,18 +61,3 @@ class Cell_pair : public Cell {
 
     friend class API;
 };
-/*****************************/
-
-class Cell_constant : public Cell {
-    private:
-        std::string contents;
-
-    public:
-        Cell_constant(std::string s);
-        Cell::type get_type() const override;
-        std::string get_contents() const;
-
-    friend class API;
-};
-
-/*****************************/

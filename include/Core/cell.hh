@@ -15,7 +15,7 @@ class Cell {
         void clean();
 
     protected:
-        enum class type { UNDEFINED, NUMBER, STRING, SYMBOL, PAIR, CONST };
+        enum class type { UNDEFINED, NUMBER, STRING, SYMBOL, PAIR };
         Cell();
         virtual ~Cell();
         virtual type get_type() const = 0;
