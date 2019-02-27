@@ -68,7 +68,18 @@ Object cddr(Object l)
     return cdr(l,1);
 }
 
-std::ostream& print_object_aux(std::ostream& s, Object l)
+std::ostream& print_object_cdr(std::ostream& s, Object l)
+{
+    if (null(l))
+    {
+        return s;
+    }
+    print_object(s, API::car(l));
+    print_object_cdr(s, API::cdr(l));
+    return s;
+}
+
+std::ostream& print_object (std::ostream& s, Object l)
 {
     if (numberp(l))
     {
@@ -92,24 +103,18 @@ std::ostream& print_object_aux(std::ostream& s, Object l)
             s << "#f ";
         }
     }
-    else if (!null(l))
+    else if (listp(l))
     {
-        print_object_aux(s, API::car(l));
-        print_object_aux(s, API::cdr(l));
+        s << "( ";
+        print_object_cdr(s,l);
+        s << ") ";
     }
-    return s;
-}
-
-std::ostream& print_object (std::ostream& s, Object l)
-{
-    s << "(" ;
-    print_object_aux(s,l);
-    s << ")" << std::endl;
     return s;
 }
 
 std::ostream& operator<<(std::ostream& s, Object l)
 {
     print_object(s,l);
+    s << std::endl;
     return s;
 }
