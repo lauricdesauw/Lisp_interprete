@@ -151,17 +151,17 @@ bool API::eq(Object a, Object b)
 
 Object API::number_to_object (int n)
 {
-    Cell_number::Cell_number(n);
+    return new Cell_number(n);
 }
 
 Object API::string_to_object (std::string s)
 {
-    Cell_string::Cell_string(s);
+    return new Cell_string(s);
 }
 
 Object API::symbol_to_object (std::string s)
 {
-    Cell_symbol::Cell_symbol(s);
+    return new Cell_symbol(s);
 }
 
 Object API::bool_to_object (bool b)
