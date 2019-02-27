@@ -2,6 +2,10 @@
 #include "read.hh"
 #include "library.hh"
 
+Toplevel::Toplevel()
+{
+    global_env = new Env();
+}
 
 void Toplevel::go(bool use_prompt)
 {
