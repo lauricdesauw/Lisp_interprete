@@ -2,6 +2,7 @@
 #include <stdexcept>
 
 #include "read.hh"
+#include "library.hh"
 
 using namespace std;
 
