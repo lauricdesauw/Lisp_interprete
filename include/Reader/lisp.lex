@@ -19,7 +19,7 @@ OPERATION [-+*/.=_?><]
 NUM [0-9]
 TRUE "#t"
 FALSE "#f"
-NIL "nil"
+NIL ("nil"|\(\))
 SYMBOL ({OPERATION}|({ALPHA}({ALPHA}|{NUM})*)|{TRUE}|{FALSE})
 NUMBER (-?{NUM}+)
 LPAR \(

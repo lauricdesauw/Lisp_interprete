@@ -7,9 +7,9 @@ using namespace std;
 
 // Consts
 
-const Object API::object_nil = *(new Object());
-const Object API::object_t = *(new Object());
-const Object API::object_f = *(new Object());
+const Object API::object_nil = new Cell_constant("nil") ;
+const Object API::object_t = new Cell_constant("true");
+const Object API::object_f = new Cell_constant("false");
 
 // Else
 
