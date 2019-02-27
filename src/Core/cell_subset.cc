@@ -83,3 +83,22 @@ Cell* Cell_pair::get_cdr () const
     check();
     return cdr;
 }
+
+/******* Cell_constant *******/
+
+Cell_constant::Cell_constant (std::string s) : Cell()
+{
+    contents = s;
+}
+
+Cell::type Cell_constant::get_type () const
+{
+    Cell::check();
+    return Cell::type::CONST;
+}
+
+std::string Cell_constant::get_contents () const
+{
+    Cell::check();
+    return contents;
+}
