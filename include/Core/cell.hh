@@ -13,13 +13,13 @@ class Cell {
     private:
         uint64_t magic;
         void clean();
-        void check() const;
 
     protected:
         enum class type { UNDEFINED, NUMBER, STRING, SYMBOL, PAIR };
         Cell();
         virtual ~Cell();
         virtual type get_type() const = 0;
+        void check() const;
 
     friend class API;
 };
