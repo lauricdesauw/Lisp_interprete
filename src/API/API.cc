@@ -21,18 +21,18 @@ void API::check(Object l)
 
 // Constants
 
- Object API::nil()
+Object API::nil()
 {
     return object_nil;
 }
 
- bool API::null(Object l)
+bool API::null(Object l)
 {
     check(l);
     return (l == object_nil);
 }
 
- Object API::t()
+Object API::t()
 {
     return API::object_t;
 }
@@ -44,7 +44,7 @@ Object API::f()
 
 // Type testers
 
- bool API::numberp(Object l)
+bool API::numberp(Object l)
 {
     check(l);
     if(!is_const_object(l))
@@ -53,7 +53,7 @@ Object API::f()
     }
 }
 
- bool API::stringp(Object l)
+bool API::stringp(Object l)
 {
     check(l);
     if(!is_const_object(l))
@@ -62,7 +62,7 @@ Object API::f()
     }
 }
 
- bool API::symbolp(Object l)
+bool API::symbolp(Object l)
 {
     check(l);
     if(!is_const_object(l))
@@ -71,7 +71,7 @@ Object API::f()
     }
 }
 
- bool API::listp(Object l)
+bool API::listp(Object l)
 {
     check(l);
     if(null(l))
@@ -86,7 +86,7 @@ Object API::f()
 
 // List Operators
 
- Object API::cons(Object a, Object l)
+Object API::cons(Object a, Object l)
 {
     API::check(a);
     API::check(l);
@@ -94,7 +94,7 @@ Object API::f()
     return new Cell_pair(a,l);
 }
 
- Object API::car(Object l)
+Object API::car(Object l)
 {
     API::check(l);
     assert(l->get_type() == Cell::type::PAIR);
@@ -102,14 +102,14 @@ Object API::f()
 }
 
 
- Object API::cdr(Object l)
+Object API::cdr(Object l)
 {
     API::check(l);
     assert(l->get_type() == Cell::type::PAIR);
     return ((Cell_pair*)l)->Cell_pair::get_cdr();
 }
 
- bool API::eq(Object a, Object b)
+bool API::eq(Object a, Object b)
 {
     API::check(a);
     API::check(b);
@@ -145,45 +145,46 @@ Object API::f()
                 ((Cell_number*)b)->get_contents());
         }
     }
+}
 
 // Object conversion
 
-static Object API::number_to_object (int n)
+Object API::number_to_object (int n)
 {
-    Cell_number::Cell_number (n);
+    Cell_number::Cell_number(n);
 }
 
- Object API::string_to_object (std::string s)
+Object API::string_to_object (std::string s)
 {
     Cell_string::Cell_string(s);
 }
 
- Object API::symbol_to_object (std::string s)
+Object API::symbol_to_object (std::string s)
 {
     Cell_symbol::Cell_symbol(s);
 }
 
- Object API::bool_to_object (bool b)
+Object API::bool_to_object (bool b)
 {
     if (b) {t();}
     else {f();}
 }
 
- int API::object_to_number (Object l)
+int API::object_to_number (Object l)
 {
     API::check(l);
     assert(numberp(l));
-    return (l->get_contents());
+    return (((Cell_number*)l)->get_contents());
 }
 
- std::string API::object_to_string (Object l)
+std::string API::object_to_string (Object l)
 {
     API::check(l);
     assert(stringp(l));
-    return (l->get_contents());
+    return (((Cell_string*)l)->get_contents());
 }
 
- bool API::object_to_bool (Object l)
+bool API::object_to_bool (Object l)
 {
     API::check(l);
     assert (l == object_t || l == object_f);

@@ -8,6 +8,8 @@ class API {
   // Object
 
     public:
+        static bool is_const_object (Object l);
+
         static void check(Object l);
 
         static Object nil();
