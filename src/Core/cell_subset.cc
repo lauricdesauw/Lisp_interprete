@@ -3,9 +3,8 @@
 
 /******* Cell_number *******/
 
-Cell_number::Cell_number (int n)
+Cell_number::Cell_number (int n) : Cell()
 {
-    Cell();
     contents = n;
 }
 
@@ -23,9 +22,8 @@ int Cell_number::get_contents ()
 
 /******* Cell_string *******/
 
-Cell_string::Cell_string (std::string s)
+Cell_string::Cell_string (std::string s) : Cell()
 {
-    Cell();
     contents = s;
 }
 
