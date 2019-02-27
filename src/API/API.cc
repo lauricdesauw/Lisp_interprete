@@ -151,8 +151,8 @@ bool API::eq(Object a, Object b)
         assert(a->get_type() == b->get_type());
         if(listp(a))
         {
-            return (dynamic_cast<Cell_pair*>(a)->get_car() == dynamic_cast<Cell_pair*>(b)->get_car() &&
-                   (dynamic_cast<Cell_pair*>(a)->get_cdr() == dynamic_cast<Cell_pair*>(b)->get_cdr());
+            return ((dynamic_cast<Cell_pair*>(a)->get_car() == dynamic_cast<Cell_pair*>(b)->get_car()) &&
+                   (dynamic_cast<Cell_pair*>(a)->get_cdr() == dynamic_cast<Cell_pair*>(b)->get_cdr()) );
         }
         else if (numberp(a))
         {
