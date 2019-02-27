@@ -3,12 +3,12 @@
 
 Cell::Cell()
 {
-    magic = (uint64_t) &this;
+    magic = (uint64_t) this;
 }
 
-void Cell::check()
+void Cell::check() const
 {
-    assert(magic == (uint64_t) &this);
+    assert(magic == (uint64_t) this);
 }
 
 void Cell::clean()
