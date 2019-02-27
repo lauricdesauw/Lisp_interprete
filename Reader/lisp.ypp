@@ -1,0 +1,92 @@
+%{
+#include <cstdio>
+#include <iostream>
+
+#include "library.hh"
+
+using namespace std;
+
+extern int yylex();
+extern int yylineno;
+extern char *yytext;
+
+void yyerror(char const *msg);
+
+static Object append_parser(Object l, Object m) {
+  check(l);
+  check(m);
+  if (null(l)) return m;
+  return cons(car(l), append_parser(cdr(l), m));
+}
+
+static Object cons_back_parser(Object l, Object a) {
+  check(l);
+  check(a);
+  return append_parser(l, cons(a, nil()));
+}
+
+static Object result;
+
+Object get_read_object() {
+  return result;
+}
+
+%}
+
+/* Declarations */
+
+%token <number_value> Token_number
+%token <string_value> Token_symbol
+%token <string_value> Token_string
+%token Token_lpar Token_rpar
+%token Token_nil
+%token Token_blank
+%token Token_EOF
+
+%type <Object_value> list_expr
+%type <Object_value> expr
+%type <Object_value> main
+
+%union {
+  Object Object_value;
+  int number_value;
+  char *string_value;
+}
+
+%start main /* the entry point */
+
+%%
+/* Grammar rules */
+
+main:
+list_rpar expr {$$ = $2; result = $$; YYACCEPT;}
+| Token_EOF {YYABORT;}
+;
+
+expr:
+Token_number {$$ = number_to_object($1);}
+| Token_nil {$$ = nil();}
+| Token_symbol {$$ = symbol_to_object($1);}
+| Token_string {$$ = string_to_object($1);}
+| Token_lpar list_expr Token_rpar {$$ = $2;}
+;
+
+list_expr:
+%empty {$$ = nil();}
+| list_expr expr {$$ = (cons_back_parser($1,$2)); }
+ 
+;
+
+list_rpar:
+%empty {}
+| list_rpar Token_rpar {}
+;
+
+%%
+/* Additional functions */
+
+void yyerror(const char *s) {
+  cerr << "ERROR: " << s << " at symbol \"" << yytext << "\""
+  << "on line " << yylineno << endl;
+  exit(1);
+}
