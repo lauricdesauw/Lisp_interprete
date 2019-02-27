@@ -5,6 +5,14 @@
 
 using namespace std;
 
+// Consts
+
+const Object object_nil = *(new Object());
+const Object object_t = *(new Object());
+const Object object_f = *(new Object());
+
+// Else
+
 bool API::const_objectp(Object l)
 {
     return (l == object_nil || l == object_t || l == object_f);
@@ -51,6 +59,7 @@ bool API::numberp(Object l)
     {
         return l->get_type() == Cell::type::NUMBER;
     }
+    return false;
 }
 
 bool API::stringp(Object l)
@@ -60,6 +69,7 @@ bool API::stringp(Object l)
     {
         return l->get_type() == Cell::type::STRING;
     }
+    return false;
 }
 
 bool API::symbolp(Object l)
@@ -69,6 +79,12 @@ bool API::symbolp(Object l)
     {
         return l->get_type() == Cell::type::SYMBOL;
     }
+    return false;
+}
+
+bool API::boolp(Object l)
+{
+    return const_objectp(l) && (l != object_nil);
 }
 
 bool API::listp(Object l)
@@ -82,6 +98,7 @@ bool API::listp(Object l)
     {
         return l->get_type() == Cell::type::PAIR;
     }
+    return false;
 }
 
 // List Operators
@@ -142,6 +159,20 @@ bool API::eq(Object a, Object b)
             return (((Cell_number*)a)->get_contents() ==
                 ((Cell_number*)b)->get_contents());
         }
+        else if (a->get_type() == Cell::type::SYMBOL)
+        {
+            return (((Cell_symbol*)a)->get_contents() ==
+                ((Cell_symbol*)b)->get_contents());
+        }
+        else if (a->get_type() == Cell::type::STRING)
+        {
+            return (((Cell_string*)a)->get_contents() ==
+                ((Cell_string*)b)->get_contents());
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -164,8 +195,14 @@ Object API::symbol_to_object (std::string s)
 
 Object API::bool_to_object (bool b)
 {
-    if (b) {t();}
-    else {f();}
+    if (b)
+    {
+        return t();
+    }
+    else
+    {
+        return f();
+    }
 }
 
 int API::object_to_number (Object l)
@@ -178,7 +215,7 @@ int API::object_to_number (Object l)
 std::string API::object_to_string (Object l)
 {
     API::check(l);
-    assert(stringp(l));
+    assert(stringp(l) | symbolp(l));
     return (((Cell_string*)l)->get_contents());
 }
 
@@ -186,6 +223,12 @@ bool API::object_to_bool (Object l)
 {
     API::check(l);
     assert (l == object_t || l == object_f);
-    if (l == object_t) {return true;}
-    else {return false;}
+    if (l == object_t)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

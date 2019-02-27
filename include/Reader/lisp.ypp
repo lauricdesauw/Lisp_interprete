@@ -74,7 +74,6 @@ Token_number {$$ = number_to_object($1);}
 list_expr:
 %empty {$$ = nil();}
 | list_expr expr {$$ = (cons_back_parser($1,$2)); }
- 
 ;
 
 list_rpar:

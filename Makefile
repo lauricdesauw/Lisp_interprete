@@ -7,7 +7,7 @@ CC_FILES	:= $(shell find [^_]* -type f -iname '*.cc' ! -iname 'lisp.*.cc')
 HH_FILES	:= $(shell find [^_]*  -type f -iname '*.hh' ! -iname 'lisp.*.hh')
 O_FILES	:= $(CC_FILES:%.cc=%.o)
 
-O_READER_FILES	:= Reader/lisp.yy.o Reader/lisp.tab.o
+O_READER_FILES	:= include/Reader/lisp.yy.o include/Reader/lisp.tab.o
 
 HELPER_FILES	:= $(wildcard Makefile* *.mak)
 
@@ -30,7 +30,7 @@ $(O_FILES): %.o: %.cc $(HH_FILES) $(HELPER_FILES)
 
 clean:
 	-rm -f $(O_FILES) $(TARGET) */*.o 
-	-rm Reader/lisp.*.cc Reader/lisp.*.hh
+	-rm include/Reader/lisp.*.cc include/Reader/lisp.*.hh
 	-rm -r _Doxydoc
 
 mrproper: clean
@@ -52,8 +52,8 @@ doc: clean
 
 ###########################################################
 
-$(O_READER_FILES): Reader/lisp.lex Reader/lisp.ypp
-	bison --defines=Reader/lisp.tab.hh -o Reader/lisp.tab.cc Reader/lisp.ypp
-	flex -o Reader/lisp.yy.cc Reader/lisp.lex 
-	g++ $(CCFLAGS) -Wno-unused-function -c Reader/lisp.yy.cc -o Reader/lisp.yy.o 
-	g++ $(CCFLAGS) -Wno-unused-function -c Reader/lisp.tab.cc -o Reader/lisp.tab.o
+$(O_READER_FILES): include/Reader/lisp.lex include/Reader/lisp.ypp
+	bison --defines=include/Reader/lisp.tab.hh -o include/Reader/lisp.tab.cc include/Reader/lisp.ypp
+	flex -o include/Reader/lisp.yy.cc include/Reader/lisp.lex 
+	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.yy.cc -o include/Reader/lisp.yy.o 
+	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.tab.cc -o include/Reader/lisp.tab.o
