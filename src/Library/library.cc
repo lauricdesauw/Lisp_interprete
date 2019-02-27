@@ -2,6 +2,7 @@
 #include "library.hh"
 #include "API.hh"
 #include <iostream>
+#include <cassert>
 
 void check(Object l) {API::check(l);}
 
@@ -34,10 +35,12 @@ bool object_to_bool(Object l) {return API::object_to_bool(l);}
 Object car(Object l, int n)
 {
     assert(n >= 1);
-    if (n == 0) {
-        car(l);
+    if (n == 0)
+    {
+        return car(l);
     }
-    else {
+    else
+    {
         return car(API::cdr(l),n-1);
     }
 }
@@ -45,10 +48,12 @@ Object car(Object l, int n)
 Object cdr(Object l, int n)
 {
     assert(n >= 1);
-    if (n == 0) {
-        cdr(l);
+    if (n == 0)
+    {
+        return cdr(l);
     }
-    else {
+    else
+    {
         return cdr(API::cdr(l),n-1);
     }
 }
