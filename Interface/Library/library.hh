@@ -54,9 +54,9 @@ Object find_value(std::string name, Env env);
 std::ostream& print_env(std::ostream& s, Env env);
 
 class No_binding_exception : public std::runtime_error {
- private:
-  std::string name;
+    private:
+        std::string name;
 
- public:
-  No_binding_exception(std::string _name);
+    public:
+        No_binding_exception(std::string _name);
 };
