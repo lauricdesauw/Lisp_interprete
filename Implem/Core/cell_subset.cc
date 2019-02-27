@@ -57,11 +57,11 @@ std::string Cell_symbol::get_contents ()
 
 /******* Cell_pair *******/
 
-Cell_pair::Cell_pair (Cell* _car, Cell* _cdr)
+Cell_pair::Cell_pair (Cell* car_p, Cell* cdr_p)
 {
     Cell::Cell();
-    car = _car;
-    cdr = _cdr;
+    car = car_p;
+    cdr = cdr_p;
 }
 
 type Cell_pair::get_type ()

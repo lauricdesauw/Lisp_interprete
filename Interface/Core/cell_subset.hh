@@ -50,14 +50,14 @@ class Cell_symbol : public Cell {
 
 class Cell_pair : public Cell {
     private:
-        Cell *car;
-        Cell *cdr;
+        Cell* car;
+        Cell* cdr;
 
     public:
-        Cell_pair(Cell *_car, Cell *_cdr);
+        Cell_pair(Cell* car_p, Cell* cdr_p);
         type get_type() const override;
-        Cell *get_car() const;
-        Cell *get_cdr() const;
+        Cell* get_car() const;
+        Cell* get_cdr() const;
 
     friend class API;
 };
