@@ -3,16 +3,12 @@
 
 using namespace std;
 
-<<<<<<< HEAD
- void API::check(Object l)
-=======
 bool is_const_object(Object l)
 {
     return (l == API::object_nil || l == API::object_t || l == API::object_f);
 }
 
 void API::check(Object l)
->>>>>>> 4977197174b13fa30ce1a5a7bc8eba9353c1ab90
 {
     assert(l != 0);
     if(!is_const_object(l))
@@ -39,11 +35,7 @@ void API::check(Object l)
     return API::object_t;
 }
 
-<<<<<<< HEAD
 Object API::f()
-=======
- API::Object f()
->>>>>>> 4977197174b13fa30ce1a5a7bc8eba9353c1ab90
 {
     return API::object_f;
 }
