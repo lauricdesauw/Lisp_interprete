@@ -7,9 +7,9 @@ using namespace std;
 
 // Consts
 
-const Object object_nil = *(new Object());
-const Object object_t = *(new Object());
-const Object object_f = *(new Object());
+const Object API::object_nil = *(new Object());
+const Object API::object_t = *(new Object());
+const Object API::object_f = *(new Object());
 
 // Else
 
@@ -42,12 +42,12 @@ bool API::null(Object l)
 
 Object API::t()
 {
-    return API::object_t;
+    return object_t;
 }
 
 Object API::f()
 {
-    return API::object_f;
+    return object_f;
 }
 
 // Type testers
@@ -55,7 +55,7 @@ Object API::f()
 bool API::numberp(Object l)
 {
     check(l);
-    if(!is_const_object(l))
+    if(!const_objectp(l))
     {
         return l->get_type() == Cell::type::NUMBER;
     }
@@ -65,7 +65,7 @@ bool API::numberp(Object l)
 bool API::stringp(Object l)
 {
     check(l);
-    if(!is_const_object(l))
+    if(!const_objectp(l))
     {
         return l->get_type() == Cell::type::STRING;
     }
@@ -75,7 +75,7 @@ bool API::stringp(Object l)
 bool API::symbolp(Object l)
 {
     check(l);
-    if(!is_const_object(l))
+    if(!const_objectp(l))
     {
         return l->get_type() == Cell::type::SYMBOL;
     }
@@ -94,7 +94,7 @@ bool API::listp(Object l)
     {
         return true;
     }
-    if(!is_const_object(l))
+    if(!const_objectp(l))
     {
         return l->get_type() == Cell::type::PAIR;
     }
@@ -105,15 +105,15 @@ bool API::listp(Object l)
 
 Object API::cons(Object a, Object l)
 {
-    API::check(a);
-    API::check(l);
+    check(a);
+    check(l);
     assert(listp(l));
     return new Cell_pair(a,l);
 }
 
 Object API::car(Object l)
 {
-    API::check(l);
+    check(l);
     assert(l->get_type() == Cell::type::PAIR);
     return ((Cell_pair*)l)->Cell_pair::get_car();
 }
@@ -121,26 +121,26 @@ Object API::car(Object l)
 
 Object API::cdr(Object l)
 {
-    API::check(l);
+    check(l);
     assert(l->get_type() == Cell::type::PAIR);
     return ((Cell_pair*)l)->Cell_pair::get_cdr();
 }
 
 bool API::eq(Object a, Object b)
 {
-    API::check(a);
-    API::check(b);
-    if(is_const_object(a) || is_const_object(b))
+    check(a);
+    check(b);
+    if(const_objectp(a) || const_objectp(b))
     {
-        if(API::null(a) && API::null(b))
+        if(null(a) && null(b))
         {
             return true;
         }
-        if(a == API::object_t && b == API::object_t)
+        if(a == object_t && b == object_t)
         {
             return true;
         }
-        if(a == API::object_f && b == API::object_f)
+        if(a == object_f && b == object_f)
         {
             return true;
         }
@@ -151,9 +151,9 @@ bool API::eq(Object a, Object b)
         assert(a->get_type() == b->get_type());
         if(a->get_type() == Cell::type::PAIR)
         {
-            return API::eq(((Cell_pair*)a)->get_car(),
+            return eq(((Cell_pair*)a)->get_car(),
                             ((Cell_pair*)b)->get_car()) &&
-                        API::eq(((Cell_pair*)a)->get_cdr(),
+                        eq(((Cell_pair*)a)->get_cdr(),
                                 ((Cell_pair*)b)->get_cdr());
         }
         else if (a->get_type() == Cell::type::NUMBER)
@@ -209,21 +209,21 @@ Object API::bool_to_object (bool b)
 
 int API::object_to_number (Object l)
 {
-    API::check(l);
+    check(l);
     assert(numberp(l));
     return (((Cell_number*)l)->get_contents());
 }
 
 std::string API::object_to_string (Object l)
 {
-    API::check(l);
+    check(l);
     assert(stringp(l) | symbolp(l));
     return (((Cell_string*)l)->get_contents());
 }
 
 bool API::object_to_bool (Object l)
 {
-    API::check(l);
+    check(l);
     assert (l == object_t || l == object_f);
     if (l == object_t)
     {
