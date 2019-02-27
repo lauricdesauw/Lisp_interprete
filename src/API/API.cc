@@ -71,6 +71,11 @@ bool API::symbolp(Object l)
     }
 }
 
+bool API::boolp(Object l)
+{
+    return const_objectp(l) && (l != object_nil);
+}
+
 bool API::listp(Object l)
 {
     check(l);
@@ -166,8 +171,8 @@ Object API::symbol_to_object (std::string s)
 
 Object API::bool_to_object (bool b)
 {
-    if (b) {t();}
-    else {f();}
+    if (b) {return t();}
+    else {return f();}
 }
 
 int API::object_to_number (Object l)
