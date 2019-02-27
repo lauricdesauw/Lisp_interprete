@@ -195,14 +195,8 @@ Object API::symbol_to_object (std::string s)
 
 Object API::bool_to_object (bool b)
 {
-    if (b)
-    {
-        return t();
-    }
-    else
-    {
-        return f();
-    }
+    if (b) { return t(); }
+    return f();
 }
 
 int API::object_to_number (Object l)
@@ -227,8 +221,5 @@ bool API::object_to_bool (Object l)
     {
         return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
