@@ -12,10 +12,8 @@ void Toplevel::go(bool use_prompt)
 
     while(true)
     {
-        std::cout << "C++Lisp :";
+        std::cout << "C++Lisp :" << nil() << std::endl;
         Object curr_obj = read_object();
         print_object(std::cout, curr_obj);
     }
 }
-
-

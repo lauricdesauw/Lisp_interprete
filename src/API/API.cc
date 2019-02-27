@@ -149,22 +149,22 @@ bool API::eq(Object a, Object b)
     else
     {
         assert(a->get_type() == b->get_type());
-        if(a->get_type() == Cell::type::PAIR)
+        if(listp(a))
         {
-            return (((Cell_pair*)a)->get_car() == ((Cell_pair*)b)->get_car() &&
-                   ((Cell_pair*)a)->get_cdr() == ((Cell_pair*)b)->get_cdr());
+            return (dynamic_cast<Cell_pair*>(a)->get_car() == dynamic_cast<Cell_pair*>(b)->get_car() &&
+                   (dynamic_cast<Cell_pair*>(a)->get_cdr() == dynamic_cast<Cell_pair*>(b)->get_cdr());
         }
-        else if (a->get_type() == Cell::type::NUMBER)
+        else if (numberp(a))
         {
             return (((Cell_number*)a)->get_contents() ==
                 ((Cell_number*)b)->get_contents());
         }
-        else if (a->get_type() == Cell::type::SYMBOL)
+        else if (symbolp(a))
         {
             return (((Cell_symbol*)a)->get_contents() ==
                 ((Cell_symbol*)b)->get_contents());
         }
-        else if (a->get_type() == Cell::type::STRING)
+        else if (stringp(a))
         {
             return (((Cell_string*)a)->get_contents() ==
                 ((Cell_string*)b)->get_contents());
