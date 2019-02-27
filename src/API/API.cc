@@ -82,6 +82,11 @@ bool API::symbolp(Object l)
     return false;
 }
 
+bool API::boolp(Object l)
+{
+    return const_objectp(l) && (l != object_nil);
+}
+
 bool API::listp(Object l)
 {
     check(l);
@@ -212,7 +217,7 @@ int API::object_to_number (Object l)
 std::string API::object_to_string (Object l)
 {
     API::check(l);
-    assert(stringp(l));
+    assert(stringp(l) | symbolp(l));
     return (((Cell_string*)l)->get_contents());
 }
 
