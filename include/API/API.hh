@@ -15,6 +15,7 @@ class API {
         static Object t();
         static Object f();
 
+        static bool const_objectp(Object l);
         static bool numberp(Object l);
         static bool stringp(Object l);
         static bool symbolp(Object l);

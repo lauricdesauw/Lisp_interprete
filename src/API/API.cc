@@ -1,17 +1,19 @@
 #include "API.hh"
+#include "cell.hh"
+#include "cell_subset.hh"
 #include <cassert>
 
 using namespace std;
 
-bool API::is_const_object(Object l)
+bool API::const_objectp(Object l)
 {
-    return (l == API::object_nil || l == API::object_t || l == API::object_f);
+    return (l == object_nil || l == object_t || l == object_f);
 }
 
 void API::check(Object l)
 {
     assert(l != 0);
-    if(!is_const_object(l))
+    if(!const_objectp(l))
     {
         l->check();
     }
@@ -21,13 +23,13 @@ void API::check(Object l)
 
  Object API::nil()
 {
-    return API::object_nil;
+    return object_nil;
 }
 
  bool API::null(Object l)
 {
-    API::check(l);
-    return (l == API::object_nil);
+    check(l);
+    return (l == object_nil);
 }
 
  Object API::t()
