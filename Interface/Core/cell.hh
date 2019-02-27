@@ -11,7 +11,6 @@ using Object = Cell *;
 
 class Cell {
     private:
-        static const uint64_t magic_number;
         uint64_t magic;
         void clean();
         void check() const;
