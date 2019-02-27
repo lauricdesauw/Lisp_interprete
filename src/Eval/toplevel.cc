@@ -1,6 +1,9 @@
 #include "toplevel.hh"
+#include "read.hh"
+#include "library.hh"
 
-Toplevel::go(bool use_prompt)
+
+void Toplevel::go(bool use_prompt)
 {
 
     while(true)
