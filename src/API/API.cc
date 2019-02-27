@@ -115,7 +115,7 @@ Object API::car(Object l)
 {
     check(l);
     assert(l->get_type() == Cell::type::PAIR);
-    return ((Cell_pair*)l)->Cell_pair::get_car();
+    return dynamic_cast<Cell_pair*>(l)->Cell_pair::get_car();
 }
 
 
@@ -123,7 +123,7 @@ Object API::cdr(Object l)
 {
     check(l);
     assert(l->get_type() == Cell::type::PAIR);
-    return ((Cell_pair*)l)->Cell_pair::get_cdr();
+    return dynamic_cast<Cell_pair*>(l)->Cell_pair::get_cdr();
 }
 
 bool API::eq(Object a, Object b)
@@ -203,14 +203,14 @@ int API::object_to_number (Object l)
 {
     check(l);
     assert(numberp(l));
-    return (((Cell_number*)l)->get_contents());
+    return dynamic_cast<Cell_number*>(l)->get_contents();
 }
 
 std::string API::object_to_string (Object l)
 {
     check(l);
     assert(stringp(l) | symbolp(l));
-    return (((Cell_string*)l)->get_contents());
+    return dynamic_cast<Cell_string*>(l)->get_contents());
 }
 
 bool API::object_to_bool (Object l)
