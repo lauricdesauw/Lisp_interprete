@@ -46,7 +46,7 @@ void API::check(Object l)
     check(l);
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::NUMBER;
+        return l->get_type() == Cell::type::NUMBER;
     }
 }
 
@@ -55,7 +55,7 @@ void API::check(Object l)
     check(l);
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::STRING;
+        return l->get_type() == Cell::type::STRING;
     }
 }
 
@@ -64,7 +64,7 @@ void API::check(Object l)
     check(l);
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::SYMBOL;
+        return l->get_type() == Cell::type::SYMBOL;
     }
 }
 
@@ -77,7 +77,7 @@ void API::check(Object l)
     }
     if(!is_const_object(l))
     {
-        return l->get_type() == Cell::PAIR;
+        return l->get_type() == Cell::type::PAIR;
     }
 }
 
@@ -94,7 +94,7 @@ void API::check(Object l)
  Object API::car(Object l)
 {
     API::check(l);
-    assert(l->get_type() == Cell::PAIR);
+    assert(l->get_type() == Cell::type::PAIR);
     return l->get_car();
 }
 
@@ -102,7 +102,7 @@ void API::check(Object l)
  Object API::cdr(Object l)
 {
     API::check(l);
-    assert(l->get_type() == Cell::PAIR);
+    assert(l->get_type() == Cell::type::PAIR);
     return l->get_cdr();
 }
 
@@ -129,7 +129,7 @@ void API::check(Object l)
     else
     {
         assert(a->get_type() == b->get_type());
-        if(l->get_type() == Cell::PAIR)
+        if(l->get_type() == Cell::type::PAIR)
         {
             return API::eq(a->get_car(),b->get_car()) && API::eq(a->get_cdr(),b->get_cdr());
         }
@@ -182,5 +182,4 @@ static bool API::object_to_bool (Object l)
     assert (l == object_t | l == object_f);
     if (l == object_t) {return true;}
     else {return false;}
->>>>>>> a1545d4e7a262435d46629bdb9591ffbead7e29a
 }
