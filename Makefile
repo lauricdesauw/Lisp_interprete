@@ -53,7 +53,7 @@ doc: clean
 ###########################################################
 
 $(O_READER_FILES): include/Reader/lisp.lex include/Reader/lisp.ypp
-	bison --defines=include/Reader/lisp.tab.hh -o include/Reader/lisp.tab.cc Reader/lisp.ypp
+	bison --defines=include/Reader/lisp.tab.hh -o include/Reader/lisp.tab.cc include/Reader/lisp.ypp
 	flex -o include/Reader/lisp.yy.cc include/Reader/lisp.lex 
 	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.yy.cc -o include/Reader/lisp.yy.o 
 	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.tab.cc -o include/Reader/lisp.tab.o
