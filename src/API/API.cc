@@ -209,7 +209,7 @@ int API::object_to_number (Object l)
 std::string API::object_to_string (Object l)
 {
     check(l);
-    assert(stringp(l) | symbolp(l));
+    assert(stringp(l) || symbolp(l));
     return (((Cell_string*)l)->get_contents());
 }
 

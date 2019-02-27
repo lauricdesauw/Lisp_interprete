@@ -118,3 +118,28 @@ std::ostream& operator<<(std::ostream& s, Object l)
     s << std::endl;
     return s;
 }
+
+std::ostream& print_type(std::ostream& s, Object l)
+{
+    if (numberp(l))
+    {
+        s << "It's a number." << std::endl;
+    }
+    else if (symbolp(l))
+    {
+        s << "It's a symbol." << std::endl;
+    }
+    else if (stringp(l))
+    {
+        s << "It's a string." << std::endl;
+    }
+    else if (boolp(l))
+    {
+        s << "It's a bool." << std::endl;
+    }
+    else if (listp(l))
+    {
+        s << "It's a list." << std::endl;
+    }
+    return s;
+}

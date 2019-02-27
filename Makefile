@@ -29,9 +29,9 @@ $(O_FILES): %.o: %.cc $(HH_FILES) $(HELPER_FILES)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
-	-rm -f $(O_FILES) $(TARGET) */*.o 
+	-rm -rf *.o 
 	-rm include/Reader/lisp.*.cc include/Reader/lisp.*.hh
-	-rm -r _Doxydoc
+	-rm r- _Doxydoc
 
 mrproper: clean
 	-rm $(TARGET)
