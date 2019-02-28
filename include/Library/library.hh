@@ -35,7 +35,7 @@ int object_to_number(Object l);
 std::string object_to_string(Object l);
 bool object_to_bool(Object l);
 
-std::ostream& print_object_aux (std::ostream& s, Object l, bool b);
+std::ostream& print_object_aux(std::ostream& s, Object l,bool b);
 std::ostream& print_object(std::ostream& s, Object l);
 std::ostream& operator<<(std::ostream& s, Object l);
 std::ostream& print_type(std::ostream& s, Object l);
@@ -48,11 +48,3 @@ Object cadr(Object l);
 Object cddr(Object l);
 
 Object list2(Object l1, Object l2);
-
-// Env
-
-Env make_env();
-Env add_new_binding(std::string name, Object value, Env env);
-Env extend_largs_env(Object lpars, Object lvals, Env env);
-Object find_value(std::string name, Env env);
-std::ostream& print_env(std::ostream& s, Env env);
