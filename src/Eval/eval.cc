@@ -71,7 +71,7 @@ Object apply (Object func, Object lvals, Env env)
     {
         return apply(eval(func,env),lvals,env);
     }
-    else
+    /*else
     {
         assert(pairp(f));
         if(car(f)  = lisp_lambda)
@@ -89,5 +89,5 @@ Object apply (Object func, Object lvals, Env env)
             let new_f = eval f env in
             eval (cons new_f lvals) env )
         }
-    }
+    }*/
 }
