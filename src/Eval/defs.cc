@@ -1,6 +1,7 @@
 #include "defs.hh"
 #include "read.hh"
 #include "eval.hh"
+#include "error.hh"
 #include "library.hh"
 #include <iostream>
 
@@ -91,6 +92,10 @@ Object do_quote (Object l, Env env)
 
 Object do_if (Object l, Env env)
 {
+    if (null(l) || null(cdr(l)))
+    {
+        error(l,env,"Cannot apply if: missing few arguements");
+    }
     Object test = car(l);
     Object true_part = cadr(l);
     Object test_value = eval(test,env);
@@ -98,6 +103,10 @@ Object do_if (Object l, Env env)
     if (object_to_bool(test_value))
     {
         return (eval(true_part,env));
+    }
+    if (null(cdr(l,1)))
+    {
+        error(l,env,"Cannot apply if: missing 'else' arguement");
     }
     Object false_part = car(l,2);
     return eval(false_part,env);
@@ -110,10 +119,10 @@ Object do_lambda (Object l, Env env)
 
 Object do_while(Object lvals, Env env)
 {
-    Object test_part = car(l);
-    Object body_part = cadr(l);
+    Object test_part = car(lvals);
+    Object body_part = cadr(lvals);
 
-    Object test_value = eval(test,env);
+    Object test_value = eval(test_part,env);
 
     while (object_to_bool(test_value))
     {

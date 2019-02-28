@@ -30,7 +30,7 @@ class Zipping_exception : public std::runtime_error
         Zipping_exception(Object _lobjs, std::string _message);
 };
 
-class Quit_exception : public exception
+class Quit_exception : public std::exception
 {
     public:
         Quit_exception(){};
