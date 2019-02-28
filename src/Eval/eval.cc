@@ -6,13 +6,9 @@
 
 Object eval (Object l, Env env)
 {
-    if (null(l))
+    if (null(l) || stringp(l) || numberp(l))
     {
         return l;
-    }
-    else if (stringp(l))
-    {
-        return nil();
     }
     else if (symbolp(l))
     {
