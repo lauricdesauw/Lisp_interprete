@@ -18,7 +18,6 @@ Object cons(Object a, Object l);
 Object car(Object l);
 Object cdr(Object l);
 bool eq(Object a, Object b);
-bool operator==(Object a, Object b);
 
 bool numberp(Object l);
 bool stringp(Object l);
