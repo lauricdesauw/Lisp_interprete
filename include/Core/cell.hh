@@ -22,4 +22,5 @@ class Cell {
         void check() const;
 
     friend class API;
+    friend class Cell_pair;
 };
