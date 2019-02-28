@@ -4,6 +4,21 @@
 #include "library.hh"
 #include <iostream>
 
+Object do_quote (Object l, Env env)
+{
+    return l;
+}
+
+Object do_if (Object l, Env env)
+{
+    return l;
+}
+
+Object do_lambda (Object l, Env env)
+{
+    return l;
+}
+
 Object do_plus(Object lvals)
 {
     Object a = car(lvals);

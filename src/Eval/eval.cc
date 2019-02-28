@@ -4,6 +4,7 @@
 #include <cassert>
 #include "eval.hh"
 #include "library.hh"
+#include "subr.hh"
 #include "defs.hh"
 
 
@@ -87,16 +88,15 @@ Object apply (Object func, Object lvals, Env env)
     {
         throw Evaluation_exception(func,env,"Cannot apply a string");
     }
-    if (subrp( func)
-)
+    if (subrp( func))
     {
-        return (apply_subr(func,lvals))
+        return (apply_subr(func,lvals));
     }
-    if(symbolp func)
+    if(symbolp (func))
     {
         return apply(eval(func,env),lvals,env);
     }
-    else
+/*    else
     {
         assert(pairp(f));
         if(car(f)  = lisp_lambda)
@@ -114,5 +114,5 @@ Object apply (Object func, Object lvals, Env env)
             new_f = eval f env
             eval (cons new_f lvals) env )
         }
-    }
+    }*/
 }
