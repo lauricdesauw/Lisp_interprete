@@ -23,7 +23,23 @@ Object eval (Object l, Env env)
     else
     {
         assert(listp(l));
-        Object f = car(l);
+        Object func = car(l);
+        if (eq(func,lisp_plus))
+        {
+            return do_plus(cdr(l),env);
+        }
+        if (eq(func,lisp_minus))
+        {
+            return do_minus(cdr(l),env);
+        }
+        if (eq(func,lisp_times))
+        {
+            return do_times(cdr(l),env);
+        }
+        if (eq(func,lisp_inf))
+        {
+            return do_inf(cdr(l),env);
+        }
         return (number_to_object(1));
     }
 }

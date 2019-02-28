@@ -17,6 +17,7 @@ void Toplevel::go(bool use_prompt)
         std::cout << "C++Lisp: ";
         Object curr_obj = read_object();
         curr_obj = eval(curr_obj,global_env);
+        std::cout << curr_obj << std::endl;
         print_type(std::cout,curr_obj);
         std::cout << std::endl;
     }

@@ -1,34 +1,45 @@
 #include "defs.hh"
 #include "read.hh"
+#include "eval.hh"
 #include "library.hh"
 #include <iostream>
 
-Object do_plus(Object lvals)
+Object do_plus(Object lvals, Env env)
 {
-    return number_to_object( object_to_number(car(lvals))
-                            + object_to_number(cadr(lvals)) );
+    Object a = eval(car(lvals), env);
+    Object b = eval(cadr(lvals), env);
+    return number_to_object( object_to_number(a)
+                            + object_to_number(b) );
 }
 
-Object do_minus(Object lvals)
+Object do_minus(Object lvals, Env env)
 {
-    return number_to_object( object_to_number(car(lvals))
-                            - object_to_number(cadr(lvals)) );
+    Object a = eval(car(lvals), env);
+    Object b = eval(cadr(lvals), env);
+    return number_to_object( object_to_number(a)
+                            - object_to_number(b) );
 }
 
-Object do_times(Object lvals)
+Object do_times(Object lvals, Env env)
 {
-    return number_to_object( object_to_number(car(lvals))
-                            * object_to_number(cadr(lvals)) );
+    Object a = eval(car(lvals), env);
+    Object b = eval(cadr(lvals), env);
+    return number_to_object( object_to_number(a)
+                            * object_to_number(b) );
 }
 
-Object do_eq(Object lvals)
+Object do_eq(Object lvals, Env env)
 {
-    return bool_to_object( eq(car(lvals),cadr(lvals)) );
+    Object a = eval(car(lvals), env);
+    Object b = eval(cadr(lvals), env);
+    return number_to_object( eq(a,b) );
 }
 
-Object do_inf(Object lvals)
+Object do_inf(Object lvals, Env env)
 {
-    return bool_to_object( object_to_number(car(lvals)) < object_to_number(cadr(lvals)) );
+    Object a = eval(car(lvals), env);
+    Object b = eval(cadr(lvals), env);
+    return bool_to_object( object_to_number(a) < object_to_number(b) );
 }
 
 Object do_concat(Object lvals)

@@ -34,7 +34,7 @@ bool object_to_bool(Object l) {return API::object_to_bool(l);}
 
 Object car(Object l, int n)
 {
-    assert(n >= 1);
+    assert(n >= 0);
     if (n == 0)
     {
         return car(l);
@@ -47,7 +47,7 @@ Object car(Object l, int n)
 
 Object cdr(Object l, int n)
 {
-    assert(n >= 1);
+    assert(n >= 0);
     if (n == 0)
     {
         return cdr(l);

@@ -12,19 +12,19 @@ const Object lisp_if = symbol_to_object("if");
 Object do_if(Object l, Env env);
 
 const Object lisp_plus = symbol_to_object("+");
-Object do_plus(Object lvals);
+Object do_plus(Object lvals, Env env);
 
 const Object lisp_minus = symbol_to_object("-");
-Object do_minus(Object lvals);
+Object do_minus(Object lvals, Env env);
 
 const Object lisp_times = symbol_to_object("*");
-Object do_times(Object lvals);
+Object do_times(Object lvals, Env env);
 
 const Object lisp_eq = symbol_to_object("=");
-Object do_eq(Object lvals);
+Object do_eq(Object lvals, Env env);
 
 const Object lisp_inf = symbol_to_object("<");
-Object do_inf(Object lvals);
+Object do_inf(Object lvals, Env env);
 
 const Object lisp_concat = symbol_to_object("concat");
 Object do_concat(Object lvals);
