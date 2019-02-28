@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "library.hh"
+#include "globals.hh"
 
 class Evaluation_exception : public std::runtime_error
 {
