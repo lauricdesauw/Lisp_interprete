@@ -209,13 +209,8 @@ int API::object_to_number (Object l)
 std::string API::object_to_string (Object l)
 {
     check(l);
-<<<<<<< HEAD
     assert(stringp(l) | symbolp(l));
-    return dynamic_cast<Cell_string*>(l)->get_contents());
-=======
-    assert(stringp(l) || symbolp(l));
-    return (((Cell_string*)l)->get_contents());
->>>>>>> 6d345c80c6275d60fe512f9cda6aefbbb23c99ad
+    return dynamic_cast<Cell_string*>(l)->get_contents();
 }
 
 bool API::object_to_bool (Object l)
