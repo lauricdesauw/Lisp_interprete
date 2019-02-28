@@ -35,7 +35,7 @@ void Toplevel::go(bool use_prompt)
                 print_type(std::cout,curr_obj);
             }
             std::cout << std::endl;
-        } catch (runtime_error& e)
+        } catch (Custom_exception& e)
             {
                 cout << e.what() << endl;
                 cout << endl;
