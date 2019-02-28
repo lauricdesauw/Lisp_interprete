@@ -76,8 +76,8 @@ Object do_error(Object lvals);
 const std::string lisp_while = ("while");
 Object do_while(Object l, Env env);
 
-const std::string lisp_define = ("define");
-Object do_define(Object l, Env env);
+const Object lisp_define = symbol_to_object("define");
+Env do_define(Object l, Env env);
 
 const std::string lisp_setq= ("set!");
 Object do_setq(Object l, Env env);
