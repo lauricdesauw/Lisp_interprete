@@ -88,7 +88,11 @@ Object do_display(Object lvals)
 
 Object do_quote (Object l, Env env)
 {
-    return l;
+    if (null(l))
+    {
+        error(l,env,"Cannot quote");
+    }
+    return car(l);
 }
 
 Object do_if (Object l, Env env)
@@ -168,6 +172,11 @@ Env do_define(Object lvals, Env env)
      Object value = eval(cadr(lvals),env);
      std::cout << name << " = " << value << std::endl;
      return add_new_binding(name,value,env);
+}
+
+Object do_eval(Object l, Env env)
+{
+    return (eval(l,env));
 }
 
 /*

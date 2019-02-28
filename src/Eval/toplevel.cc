@@ -29,6 +29,11 @@ void Toplevel::go(bool use_prompt)
             {
                 print_env(std::cout,global_env);
             }
+            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_eval))
+            {
+                curr_obj = do_eval(do_eval(cadr(curr_obj),global_env),global_env);
+                std::cout << curr_obj << std::endl;
+            }
             else
             {
                 curr_obj = eval(curr_obj,global_env);

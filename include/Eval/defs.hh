@@ -100,7 +100,7 @@ Object do_load(Object l, Env env);
 const std::string lisp_callcc = ("call/cc");
 Object do_callcc(Object l, Env env);
 
-const std::string lisp_eval = ("eval");
+const Object lisp_eval = symbol_to_object("eval");
 Object do_eval(Object l, Env env);
 
 const std::string lisp_apply = ("apply");

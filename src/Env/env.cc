@@ -73,7 +73,7 @@ Object find_value(Object obj, Env env)
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
     assert(bidingp(obj));
-    s << "| ( " << car(obj) << " = " << cdr(obj) << " ) ";
+    s << "| ( " << car(obj) << " = " << cadr(obj) << " ) ";
     return s;
 }
 
