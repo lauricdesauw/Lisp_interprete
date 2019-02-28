@@ -3,6 +3,7 @@
 #include "eval.hh"
 #include "error.hh"
 #include "library.hh"
+#include "env.hh"
 #include <iostream>
 
 Object do_plus(Object lvals)
@@ -156,6 +157,12 @@ Object do_listp(Object lvals)
 {
     return bool_to_object(listp(car(lvals)));
 }
+
+Object do_printenv(Object l, Env env)
+{
+    print_env(std::cout, env);
+}
+
 /*
 Object do_list(Object lvals)
 {
