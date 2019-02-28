@@ -68,7 +68,18 @@ Object cddr(Object l)
     return cdr(l,1);
 }
 
-std::ostream& print_object_aux(std::ostream& s, Object l)
+std::ostream& print_object_cdr(std::ostream& s, Object l)
+{
+    if (null(l))
+    {
+        return s;
+    }
+    print_object(s, API::car(l));
+    print_object_cdr(s, API::cdr(l));
+    return s;
+}
+
+std::ostream& print_object (std::ostream& s, Object l)
 {
     if (numberp(l))
     {
@@ -92,24 +103,43 @@ std::ostream& print_object_aux(std::ostream& s, Object l)
             s << "#f ";
         }
     }
-    else if (!null(l))
+    else if (listp(l))
     {
-        print_object_aux(s, API::car(l));
-        print_object_aux(s, API::cdr(l));
+        s << "( ";
+        print_object_cdr(s,l);
+        s << ") ";
     }
-    return s;
-}
-
-std::ostream& print_object (std::ostream& s, Object l)
-{
-    s << "(" ;
-    print_object_aux(s,l);
-    s << ")" << std::endl;
     return s;
 }
 
 std::ostream& operator<<(std::ostream& s, Object l)
 {
     print_object(s,l);
+    s << std::endl;
+    return s;
+}
+
+std::ostream& print_type(std::ostream& s, Object l)
+{
+    if (numberp(l))
+    {
+        s << "It's a number." << std::endl;
+    }
+    else if (symbolp(l))
+    {
+        s << "It's a symbol." << std::endl;
+    }
+    else if (stringp(l))
+    {
+        s << "It's a string." << std::endl;
+    }
+    else if (boolp(l))
+    {
+        s << "It's a bool." << std::endl;
+    }
+    else if (listp(l))
+    {
+        s << "It's a list." << std::endl;
+    }
     return s;
 }

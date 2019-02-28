@@ -1,5 +1,7 @@
-*.ypp
 *.o
 *.aux
 *.log
 *.out
+*.tab*
+*.yy.*
+main

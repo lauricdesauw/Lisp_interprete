@@ -1,6 +1,7 @@
 #include "toplevel.hh"
 #include "read.hh"
 #include "library.hh"
+#include <iostream>
 
 Toplevel::Toplevel()
 {
@@ -12,10 +13,9 @@ void Toplevel::go(bool use_prompt)
 
     while(true)
     {
-        std::cout << "C++Lisp :";
+        std::cout << "C++Lisp: ";
         Object curr_obj = read_object();
-        print_object(std::cout, curr_obj);
+        print_type(std::cout,curr_obj);
+        std::cout << std::endl;
     }
 }
-
-
