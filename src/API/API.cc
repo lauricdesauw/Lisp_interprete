@@ -146,7 +146,10 @@ bool API::eq(Object a, Object b)
         }
         return false;
     }
-    assert(a->get_type() == b->get_type());
+    if (!(a->get_type() == b->get_type()))
+    {
+        return false;
+    }
     if(listp(a))
     {
         return ((dynamic_cast<Cell_pair*>(a)->get_car() ==

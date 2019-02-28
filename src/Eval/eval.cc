@@ -48,22 +48,6 @@ Object eval (Object l, Env env)
 
     Object eval_parameters = eval_list(cdr(l), env);
     return apply(func,eval_parameters, env);
-/*    if (eq(func,lisp_plus))
-    {
-        return do_plus(cdr(l),env);
-    }
-    if (eq(func,lisp_minus))
-    {
-        return do_minus(cdr(l),env);
-    }
-    if (eq(func,lisp_times))
-    {
-        return do_times(cdr(l),env);
-    }
-    if (eq(func,lisp_inf))
-    {
-        return do_inf(cdr(l),env);
-    return (number_to_object(1));*/
 }
 
 Object apply (Object func, Object lvals, Env env)
