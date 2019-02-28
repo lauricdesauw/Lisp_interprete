@@ -3,7 +3,6 @@
 #include "library.hh"
 
 const Object lisp_quit = symbol_to_object("quit");
-void do_quit();
 
 const Object lisp_lambda = symbol_to_object("lambda");
 Object do_lambda(Object l, Env env);

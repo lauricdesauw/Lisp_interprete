@@ -4,11 +4,6 @@
 #include "library.hh"
 #include <iostream>
 
-void do_quit()
-{
-    throw Quit_exception();
-}
-
 Object do_plus(Object lvals)
 {
     Object a = car(lvals);
