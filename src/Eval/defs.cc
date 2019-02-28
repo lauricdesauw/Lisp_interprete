@@ -11,7 +11,16 @@ Object do_quote (Object l, Env env)
 
 Object do_if (Object l, Env env)
 {
-    return l;
+    Object test = car(l);
+    Object true_part = cadr(l);
+    Object test_value = eval(test,env);
+
+    if (object_to_bool(test_value))
+    {
+        return (eval(true_part,env));
+    }
+    Object false_part = car(l,2);
+    return eval(false_part,env);
 }
 
 Object do_lambda (Object l, Env env)
@@ -47,7 +56,7 @@ Object do_eq(Object lvals)
 {
     Object a = car(lvals);
     Object b = cadr(lvals);
-    return number_to_object( eq(a,b) );
+    return bool_to_object( eq(a,b) );
 }
 
 Object do_inf(Object lvals)
