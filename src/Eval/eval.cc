@@ -5,7 +5,7 @@
 
 Object get_value_env(Object l, Env env)
 {
-    
+
 }
 
 Object eval (Object l, Env env)
@@ -59,7 +59,7 @@ Object apply (Object f, Object lvals, Env env)
     }
     if (subrp f)
     {
-        return (subr_to_fun(f))(lvals)
+        return (apply_subr(f,lvals))
     }
     else if(symbolp f)
     {

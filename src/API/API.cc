@@ -84,7 +84,7 @@ bool API::symbolp(Object l)
 
 bool API::boolp(Object l)
 {
-    return const_objectp(l) && (l != object_nil);
+    return l == object_t || l == object_f;
 }
 
 bool API::listp(Object l)
@@ -190,6 +190,8 @@ Object API::string_to_object (std::string s)
 
 Object API::symbol_to_object (std::string s)
 {
+    if(s = "#t"){return object_t}
+    if(s = "#f"){return object_f}    
     return new Cell_symbol(s);
 }
 
