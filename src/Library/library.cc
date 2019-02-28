@@ -16,7 +16,6 @@ Object cons(Object a, Object l) {return API::cons(a,l);}
 Object car(Object l) {return API::car(l);}
 Object cdr(Object l) {return API::cdr(l);}
 bool eq(Object a, Object b) {return API::eq(a,b);}
-bool operator==(Object a, Object b) {return eq(a,b);}
 
 bool numberp(Object l) {return API::numberp(l);}
 bool stringp(Object l) {return API::stringp(l);}
