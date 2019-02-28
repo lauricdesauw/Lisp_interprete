@@ -214,10 +214,7 @@ std::string API::object_to_string (Object l)
     {
         return dynamic_cast<Cell_string*>(l)->get_contents();
     }
-    else
-    {
-        return dynamic_cast<Cell_symbol*>(l)->get_contents();
-    }
+    return dynamic_cast<Cell_symbol*>(l)->get_contents();
 }
 
 bool API::object_to_bool (Object l)
