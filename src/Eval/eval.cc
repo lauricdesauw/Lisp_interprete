@@ -6,19 +6,14 @@
 
 Object eval (Object l, Env env)
 {
-    if (null(l))
+    if (null(l) || stringp(l) || numberp(l))
     {
         return l;
-    }
-    else if (stringp(l))
-    {
-        return nil();
     }
     else if (symbolp(l))
     {
         std::string s = object_to_string(l);
-        std::cout << s << std::endl;
-        if (s == "#t ")
+        if (s == "#t")
         {
             return t();
         }
@@ -30,7 +25,7 @@ Object eval (Object l, Env env)
         {
             return nil();
         }
-        return nil();
+        return l;
     }
     else {return nil();}
 }

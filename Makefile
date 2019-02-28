@@ -12,7 +12,7 @@ O_READER_FILES	:= include/Reader/lisp.yy.o include/Reader/lisp.tab.o
 HELPER_FILES	:= $(wildcard Makefile* *.mak)
 
 DIRS	:= $(sort $(dir $(HH_FILES)))
-CCFLAGS	:= -W -Wall -std=gnu++14 $(DIRS:%=-I %)
+CCFLAGS	:= -W -Wall -g -std=gnu++14 $(DIRS:%=-I %)
 
 TARGET	:= main
 
@@ -22,14 +22,16 @@ default: all
 
 all: $(TARGET)
 
-$(TARGET): $(O_FILES) $(O_READER_FILES) $(HELPER_FILES) 
+$(TARGET): $(O_FILES) $(O_READER_FILES) $(HELPER_FILES)
 	$(CC) $(O_FILES) $(O_READER_FILES) -o $@
 
 $(O_FILES): %.o: %.cc $(HH_FILES) $(HELPER_FILES)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
-	-rm -r -f *.o 
+	-rm *.o
+	-rm */*.o
+	-rm */*/*.o
 	-rm include/Reader/lisp.*.cc include/Reader/lisp.*.hh
 	-rm r- _Doxydoc
 
@@ -37,7 +39,7 @@ mrproper: clean
 	-rm $(TARGET)
 
 indent: clean
-	-clang-format -verbose -style=Google -i $(CC_FILES) $(HH_FILES) 
+	-clang-format -verbose -style=Google -i $(CC_FILES) $(HH_FILES)
 
 run: $(TARGET)
 	rlwrap ./main
@@ -54,6 +56,6 @@ doc: clean
 
 $(O_READER_FILES): include/Reader/lisp.lex include/Reader/lisp.ypp
 	bison --defines=include/Reader/lisp.tab.hh -o include/Reader/lisp.tab.cc include/Reader/lisp.ypp
-	flex -o include/Reader/lisp.yy.cc include/Reader/lisp.lex 
-	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.yy.cc -o include/Reader/lisp.yy.o 
+	flex -o include/Reader/lisp.yy.cc include/Reader/lisp.lex
+	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.yy.cc -o include/Reader/lisp.yy.o
 	g++ $(CCFLAGS) -Wno-unused-function -c include/Reader/lisp.tab.cc -o include/Reader/lisp.tab.o
