@@ -32,9 +32,6 @@ int object_to_number(Object l) {return API::object_to_number(l);}
 std::string object_to_string(Object l) {return API::object_to_string(l);}
 bool object_to_bool(Object l) {return API::object_to_bool(l);}
 
-No_binding_exception::No_binding_exception(std::string _name) :
-std::runtime_error(_name), name(_name){}
-
 Object car(Object l, int n)
 {
     assert(n >= 0);
@@ -148,6 +145,11 @@ std::ostream& print_type(std::ostream& s, Object l)
 
 //Env
 
+No_binding_exception::No_binding_exception(std::string _name) :
+std::runtime_error(_name), name(_name){}
+Number_param_exception::Number_param_exception(std::string _name) :
+std::runtime_error(name), name(_name){}
+
 Env make_env()
 {
     Env new_env = Env();
@@ -171,13 +173,40 @@ Env add_new_binding(std::string name, Object value, Env env)
     return cons(env,res);
 }
 
+Env extend_largs_env(Object lpars, Object lvals, Env env) {
+    if (null(lpars))
+    {
+        if (!null(lvals))
+        {
+            throw Number_param_exception("Too many vals");
+        }
+        else
+        {
+            return env;
+        }
+    }
+    else
+    {
+        if (null(lvals))
+        {
+            throw Number_param_exception("Too many parameters");
+        }
+        else
+        {
+            std::string name = object_to_string(car(lpars));
+            Env new_env = add_new_binding(name,car(lvals),env);
+            return extend_largs_env(cdr(lpars),cdr(lvals),env);
+        }
+    }
+}
+
 Object find_value(std::string name, Env env)
 {
     Object head = car(env);
     std::string h_name = object_to_string(car(head));
     if (null(env))
     {
-        throw No_binding_exception(name+" Not found");
+        throw No_binding_exception("'" + name + "'" + "Not found");
     }
     if (h_name == name)
     {
