@@ -3,6 +3,7 @@
 #include "eval.hh"
 #include "error.hh"
 #include "library.hh"
+#include "env.hh"
 #include <iostream>
 
 Object do_plus(Object lvals)
@@ -156,6 +157,19 @@ Object do_listp(Object lvals)
 {
     return bool_to_object(listp(car(lvals)));
 }
+
+Env do_define(Object lvals, Env env)
+{
+    if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
+    {
+        error(lvals,env,"Cannot define it: missing few arguments");
+    }
+    std::string name = object_to_string(car(lvals));
+    Object value = eval(cadr(lvals),env);
+    std::cout << name << " = " << value << std::endl;
+    return add_new_binding(name,value,env);
+}
+
 /*
 Object do_list(Object lvals)
 {

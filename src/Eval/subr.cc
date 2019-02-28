@@ -11,7 +11,8 @@ const bool subrp(Object obj)
             (obj_s == lisp_minus) ||
             (obj_s == lisp_eq) ||
             (obj_s == lisp_inf) ||
-            (obj_s == lisp_concat));
+            (obj_s == lisp_concat) ||
+            (obj_s == lisp_nullp));
 }
 
 const Object apply_subr(Object sub, Object lvals)
@@ -54,5 +55,9 @@ const Object apply_subr(Object sub, Object lvals)
     if (sub_string == lisp_cons)
     {
         return do_cons(lvals);
+    }
+    if (sub_string == lisp_nullp)
+    {
+        return do_nullp(lvals);
     }
 }

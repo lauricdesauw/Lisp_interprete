@@ -2,6 +2,7 @@
 #include "read.hh"
 #include "eval.hh"
 #include "library.hh"
+#include "defs.hh"
 #include <iostream>
 
 Toplevel::Toplevel()
@@ -16,11 +17,20 @@ void Toplevel::go(bool use_prompt)
     {
         try
         {
+            check(global_env);
             std::cout << "C++Lisp: ";
             Object curr_obj = read_object();
-            curr_obj = eval(curr_obj,global_env);
-            std::cout << curr_obj << std::endl;
-            print_type(std::cout,curr_obj);
+            if (listp(curr_obj) || !null(curr_obj) || eq(car(curr_obj),lisp_define))
+            {
+                Object a = cdr(curr_obj);
+                global_env = do_define(a,global_env);
+            }
+            else
+            {
+                curr_obj = eval(curr_obj,global_env);
+                std::cout << curr_obj << std::endl;
+                print_type(std::cout,curr_obj);
+            }
             std::cout << std::endl;
         } catch (runtime_error& e)
             {
