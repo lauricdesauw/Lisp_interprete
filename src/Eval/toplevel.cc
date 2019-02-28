@@ -13,24 +13,23 @@ Toplevel::Toplevel()
 
 void Toplevel::go(bool use_prompt)
 {
-
     while(true)
     {
         try
         {
             std::cout << "C++Lisp: ";
             Object curr_obj = read_object();
-            /*if(is_load_directive(curr_obj))
+            if(is_load_directive(curr_obj))
             {
                 handle_load(curr_obj, this);
             }
             else
-            {*/
+            {
                 curr_obj = eval(curr_obj,global_env);
                 std::cout << curr_obj << std::endl;
                 print_type(std::cout,curr_obj);
                 std::cout << std::endl;
-            //}
+            }
         } catch (runtime_error& e)
             {
                 cout << e.what() << endl;
@@ -40,11 +39,11 @@ void Toplevel::go(bool use_prompt)
 }
 
 // ----------------------------------------------------------//
-/*
+
 bool is_load_directive(Object obj)
 {
-  if(!pairp(obj)){return false;}
-  else if(car(obj) == lisp_load) {return true;} else {return false;}
+    if(!pairp(obj)){cout<<"0"<<endl;return false;}
+    else if(eq(car(obj),lisp_load)) {cout<<"1"<<endl;return true;} else {cout<<"2"<<endl;return false;}
 }
 
 void handle_load_core(std::string file_name, Toplevel* toplevel)
@@ -66,11 +65,12 @@ void handle_load(Object obj, Toplevel* toplevel)
   Object file_object = cadr( obj);
   assert(stringp(file_object));
   std::string file_path = object_to_string( file_object);
-  FILE* new_stream = fopen("~/Desktop/test.lisp","r");
+  FILE* new_stream = fopen("test.lisp","r");
   change_lexer_input(new_stream);
+  cout << "Test test4"<< endl;
   handle_load_core( file_path, toplevel);
+  cout << "Test test5"<< endl;
   fclose(new_stream);
   change_lexer_input(stdin);
   toplevel->go(true);
 }
-*/

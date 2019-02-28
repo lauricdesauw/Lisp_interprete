@@ -51,8 +51,3 @@ COMMENT (;{LINE})
 .		{clog << "Unexpected character: " <<
 			(int)(yytext[0]) << endl;}
 %%
-
-void change_input(FILE* stream)
-{
-	yyin = stream;
-}
