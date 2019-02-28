@@ -6,7 +6,7 @@
 
 Toplevel::Toplevel()
 {
-    global_env = *(new Env());
+    global_env = nil();
 }
 
 void Toplevel::go(bool use_prompt)
