@@ -7,17 +7,6 @@
 #include "subr.hh"
 #include "defs.hh"
 
-
-Evaluation_exception::Evaluation_exception(Object _obj,
-                                           Env _env,
-                                           string _message):
-    std::runtime_error(_message),
-    obj(_obj),
-    env(_env),
-    message(_message)
-{};
-
-
 Object get_value_env(Object l, Env env)
 {
     return l;

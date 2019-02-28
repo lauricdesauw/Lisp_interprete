@@ -2,6 +2,7 @@
 
 #include "toplevel.hh"
 #include "eval.hh"
+#include "error.hh"
 
 using namespace std;
 

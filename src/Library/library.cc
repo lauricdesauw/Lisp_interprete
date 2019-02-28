@@ -3,6 +3,7 @@
 #include "API.hh"
 #include <iostream>
 #include <cassert>
+#include "error.hh"
 
 void check(Object l) {API::check(l);}
 
@@ -31,9 +32,6 @@ Object bool_to_object(bool b) {return API::bool_to_object(b);}
 int object_to_number(Object l) {return API::object_to_number(l);}
 std::string object_to_string(Object l) {return API::object_to_string(l);}
 bool object_to_bool(Object l) {return API::object_to_bool(l);}
-
-No_binding_exception::No_binding_exception(std::string _name) :
-std::runtime_error(_name), name(_name){}
 
 Object car(Object l, int n)
 {
