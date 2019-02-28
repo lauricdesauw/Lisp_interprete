@@ -15,12 +15,19 @@ void Toplevel::go(bool use_prompt)
 
     while(true)
     {
-        std::cout << "C++Lisp: ";
-        Object curr_obj = read_object();
-        curr_obj = eval(curr_obj,global_env);
-        std::cout << curr_obj << std::endl;
-        print_type(std::cout,curr_obj);
-        std::cout << std::endl;
+        try
+        {
+            std::cout << "C++Lisp: ";
+            Object curr_obj = read_object();
+            curr_obj = eval(curr_obj,global_env);
+            std::cout << curr_obj << std::endl;
+            print_type(std::cout,curr_obj);
+            std::cout << std::endl;
+        } catch (runtime_error& e)
+            {
+                cout << e.what() << endl;
+                cout << endl;
+            }
     }
 }
 

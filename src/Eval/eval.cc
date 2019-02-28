@@ -35,7 +35,7 @@ Object eval (Object l, Env env)
 {
     if (eq(l,lisp_quit))
     {
-        throw Evaluation_exception(l,env,"Bye, bye!");
+        throw Quit_exception();
     }
     if (null(l) || stringp(l) || numberp(l) || boolp(l))
     {
