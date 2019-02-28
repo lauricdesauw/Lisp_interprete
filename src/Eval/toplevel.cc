@@ -8,7 +8,7 @@
 
 Toplevel::Toplevel()
 {
-    global_env = *(new Env());
+    global_env = nil();
 }
 
 void Toplevel::go(bool use_prompt)
@@ -23,13 +23,18 @@ void Toplevel::go(bool use_prompt)
             {
                 handle_load(curr_obj, this);
             }
+            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
+            {
+                Object a = cdr(curr_obj);
+                global_env = do_define(a,global_env);
+            }
             else
             {
                 curr_obj = eval(curr_obj,global_env);
                 std::cout << curr_obj << std::endl;
                 print_type(std::cout,curr_obj);
-                std::cout << std::endl;
             }
+            std::cout << std::endl;
         } catch (runtime_error& e)
             {
                 cout << e.what() << endl;
@@ -42,8 +47,8 @@ void Toplevel::go(bool use_prompt)
 
 bool is_load_directive(Object obj)
 {
-    if(!pairp(obj)){cout<<"0"<<endl;return false;}
-    else if(eq(car(obj),lisp_load)) {cout<<"1"<<endl;return true;} else {cout<<"2"<<endl;return false;}
+    if(!pairp(obj)){return false;}
+    else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
 }
 
 void handle_load_core(std::string file_name, Toplevel* toplevel)

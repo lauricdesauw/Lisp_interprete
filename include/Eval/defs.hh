@@ -13,95 +13,95 @@ Object do_quote(Object l, Env env);
 const Object lisp_if = symbol_to_object("if");
 Object do_if(Object l, Env env);
 
-const Object lisp_plus = symbol_to_object("+");
+const std::string lisp_plus = ("+");
 Object do_plus(Object lvals);
 
-const Object lisp_minus = symbol_to_object("-");
+const std::string lisp_minus = ("-");
 Object do_minus(Object lvals);
 
-const Object lisp_times = symbol_to_object("*");
+const std::string lisp_times = ("*");
 Object do_times(Object lvals);
 
-const Object lisp_eq = symbol_to_object("=");
+const std::string lisp_eq = ("=");
 Object do_eq(Object lvals);
 
-const Object lisp_inf = symbol_to_object("<");
+const std::string lisp_inf = ("<");
 Object do_inf(Object lvals);
 
-const Object lisp_concat = symbol_to_object("concat");
+const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
 
-const Object lisp_car = symbol_to_object("car");
+const std::string lisp_car = ("car");
 Object do_car(Object lvals);
 
-const Object lisp_cdr = symbol_to_object("cdr");
+const std::string lisp_cdr = ("cdr");
 Object do_cdr(Object lvals);
 
-const Object lisp_cons = symbol_to_object("cons");
+const std::string lisp_cons = ("cons");
 Object do_cons(Object lvals);
 
-const Object lisp_read = symbol_to_object("read");
+const std::string lisp_read = ("read");
 Object do_read(Object lvals);
 
-const Object lisp_display = symbol_to_object("display");
+const std::string lisp_display = ("display");
 Object do_display(Object lvals);
 
-const Object lisp_newline = symbol_to_object("newline");
+const std::string lisp_newline = ("newline");
 Object do_newline(Object lvals);
 
-const Object lisp_end = symbol_to_object("end");
+const std::string lisp_end = ("end");
 Object do_end(Object lvals);
 
-const Object lisp_nullp = symbol_to_object("nullp");
+const std::string lisp_nullp = ("nullp");
 Object do_nullp(Object lvals);
 
-const Object lisp_stringp = symbol_to_object("stringp");
+const std::string lisp_stringp = ("stringp");
 Object do_stringp(Object lvals);
 
-const Object lisp_numberp= symbol_to_object("numberp");
+const std::string lisp_numberp= ("numberp");
 Object do_numberp(Object lvals);
 
-const Object lisp_symbolp = symbol_to_object("symbolp");
+const std::string lisp_symbolp = ("symbolp");
 Object do_symbolp(Object lvals);
 
-const Object lisp_listp = symbol_to_object("listp");
-Object do_lisp(Object lvals);
+const std::string lisp_listp = ("listp");
+Object do_listp(Object lvals);
 
-const Object lisp_list = symbol_to_object("list");
+const std::string lisp_list = ("list");
 Object do_list(Object lvals);
 
-const Object lisp_error = symbol_to_object("error");
+const std::string lisp_error = ("error");
 Object do_error(Object lvals);
 
-const Object lisp_while = symbol_to_object("while");
+const std::string lisp_while = ("while");
 Object do_while(Object l, Env env);
 
 const Object lisp_define = symbol_to_object("define");
-Object do_define(Object l, Env env);
+Env do_define(Object l, Env env);
 
-const Object lisp_setq= symbol_to_object("set!");
+const std::string lisp_setq= ("set!");
 Object do_setq(Object l, Env env);
 
-const Object lisp_cond = symbol_to_object("cond");
+const std::string lisp_cond = ("cond");
 Object do_cond(Object l, Env env);
 
-const Object lisp_begin = symbol_to_object("begin");
+const std::string lisp_begin = ("begin");
 Object do_begin(Object l, Env env);
 
-const Object lisp_printenv = symbol_to_object("printenv");
+const std::string lisp_printenv = ("printenv");
 Object do_printenv(Object l, Env env);
 
-const Object lisp_debug = symbol_to_object("debug");
+const std::string lisp_debug = ("debug");
 Object do_debug(Object l, Env env);
 
-const Object lisp_load = symbol_to_object("load");
+const std::string lisp_load = ("load");
 Object do_load(Object l, Env env);
 
-const Object lisp_callcc = symbol_to_object("call/cc");
+const std::string lisp_callcc = ("call/cc");
 Object do_callcc(Object l, Env env);
 
-const Object lisp_eval = symbol_to_object("eval");
+const std::string lisp_eval = ("eval");
 Object do_eval(Object l, Env env);
 
-const Object lisp_apply = symbol_to_object("apply");
+const std::string lisp_apply = ("apply");
 Object do_apply(Object l, Env env);

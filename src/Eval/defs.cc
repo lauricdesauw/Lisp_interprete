@@ -3,6 +3,7 @@
 #include "eval.hh"
 #include "error.hh"
 #include "library.hh"
+#include "env.hh"
 #include <iostream>
 
 Object do_plus(Object lvals)
@@ -106,7 +107,7 @@ Object do_if (Object l, Env env)
     }
     if (null(cdr(l,1)))
     {
-        error(l,env,"Cannot apply if: missing 'else' arguement");
+        error(l,env,"Cannot apply if: missing 'else' argument");
     }
     Object false_part = car(l,2);
     return eval(false_part,env);
@@ -130,8 +131,47 @@ Object do_while(Object lvals, Env env)
     }
 }
 
-/*
 Object do_newline(Object lvals)
+{
+    std::cout<<std::endl;
+    return nil();
+}
+
+
+Object do_nullp(Object lvals)
+{
+    return bool_to_object(null(car(lvals)));
+}
+
+Object do_stringp(Object lvals)
+{
+    return bool_to_object(stringp(car(lvals)));
+}
+
+Object do_numberp(Object lvals)
+{
+    return bool_to_object(numberp(car(lvals)));
+}
+
+Object do_listp(Object lvals)
+{
+    return bool_to_object(listp(car(lvals)));
+}
+
+Env do_define(Object lvals, Env env)
+{
+    if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
+    {
+        error(lvals,env,"Cannot define it: missing few arguments");
+    }
+    std::string name = object_to_string(car(lvals));
+    Object value = eval(cadr(lvals),env);
+    std::cout << name << " = " << value << std::endl;
+    return add_new_binding(name,value,env);
+}
+
+/*
+Object do_list(Object lvals)
 {
     return
 }
@@ -141,33 +181,7 @@ Object do_end(Object lvals)
     return
 }
 
-Object do_nullp(Object lvals)
-{
-    return
-}
-
-Object do_stringp(Object lvals)
-{
-    return
-}
-
-Object do_numberp(Object lvals)
-{
-    return
-}
-
-Object do_listp(Object lvals)
-{
-    return
-}
-
-Object do_list(Object lvals)
-{
-    return
-}
-
 Object do_error(Object lvals)
 {
     return
-}
-*/
+}*/

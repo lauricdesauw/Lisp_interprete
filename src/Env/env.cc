@@ -20,7 +20,7 @@ Env add_new_binding(std::string name, Object value, Env env)
     Object s = string_to_object(name);
     Object res = cons (s,cons(value,nil()));
     assert(bidingp(res));
-    return cons(env,res);
+    return cons(res,env);
 }
 
 Env extend_largs_env(Object lpars, Object lvals, Env env) {
@@ -50,21 +50,23 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
     }
 }
 
-Object find_value(std::string name, Env env)
+Object find_value(Object obj, Env env)
 {
-    Object head = car(env);
-    std::string h_name = object_to_string(car(head));
+    assert(symbolp(obj));
+    std::string name = object_to_string(obj);
     if (null(env))
     {
-        throw No_binding_exception("'" + name + "'" + "Not found");
+        throw No_binding_exception("'" + name + "' " + "Not found");
     }
+    Object head = car(env);
+    std::string h_name = object_to_string(car(head));
     if (h_name == name)
     {
-        return(cdr(head));
+        return(car(cdr(head)));
     }
     else
     {
-        return(find_value(name, cdr(env)));
+        return(find_value(obj, cdr(env)));
     }
 }
 
