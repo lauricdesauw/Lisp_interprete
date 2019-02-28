@@ -45,3 +45,10 @@ class No_binding_exception : public std::runtime_error
     public:
         No_binding_exception(std::string _name);
 };
+
+class Number_param_exception : public std::runtime_error {
+    private:
+        std::string name; //nb = 0 if there are too many param and 1 if there are too many variables
+    public:
+        Number_param_exception(std::string _name);
+};
