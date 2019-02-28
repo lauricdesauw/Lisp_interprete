@@ -22,6 +22,7 @@ bool stringp(Object l) {return API::stringp(l);}
 bool symbolp(Object l) {return API::symbolp(l);}
 bool boolp(Object l) {return API::boolp(l);}
 bool listp(Object l) {return API::listp(l);}
+bool pairp(Object l) {return API::pairp(l);}
 
 Object number_to_object(int n) {return API::number_to_object(n);}
 Object string_to_object(std::string s) {return API::string_to_object(s);}

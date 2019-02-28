@@ -101,6 +101,13 @@ bool API::listp(Object l)
     return false;
 }
 
+bool API::pairp(Object l)
+{
+    check(l);
+    return l->get_type() == Cell::type::PAIR;
+
+}
+
 // List Operators
 
 Object API::cons(Object a, Object l)

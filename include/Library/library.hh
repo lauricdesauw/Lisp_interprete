@@ -24,6 +24,7 @@ bool stringp(Object l);
 bool symbolp(Object l);
 bool boolp(Object l);
 bool listp(Object l);
+bool pairp(Object l);
 
 Object number_to_object(int n);
 Object string_to_object(std::string s);

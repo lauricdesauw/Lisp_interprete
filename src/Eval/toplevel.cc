@@ -33,27 +33,34 @@ void Toplevel::go(bool use_prompt)
 
 // ----------------------------------------------------------//
 
-is_load_directive(Object obj)
+bool is_load_directive(Object obj)
 {
   if(!pairp(obj)){return false;}
   else if(car(obj) == lisp_load) {return true;} else {return false;}
 }
 
-let handle_load_core(file_name toplevel =
-  print_string ("Loading file " ^ file_name ^ "...\n");
-  (try toplevel () with End_of_file -> ());
-  print_string ("File " ^ file_name ^ " loaded!\n")
-;;
-
-let handle_load obj toplevel =
-  let file_object = cadr obj in
-  let file_value = eval_direct file_object !Globals.global_env_ref in
-  let file_name = obj_to_string file_value in
-  let initial_channel = !Globals.current_channel in
-  Globals.current_channel := open_in file_name;
-  Lexer.reset_parser ();
+void handle_load_core(std:string file_name, Toplevel toplevel)
+{
+    cout << "Loading file " << file_name << "...\n";
+    try
+    {
+        toplevel ();
+    }
+    catch(End_of_file e)
+    {
+        cout << "File " << file_name << " loaded!\n";
+    }
+}
+/*
+void handle_load(Object obj, Toplevel toplevel)
+{
+  Object file_object = cadr( obj);
+  assert(stringp(file_object));
+  std::string file_path = obj_to_string( file_object);
+  FILE* = fopen(file_path, "r");
+  change_lexer_input()
   handle_load_core file_name toplevel;
   close_in !Globals.current_channel;
   Globals.current_channel := initial_channel;
   Lexer.reset_parser ()
-;;
+}*/
