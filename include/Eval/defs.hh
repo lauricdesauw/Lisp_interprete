@@ -65,7 +65,7 @@ const std::string lisp_symbolp = ("symbolp");
 Object do_symbolp(Object lvals);
 
 const std::string lisp_listp = ("listp");
-Object do_lisp(Object lvals);
+Object do_listp(Object lvals);
 
 const std::string lisp_list = ("list");
 Object do_list(Object lvals);

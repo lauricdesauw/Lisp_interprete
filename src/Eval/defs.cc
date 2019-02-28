@@ -106,7 +106,7 @@ Object do_if (Object l, Env env)
     }
     if (null(cdr(l,1)))
     {
-        error(l,env,"Cannot apply if: missing 'else' arguement");
+        error(l,env,"Cannot apply if: missing 'else' argument");
     }
     Object false_part = car(l,2);
     return eval(false_part,env);
