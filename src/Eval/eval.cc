@@ -33,6 +33,10 @@ Object eval_list (Object l, Env env)
 
 Object eval (Object l, Env env)
 {
+    if (eq(l,lisp_quit))
+    {
+        throw Evaluation_exception(l,env,"Bye, bye!");
+    }
     if (null(l) || stringp(l) || numberp(l) || boolp(l))
     {
         return l;
