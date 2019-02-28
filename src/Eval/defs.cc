@@ -130,8 +130,34 @@ Object do_while(Object lvals, Env env)
     }
 }
 
-/*
 Object do_newline(Object lvals)
+{
+    std::cout<<std::endl;
+    return nil();
+}
+
+
+Object do_nullp(Object lvals)
+{
+    return bool_to_object(null(car(lvals)));
+}
+
+Object do_stringp(Object lvals)
+{
+    return bool_to_object(stringp(car(lvals)));
+}
+
+Object do_numberp(Object lvals)
+{
+    return bool_to_object(numberp(car(lvals)));
+}
+
+Object do_listp(Object lvals)
+{
+    return bool_to_object(listp(car(lvals)));
+}
+/*
+Object do_list(Object lvals)
 {
     return
 }
@@ -141,33 +167,7 @@ Object do_end(Object lvals)
     return
 }
 
-Object do_nullp(Object lvals)
-{
-    return
-}
-
-Object do_stringp(Object lvals)
-{
-    return
-}
-
-Object do_numberp(Object lvals)
-{
-    return
-}
-
-Object do_listp(Object lvals)
-{
-    return
-}
-
-Object do_list(Object lvals)
-{
-    return
-}
-
 Object do_error(Object lvals)
 {
     return
-}
-*/
+}*/
