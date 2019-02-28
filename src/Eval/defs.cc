@@ -23,12 +23,12 @@ Object do_times(Object lvals)
 
 Object do_eq(Object lvals)
 {
-    return number_to_object( eq(car(lvals),cadr(lvals)) );
+    return bool_to_object( eq(car(lvals),cadr(lvals)) );
 }
 
 Object do_inf(Object lvals)
 {
-    return number_to_object( object_to_number(car(lvals)) < object_to_number(cadr(lvals)) );
+    return bool_to_object( object_to_number(car(lvals)) < object_to_number(cadr(lvals)) );
 }
 
 Object do_concat(Object lvals)
