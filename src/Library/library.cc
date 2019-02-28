@@ -16,7 +16,30 @@ Object f() {return API::f();}
 Object cons(Object a, Object l) {return API::cons(a,l);}
 Object car(Object l) {return API::car(l);}
 Object cdr(Object l) {return API::cdr(l);}
-bool eq(Object a, Object b) {return API::eq(a,b);}
+
+bool eq(Object a, Object b)
+{
+    check(a);
+    check(b);
+    if(API::const_objectp(a) || API::const_objectp(b))
+    {
+        return a == b;
+    }
+
+    if(listp(a) && listp(b))
+    {
+        return a == b;
+    }
+    if (numberp(a) && numberp(b))
+    {
+        return object_to_number(a) == object_to_number(b);
+    }
+    if ((symbolp(a) && symbolp(b)) || (stringp(a) && stringp(b)))
+    {
+        return object_to_string(a) == object_to_string(b);
+    }
+    return false;
+}
 
 bool numberp(Object l) {return API::numberp(l);}
 bool stringp(Object l) {return API::stringp(l);}
@@ -76,41 +99,51 @@ std::ostream& print_object_cdr(std::ostream& s, Object l)
     {
         return s;
     }
-    print_object(s, API::car(l));
+    print_object_aux(s, API::car(l), !null(API::cdr(l)));
     print_object_cdr(s, API::cdr(l));
     return s;
 }
 
-std::ostream& print_object (std::ostream& s, Object l)
+std::ostream& print_object_aux (std::ostream& s, Object l, bool b)
 {
     if (numberp(l))
     {
         int n = object_to_number(l);
-        s << n << " ";
+        s << n ;
     }
     else if (stringp(l) || symbolp(l))
     {
         std::string st = object_to_string(l);
-        s << st << " ";
+        s << st ;
     }
     else if (boolp(l))
     {
         bool b = object_to_bool(l);
         if (b)
         {
-            s << "#t ";
+            s << "#t";
         }
         else
         {
-            s << "#f ";
+            s << "#f";
         }
     }
     else if (listp(l))
     {
-        s << "( ";
+        s << "(";
         print_object_cdr(s,l);
-        s << ") ";
+        s << ")";
     }
+    if (b)
+    {
+        s << " ";
+    }
+    return s;
+}
+
+std::ostream& print_object(std::ostream& s, Object l)
+{
+    print_object_aux(s,l,true);
     return s;
 }
 

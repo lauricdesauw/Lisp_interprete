@@ -133,53 +133,6 @@ Object API::cdr(Object l)
     return dynamic_cast<Cell_pair*>(l)->Cell_pair::get_cdr();
 }
 
-bool API::eq(Object a, Object b)
-{
-    check(a);
-    check(b);
-    if(const_objectp(a) || const_objectp(b))
-    {
-        if(null(a) && null(b))
-        {
-            return true;
-        }
-        if(a == object_t && b == object_t)
-        {
-            return true;
-        }
-        if(a == object_f && b == object_f)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    if(a->get_type() != b->get_type()){return false;}
-    if(listp(a))
-    {
-        return ((dynamic_cast<Cell_pair*>(a)->get_car() ==
-                    dynamic_cast<Cell_pair*>(b)->get_car()) &&
-               (dynamic_cast<Cell_pair*>(a)->get_cdr() ==
-                    dynamic_cast<Cell_pair*>(b)->get_cdr()) );
-    }
-    if (numberp(a))
-    {
-        return (((Cell_number*)a)->get_contents() ==
-            ((Cell_number*)b)->get_contents());
-    }
-    if (symbolp(a))
-    {
-        return (((Cell_symbol*)a)->get_contents() ==
-            ((Cell_symbol*)b)->get_contents());
-    }
-    if (stringp(a))
-    {
-        return (((Cell_string*)a)->get_contents() ==
-            ((Cell_string*)b)->get_contents());
-    }
-    return false;
-}
-
 // Object conversion
 
 Object API::number_to_object (int n)
