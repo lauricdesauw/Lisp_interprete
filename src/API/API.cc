@@ -190,8 +190,8 @@ Object API::string_to_object (std::string s)
 
 Object API::symbol_to_object (std::string s)
 {
-    if(s = "#t"){return object_t}
-    if(s = "#f"){return object_f}    
+    if(s == "#t"){return object_t;}
+    if(s == "#f"){return object_f;}    
     return new Cell_symbol(s);
 }
 
