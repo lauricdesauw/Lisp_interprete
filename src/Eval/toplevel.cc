@@ -52,16 +52,16 @@ void handle_load_core(std::string file_name, Toplevel toplevel)
         throw std::runtime_error("");
     }
 }
-/*
+
 void handle_load(Object obj, Toplevel toplevel)
 {
   Object file_object = cadr( obj);
   assert(stringp(file_object));
   std::string file_path = obj_to_string( file_object);
-  FILE* = fopen(file_path, "r");
-  change_lexer_input()
-  handle_load_core file_name toplevel;
-  close_in !Globals.current_channel;
-  Globals.current_channel := initial_channel;
-  Lexer.reset_parser ()
-}*/
+  FILE* new_stream = fopen(file_path, "r");
+  change_lexer_input(new_stream);
+  handle_load_core( file_path, toplevel);
+  fclose(new_stream);
+  change_lexer_input(stdin);
+  toplevel.go(true);
+}
