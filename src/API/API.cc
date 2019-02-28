@@ -8,8 +8,8 @@ using namespace std;
 // Consts
 
 const Object API::object_nil = new Cell_symbol("nil") ;
-const Object API::object_t = new Cell_symbol("true");
-const Object API::object_f = new Cell_symbol("false");
+const Object API::object_t = new Cell_symbol("#t");
+const Object API::object_f = new Cell_symbol("#f");
 
 // Else
 
