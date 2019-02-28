@@ -22,40 +22,49 @@ Object get_value_env(Object l, Env env)
     return l;
 }
 
+Object eval_parameters (Object l, Env env)
+{
+    if (null(l)) {return l;}
+
+    Object el = eval(car(l),env);
+    return cons(el,eval_parameters(cdr(l),env))
+}
+
 Object eval (Object l, Env env)
 {
     if (null(l) || stringp(l) || numberp(l) || boolp(l))
     {
         return l;
     }
-    else if (symbolp(l))
-    {
-        return get_value_env(l,env);
-    }
-    else
-    {
-        assert(listp(l));
-        Object func = car(l);
-        if (eq(func,lisp_plus))
-        {
-            return do_plus(cdr(l),env);
-        }
-        if (eq(func,lisp_minus))
-        {
-            return do_minus(cdr(l),env);
-        }
-        if (eq(func,lisp_times))
-        {
-            return do_times(cdr(l),env);
-        }
-        if (eq(func,lisp_inf))
-        {
-            return do_inf(cdr(l),env);
-        }
-        return (number_to_object(1));
-    }
-}
+    if (symbolp(l)) {return get_value_env(l,env);}
 
+    assert(listp(l));
+    Object func = car(l);
+
+    if (eq(func, lisp_lambda)) {return l;}
+    if (eq(func, lisp_quote)) {return do_quote(l);}
+    if (eq(func, lisp_if)) {return do_if(l);}
+
+    Object eval_parameters = eval_list(cdr(l), env);
+    return apply(func,eval_parameters, env);
+/*    if (eq(func,lisp_plus))
+    {
+        return do_plus(cdr(l),env);
+    }
+    if (eq(func,lisp_minus))
+    {
+        return do_minus(cdr(l),env);
+    }
+    if (eq(func,lisp_times))
+    {
+        return do_times(cdr(l),env);
+    }
+    if (eq(func,lisp_inf))
+    {
+        return do_inf(cdr(l),env);
+    return (number_to_object(1));*/
+}
+/*
 
 Object apply (Object func, Object lvals, Env env)
 {
@@ -87,7 +96,7 @@ Object apply (Object func, Object lvals, Env env)
     {
         return apply(eval(func,env),lvals,env);
     }
-    /*else
+    else
     {
         assert(pairp(f));
         if(car(f)  = lisp_lambda)
@@ -105,5 +114,6 @@ Object apply (Object func, Object lvals, Env env)
             let new_f = eval f env in
             eval (cons new_f lvals) env )
         }
-    }*/
+    }
 }
+*/

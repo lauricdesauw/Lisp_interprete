@@ -3,28 +3,28 @@
 #include "library.hh"
 
 const Object lisp_lambda = symbol_to_object("lambda");
-Object do_lambda(Object l);
+Object do_lambda(Object l, Env env);
 
 const Object lisp_quote = symbol_to_object("quote");
-Object do_quote(Object l);
+Object do_quote(Object l, Env env);
 
 const Object lisp_if = symbol_to_object("if");
 Object do_if(Object l, Env env);
 
 const Object lisp_plus = symbol_to_object("+");
-Object do_plus(Object lvals, Env env);
+Object do_plus(Object lvals);
 
 const Object lisp_minus = symbol_to_object("-");
-Object do_minus(Object lvals, Env env);
+Object do_minus(Object lvals);
 
 const Object lisp_times = symbol_to_object("*");
-Object do_times(Object lvals, Env env);
+Object do_times(Object lvals);
 
 const Object lisp_eq = symbol_to_object("=");
-Object do_eq(Object lvals, Env env);
+Object do_eq(Object lvals);
 
 const Object lisp_inf = symbol_to_object("<");
-Object do_inf(Object lvals, Env env);
+Object do_inf(Object lvals);
 
 const Object lisp_concat = symbol_to_object("concat");
 Object do_concat(Object lvals);
