@@ -15,10 +15,11 @@ class Evaluation_exception : public runtime_error {
         string message;
 
     public:
-        Evaluation_exception(Object _obj, Env _env, string _message);
+        Evaluation_exception();
+        Evaluation_exception(Object _obj, Env _env, string _message) ;//: std::runtime_error(_message),obj(_obj),env(_env),message(_message){};
 };
 
-class Zipping_exception : public runtime_error {
+class Zipping_exception : public std::runtime_error {
     private:
         string message;
         Object lobjs;

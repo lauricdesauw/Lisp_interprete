@@ -1,9 +1,21 @@
 #include <string>
+#include <stdexcept>
 #include <iostream>
 #include <cassert>
 #include "eval.hh"
 #include "library.hh"
 #include "defs.hh"
+
+
+Evaluation_exception::Evaluation_exception(Object _obj,
+                                           Env _env,
+                                           string _message):
+    std::runtime_error(_message),
+    obj(_obj),
+    env(_env),
+    message(_message)
+{};
+
 
 Object get_value_env(Object l, Env env)
 {
@@ -44,38 +56,38 @@ Object eval (Object l, Env env)
     }
 }
 
-/*
-Object apply (Object f, Object lvals, Env env)
+
+Object apply (Object func, Object lvals, Env env)
 {
-    if(null(f))
+    if(null(func))
     {
-        throw new Evaluation_exception(f,env,"Cannot apply nil");
+        throw Evaluation_exception(func,env,"Cannot apply nil");
     }
-    else if(f == t())
+    if(func == t())
     {
-        throw new Evaluation_exception(f,env,"Cannot apply true");
+        throw Evaluation_exception(func,env,"Cannot apply true");
     }
-    else if(f == f())
+    if(func == f())
     {
-        throw new Evaluation_exception(f,env,"Cannot apply false");
+        throw Evaluation_exception(func,env,"Cannot apply false");
     }
-    else if(numberp(f))
+    if(numberp(func))
     {
-        throw new Evaluation_exception(f,env,"Cannot apply a number");
+        throw Evaluation_exception(func,env,"Cannot apply a number");
     }
-    else if(stringp(f))
+    if(stringp(func))
     {
-        throw new Evaluation_exception(f,env,"Cannot apply a string");
+        throw Evaluation_exception(func,env,"Cannot apply a string");
     }
-    if (subrp (f))
+    if (subrp func)
     {
-        return (apply_subr(f,lvals))
+        return (apply_subr(func,lvals))
     }
-    else if(symbolp (f))
+    if(symbolp func)
     {
-        return apply(eval(f,env),lvals,env);
+        return apply(eval(func,env),lvals,env);
     }
-    else
+    /*else
     {
         assert(pairp(f));
         if(car(f)  = lisp_lambda)
@@ -93,5 +105,5 @@ Object apply (Object f, Object lvals, Env env)
             let new_f = eval f env in
             eval (cons new_f lvals) env )
         }
-    }
-}*/
+    }*/
+}
