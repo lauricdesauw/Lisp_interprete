@@ -4,9 +4,11 @@
 
 using namespace std;
 
-int main() {
-    Toplevel toplevel;
+int main(int argc,char* argv[]) {
 
+    
+
+    Toplevel toplevel;
     try {
         toplevel.go(true);
         } catch (runtime_error& e) {
