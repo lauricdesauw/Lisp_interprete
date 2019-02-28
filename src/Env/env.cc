@@ -73,16 +73,27 @@ Object find_value(Object obj, Env env)
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
     assert(bidingp(obj));
-    s << "| ( " << car(obj) << " = " << cadr(obj) << " ) ";
+    s << "( " << car(obj) << " = " << cadr(obj) << " )";
     return s;
+}
+
+std::ostream& print_env_aux(std::ostream& s, Env env)
+{
+    if (null(env))
+    {
+        return s;
+    }
+    print_binding(s,car(env));
+    if (!null(cdr(env))) {
+        s << " | ";
+    }
+    print_env_aux(s,cdr(env));
 }
 
 std::ostream& print_env(std::ostream& s, Env env)
 {
-    if (null(env))
-    {
+    s << "[";
+    print_env_aux(s,env);
+    s << "]";
     return s;
-    }
-    print_binding(s,car(env));
-    print_env(s,cdr(env));
 }
