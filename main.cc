@@ -1,6 +1,7 @@
 #include <cstdio>
 
 #include "toplevel.hh"
+#include "eval.hh"
 
 using namespace std;
 
@@ -9,8 +10,8 @@ int main() {
 
     try {
         toplevel.go(true);
-        } catch (runtime_error& e) {
-            clog << e.what() << endl;
-            clog << "May Lisp be with you!" << endl;
-  }
+    } catch (Quit_exception e)
+        {
+            cout << "May Lisp be with you!" << endl;
+        }
 }
