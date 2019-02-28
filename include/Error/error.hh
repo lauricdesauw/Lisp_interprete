@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 #include <stdexcept>
-#include <exception>
 #include <string>
 
 #include "library.hh"
@@ -17,7 +16,7 @@ class Evaluation_exception : public std::runtime_error
 
     public:
         Evaluation_exception();
-        Evaluation_exception(Object _obj, Env _env, std::string _message);//: std::runtime_error(_message),obj(_obj),env(_env),message(_message){};
+        Evaluation_exception(Object _obj, Env _env, std::string _message);
 };
 void error(Object obj, Env env, std::string s);
 
