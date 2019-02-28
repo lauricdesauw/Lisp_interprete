@@ -1,3 +1,5 @@
+#include "subr.hh"
+#include <cassert>
 const bool subrp(Object obj)
 {
     check(obj);
@@ -5,44 +7,44 @@ const bool subrp(Object obj)
     return ( eq(obj,lisp_plus) || eq(obj,lisp_times) || eq(obj,lisp_minus) || eq(obj,lisp_eq) || eq(obj,lisp_inf) || eq(obj,lisp_concat) );
 }
 
-const apply_subr(Object sub, Object lvals)
+const Object apply_subr(Object sub, Object lvals)
 {
     check(sub);
     check(lvals);
     subrp(sub);
-    if (eq(obj,lisp_plus))
+    if (eq(sub,lisp_plus))
     {
         do_plus(lvals);
     }
-    if (eq(obj,lisp_times))
+    if (eq(sub,lisp_times))
     {
         do_times(lvals);
     }
-    if (eq(obj,lisp_minus))
+    if (eq(sub,lisp_minus))
     {
         do_minus(lvals);
     }
-    if (eq(obj,lisp_eq))
+    if (eq(sub,lisp_eq))
     {
         do_eq(lvals);
     }
-    if (eq(obj,lisp_inf))
+    if (eq(sub,lisp_inf))
     {
         do_inf(lvals);
     }
-    if (eq(obj,lisp_concat))
+    if (eq(sub,lisp_concat))
     {
         do_concat(lvals);
     }
-    if (eq(obj,lisp_car))
+    if (eq(sub,lisp_car))
     {
         do_car(lvals);
     }
-    if (eq(obj,lisp_cdr))
+    if (eq(sub,lisp_cdr))
     {
         do_cdr(lvals);
     }
-    if (eq(obj,lisp_cons))
+    if (eq(sub,lisp_cons))
     {
         do_cons(lvals);
     }
