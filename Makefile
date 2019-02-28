@@ -12,7 +12,7 @@ O_READER_FILES	:= include/Reader/lisp.yy.o include/Reader/lisp.tab.o
 HELPER_FILES	:= $(wildcard Makefile* *.mak)
 
 DIRS	:= $(sort $(dir $(HH_FILES)))
-CCFLAGS	:= -W -Wall -g -std=gnu++14 $(DIRS:%=-I %)
+CCFLAGS	:= -Wall -Wextra -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-return-type -g -std=gnu++14 $(DIRS:%=-I %)
 
 TARGET	:= main
 
