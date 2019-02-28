@@ -12,3 +12,7 @@ class Toplevel {
         Toplevel();
         void go(bool use_prompt);
 };
+
+bool is_load_directive(Object obj);
+void handle_load_core(std::string file_name, Toplevel* toplevel);
+void handle_load(Object obj, Toplevel* toplevel);
