@@ -158,12 +158,6 @@ Object do_listp(Object lvals)
     return bool_to_object(listp(car(lvals)));
 }
 
-
-Object do_printenv(Object l, Env env)
-{
-    print_env(std::cout, env);
-}
-
 Env do_define(Object lvals, Env env)
 {
      if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))

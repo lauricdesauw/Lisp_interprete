@@ -14,7 +14,6 @@ const Object lisp_if = symbol_to_object("if");
 Object do_if(Object l, Env env);
 
 const Object lisp_printenv = symbol_to_object("printenv");
-Object do_printenv(Object l, Env env);
 
 const std::string lisp_plus = ("+");
 Object do_plus(Object lvals);
