@@ -51,11 +51,11 @@ Object apply (Object f, Object lvals, Env env)
     {
         throw new Evaluation_exception(f,env,"Cannot apply a string");
     }
-    if (subrp f)
+    if (subrp (f))
     {
         return (apply_subr(f,lvals))
     }
-    else if(symbolp f)
+    else if(symbolp (f))
     {
         return apply(eval(f,env),lvals,env);
     }
