@@ -7,11 +7,7 @@
 #include "subr.hh"
 #include "defs.hh"
 #include "error.hh"
-
-Object get_value_env(Object l, Env env)
-{
-    return l;
-}
+#include "env.hh"
 
 Object eval_list (Object l, Env env)
 {
@@ -27,7 +23,7 @@ Object eval (Object l, Env env)
     {
         return l;
     }
-    if (symbolp(l)) {return get_value_env(l,env);}
+    if (symbolp(l)) {return find_value(l,env);}
 
     assert(listp(l));
     Object func = car(l);
