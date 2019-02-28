@@ -54,18 +54,3 @@ Env add_new_binding(std::string name, Object value, Env env);
 Env extend_largs_env(Object lpars, Object lvals, Env env);
 Object find_value(std::string name, Env env);
 std::ostream& print_env(std::ostream& s, Env env);
-
-class No_binding_exception : public std::runtime_error {
-    private:
-        std::string name;
-
-    public:
-        No_binding_exception(std::string _name);
-};
-
-class Number_param_exception : public std::runtime_error {
-    private:
-        std::string name; //nb = 0 if there are too many param and 1 if there are too many variables
-    public:
-        Number_param_exception(std::string _name);
-};
