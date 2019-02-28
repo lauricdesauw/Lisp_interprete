@@ -29,7 +29,7 @@ $(O_FILES): %.o: %.cc $(HH_FILES) $(HELPER_FILES)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
-	-rm -rf *.o 
+	-rm -r -f *.o 
 	-rm include/Reader/lisp.*.cc include/Reader/lisp.*.hh
 	-rm r- _Doxydoc
 

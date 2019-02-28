@@ -216,10 +216,9 @@ std::string API::object_to_string (Object l)
 bool API::object_to_bool (Object l)
 {
     check(l);
-    assert (l == object_t || l == object_f);
-    if (l == object_t)
+    if (l == object_f || null(l))
     {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
