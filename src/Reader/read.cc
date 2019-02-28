@@ -3,6 +3,7 @@
 
 #include "read.hh"
 #include "library.hh"
+#include "error.hh"
 
 using namespace std;
 

@@ -52,19 +52,19 @@ Object do_newline(Object lvals);
 const Object lisp_end = symbol_to_object("end");
 Object do_end(Object lvals);
 
-const Object lisp_nullp = symbol_to_object("null?");
+const Object lisp_nullp = symbol_to_object("nullp");
 Object do_nullp(Object lvals);
 
-const Object lisp_stringp = symbol_to_object("string?");
+const Object lisp_stringp = symbol_to_object("stringp");
 Object do_stringp(Object lvals);
 
-const Object lisp_numberp= symbol_to_object("number?");
+const Object lisp_numberp= symbol_to_object("numberp");
 Object do_numberp(Object lvals);
 
-const Object lisp_symbolp = symbol_to_object("symbol?");
+const Object lisp_symbolp = symbol_to_object("symbolp");
 Object do_symbolp(Object lvals);
 
-const Object lisp_listp = symbol_to_object("list?");
+const Object lisp_listp = symbol_to_object("listp");
 Object do_lisp(Object lvals);
 
 const Object lisp_list = symbol_to_object("list");
@@ -72,3 +72,36 @@ Object do_list(Object lvals);
 
 const Object lisp_error = symbol_to_object("error");
 Object do_error(Object lvals);
+
+const Object lisp_while = symbol_to_object("while");
+Object do_while(Object l, Env env);
+
+const Object lisp_define = symbol_to_object("define");
+Object do_define(Object l, Env env);
+
+const Object lisp_setq= symbol_to_object("set!");
+Object do_setq(Object l, Env env);
+
+const Object lisp_cond = symbol_to_object("cond");
+Object do_cond(Object l, Env env);
+
+const Object lisp_begin = symbol_to_object("begin");
+Object do_begin(Object l, Env env);
+
+const Object lisp_printenv = symbol_to_object("printenv");
+Object do_printenv(Object l, Env env);
+
+const Object lisp_debug = symbol_to_object("debug");
+Object do_debug(Object l, Env env);
+
+const Object lisp_load = symbol_to_object("load");
+Object do_load(Object l, Env env);
+
+const Object lisp_callcc = symbol_to_object("call/cc");
+Object do_callcc(Object l, Env env);
+
+const Object lisp_eval = symbol_to_object("eval");
+Object do_eval(Object l, Env env);
+
+const Object lisp_apply = symbol_to_object("apply");
+Object do_apply(Object l, Env env);
