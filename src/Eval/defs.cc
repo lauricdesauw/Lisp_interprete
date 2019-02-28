@@ -19,5 +19,5 @@ Object do_times(Object lvals)
 
 Object do_eq(Object lvals)
 {
-    return number_to_object( eq(car(lvals),cadr(lvals)) );
+    return bool_to_object( eq(car(lvals),cadr(lvals)) );
 }
