@@ -1,8 +1,10 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <cassert>
 #include "eval.hh"
 #include "library.hh"
+#include "defs.hh"
 
 
 Evaluation_exception::Evaluation_exception(Object _obj,
@@ -17,33 +19,25 @@ Evaluation_exception::Evaluation_exception(Object _obj,
 
 Object get_value_env(Object l, Env env)
 {
-
+    return l;
 }
 
 Object eval (Object l, Env env)
 {
-    if (null(l) || stringp(l) || numberp(l))
+    if (null(l) || stringp(l) || numberp(l) || boolp(l))
     {
         return l;
     }
     else if (symbolp(l))
     {
-        std::string s = object_to_string(l);
-        if (s == "#t")
-        {
-            return t();
-        }
-        else if (s == "#f")
-        {
-            return f();
-        }
-        else if (s == "nil")
-        {
-            return nil();
-        }
         return get_value_env(l,env);
     }
-    else {return nil();}
+    else
+    {
+        assert(listp(l));
+        Object f = car(l);
+        return (number_to_object(1));
+    }
 }
 
 
@@ -77,7 +71,7 @@ Object apply (Object func, Object lvals, Env env)
     {
         return apply(eval(func,env),lvals,env);
     }
-    /*else
+    else
     {
         assert(pairp(f));
         if(car(f)  = lisp_lambda)
@@ -95,7 +89,5 @@ Object apply (Object func, Object lvals, Env env)
             let new_f = eval f env in
             eval (cons new_f lvals) env )
         }
-    }*/
-
-
+    }
 }

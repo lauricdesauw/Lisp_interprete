@@ -1,23 +1,114 @@
 #include "defs.hh"
-
-Object do_if(Object l, Env env){}
+#include "read.hh"
+#include "library.hh"
+#include <iostream>
 
 Object do_plus(Object lvals)
 {
-    return number_to_object( object_to_number(car(lvals)) + object_to_number(cadr(lvals)) );
+    return number_to_object( object_to_number(car(lvals))
+                            + object_to_number(cadr(lvals)) );
 }
 
 Object do_minus(Object lvals)
 {
-    return number_to_object( object_to_number(car(lvals)) - object_to_number(cadr(lvals)) );
+    return number_to_object( object_to_number(car(lvals))
+                            - object_to_number(cadr(lvals)) );
 }
 
 Object do_times(Object lvals)
 {
-    return number_to_object( object_to_number(car(lvals)) * object_to_number(cadr(lvals)) );
+    return number_to_object( object_to_number(car(lvals))
+                            * object_to_number(cadr(lvals)) );
 }
 
 Object do_eq(Object lvals)
 {
-    return number_to_object( eq(car(lvals),cadr(lvals)) );
+    return bool_to_object( eq(car(lvals),cadr(lvals)) );
 }
+
+Object do_inf(Object lvals)
+{
+    return bool_to_object( object_to_number(car(lvals)) < object_to_number(cadr(lvals)) );
+}
+
+Object do_concat(Object lvals)
+{
+    if (null(lvals))
+    {
+        return string_to_object("");
+    }
+    std::string s = object_to_string(car(lvals));
+    std::string t = object_to_string(do_concat(cdr(lvals)));
+
+    return string_to_object(s+t);
+}
+
+Object do_car(Object lvals)
+{
+    return car(car(lvals));
+}
+
+Object do_cdr(Object lvals)
+{
+    return cdr(car(lvals));
+}
+
+Object do_cons(Object lvals)
+{
+    return cons(car(lvals),(cadr(lvals)));
+}
+
+Object do_read(Object lvals)
+{
+    return read_object();
+}
+
+Object do_display(Object lvals)
+{
+    Object obj = car(lvals);
+    print_object(std::cout,obj);
+    //flush stdout
+    //
+    return obj;
+}
+/*
+Object do_newline(Object lvals)
+{
+    return
+}
+
+Object do_end(Object lvals)
+{
+    return
+}
+
+Object do_nullp(Object lvals)
+{
+    return
+}
+
+Object do_stringp(Object lvals)
+{
+    return
+}
+
+Object do_numberp(Object lvals)
+{
+    return
+}
+
+Object do_listp(Object lvals)
+{
+    return
+}
+
+Object do_list(Object lvals)
+{
+    return
+}
+
+Object do_error(Object lvals)
+{
+    return
+}
+*/
