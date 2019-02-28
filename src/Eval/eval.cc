@@ -63,7 +63,7 @@ Object apply (Object func, Object lvals, Env env)
     {
         throw Evaluation_exception(func,env,"Cannot apply a string");
     }
-    if (subrp func)
+    if (subrp( func))
     {
         return (apply_subr(func,lvals))
     }
