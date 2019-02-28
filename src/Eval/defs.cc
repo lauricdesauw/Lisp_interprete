@@ -51,7 +51,7 @@ Object do_cdr(Object lvals)
 
 Object do_cons(Object lvals)
 {
-    return cons(car(lvals),(cadr(lvals));
+    return cons(car(lvals),(cadr(lvals)));
 }
 
 Object do_read(Object lvals)
@@ -63,47 +63,45 @@ Object do_display(Object lvals)
 {
     Object onj = car(lvals);
     print_object(obj);
-    //flush stdout
-    //
+    std::cout<<std::flush;
     return obj;
 }
 
 Object do_newline(Object lvals)
 {
-    return 
+    std::cout << endl;
+    return nil; 
 }
 
 Object do_end(Object lvals)
 {
-    return
+    // throw End_of_Toplevel
 }
-
+    
 Object do_nullp(Object lvals)
 {
-    return
+    return bool_to_object(nullp(car(lvals)));
 }
 
 Object do_stringp(Object lvals)
 {
-    return
+    return boo_to_object(stringp(car(lvals)));
 }
 
 Object do_numberp(Object lvals)
 {
-    return
+    return bool_to_object(numberp(car(lvals)));
 }
 
 Object do_listp(Object lvals)
 {
-    return
+    return bool_to_object(listp(car(lvals)));
 }
 
 Object do_list(Object lvals)
 {
-    return
 }
 
 Object do_error(Object lvals)
 {
-    return
 }
