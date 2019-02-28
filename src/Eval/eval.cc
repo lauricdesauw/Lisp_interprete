@@ -7,7 +7,7 @@
 
 Object get_value_env(Object l, Env env)
 {
-
+    return l;
 }
 
 Object eval (Object l, Env env)
@@ -24,11 +24,11 @@ Object eval (Object l, Env env)
     {
         assert(listp(l));
         Object f = car(l);
-        return (nil());
+        return (number_to_object(1));
     }
 }
 
-
+/*
 Object apply (Object f, Object lvals, Env env)
 {
     if(null(f))
@@ -59,7 +59,7 @@ Object apply (Object f, Object lvals, Env env)
     {
         return apply(eval(f,env),lvals,env);
     }
-    /*else
+    else
     {
         assert(pairp(f));
         if(car(f)  = lisp_lambda)
@@ -77,5 +77,5 @@ Object apply (Object f, Object lvals, Env env)
             let new_f = eval f env in
             eval (cons new_f lvals) env )
         }
-    }*/
-}
+    }
+}*/
