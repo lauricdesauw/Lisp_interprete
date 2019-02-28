@@ -23,12 +23,12 @@ Object get_value_env(Object l, Env env)
     return l;
 }
 
-Object eval_parameters (Object l, Env env)
+Object eval_list (Object l, Env env)
 {
     if (null(l)) {return l;}
 
     Object el = eval(car(l),env);
-    return cons(el,eval_parameters(cdr(l),env))
+    return cons(el,eval_list(cdr(l),env));
 }
 
 Object eval (Object l, Env env)
@@ -43,8 +43,8 @@ Object eval (Object l, Env env)
     Object func = car(l);
 
     if (eq(func, lisp_lambda)) {return l;}
-    if (eq(func, lisp_quote)) {return do_quote(l);}
-    if (eq(func, lisp_if)) {return do_if(l);}
+    if (eq(func, lisp_quote)) {return do_quote(cdr(l),env);}
+    if (eq(func, lisp_if)) {return do_if(cdr(l),env);}
 
     Object eval_parameters = eval_list(cdr(l), env);
     return apply(func,eval_parameters, env);
@@ -65,7 +65,6 @@ Object eval (Object l, Env env)
         return do_inf(cdr(l),env);
     return (number_to_object(1));*/
 }
-/*
 
 Object apply (Object func, Object lvals, Env env)
 {
@@ -112,9 +111,8 @@ Object apply (Object func, Object lvals, Env env)
         else
         {
             throw new Evaluation_exception(f,env,"Cannot apply a list");
-            let new_f = eval f env in
+            new_f = eval f env
             eval (cons new_f lvals) env )
         }
     }
 }
-*/

@@ -14,38 +14,38 @@ const Object apply_subr(Object sub, Object lvals)
     subrp(sub);
     if (eq(sub,lisp_plus))
     {
-        do_plus(lvals);
+        return do_plus(lvals);
     }
     if (eq(sub,lisp_times))
     {
-        do_times(lvals);
+        return do_times(lvals);
     }
     if (eq(sub,lisp_minus))
     {
-        do_minus(lvals);
+        return do_minus(lvals);
     }
     if (eq(sub,lisp_eq))
     {
-        do_eq(lvals);
+        return do_eq(lvals);
     }
     if (eq(sub,lisp_inf))
     {
-        do_inf(lvals);
+        return do_inf(lvals);
     }
     if (eq(sub,lisp_concat))
     {
-        do_concat(lvals);
+        return do_concat(lvals);
     }
     if (eq(sub,lisp_car))
     {
-        do_car(lvals);
+        return do_car(lvals);
     }
     if (eq(sub,lisp_cdr))
     {
-        do_cdr(lvals);
+        return do_cdr(lvals);
     }
     if (eq(sub,lisp_cons))
     {
-        do_cons(lvals);
+        return do_cons(lvals);
     }
 }
