@@ -3,11 +3,11 @@
 #include <iostream>
 #include <cassert>
 #include <stdexcept>
-#include <exception>
 #include <string>
 
 
-class Evaluation_exception : public runtime_error
+
+class Evaluation_exception : public std::runtime_error
 {
     private:
         Object obj;
@@ -16,8 +16,7 @@ class Evaluation_exception : public runtime_error
 
     public:
         Evaluation_exception();
-        Evaluation_exception(Object _obj, Env _env, string _message);//: std::runtime_error(_message),obj(_obj),env(_env),message(_message){};
-};
+        Evaluation_exception(Object _obj, Env _env, string _message);
 
 class Zipping_exception : public std::runtime_error
 {
