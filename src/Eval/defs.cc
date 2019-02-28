@@ -158,16 +158,22 @@ Object do_listp(Object lvals)
     return bool_to_object(listp(car(lvals)));
 }
 
+
+Object do_printenv(Object l, Env env)
+{
+    print_env(std::cout, env);
+}
+
 Env do_define(Object lvals, Env env)
 {
-    if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
-    {
-        error(lvals,env,"Cannot define it: missing few arguments");
-    }
-    std::string name = object_to_string(car(lvals));
-    Object value = eval(cadr(lvals),env);
-    std::cout << name << " = " << value << std::endl;
-    return add_new_binding(name,value,env);
+     if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
+     {
+          error(lvals,env,"Cannot define it: missing few arguments");
+     }
+     std::string name = object_to_string(car(lvals));
+     Object value = eval(cadr(lvals),env);
+     std::cout << name << " = " << value << std::endl;
+     return add_new_binding(name,value,env);
 }
 
 /*
