@@ -33,10 +33,6 @@ Object eval_list (Object l, Env env)
 
 Object eval (Object l, Env env)
 {
-    if (eq(l,lisp_quit))
-    {
-        throw Evaluation_exception(l,env,"Bye, bye!");
-    }
     if (null(l) || stringp(l) || numberp(l) || boolp(l))
     {
         return l;
@@ -76,11 +72,11 @@ Object apply (Object func, Object lvals, Env env)
     {
         throw Evaluation_exception(func,env,"Cannot apply a string");
     }
-    if (subrp( func))
+    if (subrp(func))
     {
         return (apply_subr(func,lvals));
     }
-    if(symbolp (func))
+    if(symbolp(func))
     {
         return apply(eval(func,env),lvals,env);
     }
