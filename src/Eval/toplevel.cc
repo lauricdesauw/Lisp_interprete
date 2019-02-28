@@ -39,16 +39,17 @@ bool is_load_directive(Object obj)
   else if(car(obj) == lisp_load) {return true;} else {return false;}
 }
 
-void handle_load_core(std:string file_name, Toplevel toplevel)
+void handle_load_core(std::string file_name, Toplevel toplevel)
 {
     cout << "Loading file " << file_name << "...\n";
     try
     {
-        toplevel ();
+        toplevel.go(true);
     }
-    catch(End_of_file e)
+    catch(exception e)
     {
         cout << "File " << file_name << " loaded!\n";
+        throw std::runtime_error("");
     }
 }
 /*
