@@ -50,8 +50,10 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
     }
 }
 
-Object find_value(std::string name, Env env)
+Object find_value(Object obj, Env env)
 {
+    symbolp(obj);
+    std::string name = object_to_string(obj);
     Object head = car(env);
     std::string h_name = object_to_string(car(head));
     if (null(env))
@@ -64,7 +66,7 @@ Object find_value(std::string name, Env env)
     }
     else
     {
-        return(find_value(name, cdr(env)));
+        return(find_value(obj, cdr(env)));
     }
 }
 
