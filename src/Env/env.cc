@@ -62,7 +62,7 @@ Object find_value(Object obj, Env env)
     }
     if (h_name == name)
     {
-        return(cdr(head));
+        return(car(cdr(head)));
     }
     else
     {
