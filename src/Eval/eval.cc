@@ -5,7 +5,6 @@
 #include "eval.hh"
 #include "library.hh"
 #include "defs.hh"
-#include "subr.hh"
 
 
 Evaluation_exception::Evaluation_exception(Object _obj,
@@ -64,15 +63,12 @@ Object apply (Object func, Object lvals, Env env)
     {
         throw Evaluation_exception(func,env,"Cannot apply a string");
     }
-<<<<<<< HEAD
-    if (subrp( func))
-=======
-    if (subrp(func))
->>>>>>> 890db76b9e3a19051984da95cb5dc64d85120c32
+    if (subrp( func)
+)
     {
-        return (apply_subr(func,lvals));
+        return (apply_subr(func,lvals))
     }
-    if(symbolp(func))
+    if(symbolp func)
     {
         return apply(eval(func,env),lvals,env);
     }
