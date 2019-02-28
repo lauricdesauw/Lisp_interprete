@@ -34,6 +34,7 @@ int object_to_number(Object l);
 std::string object_to_string(Object l);
 bool object_to_bool(Object l);
 
+std::ostream& print_object_aux (std::ostream& s, Object l, bool b);
 std::ostream& print_object(std::ostream& s, Object l);
 std::ostream& operator<<(std::ostream& s, Object l);
 std::ostream& print_type(std::ostream& s, Object l);

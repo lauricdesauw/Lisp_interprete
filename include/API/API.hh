@@ -27,7 +27,6 @@ class API {
         static Object cons(Object a, Object l);
         static Object car(Object l);
         static Object cdr(Object l);
-        static bool eq(Object a, Object b);
 
         static Object number_to_object(int n);
         static Object string_to_object(std::string s);

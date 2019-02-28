@@ -1,4 +1,4 @@
-make 
+make
 echo
 echo Write quit to quit the interpretor
 

@@ -6,6 +6,7 @@
 #include "library.hh"
 #include "subr.hh"
 #include "defs.hh"
+#include "error.hh"
 
 Object get_value_env(Object l, Env env)
 {
@@ -41,25 +42,29 @@ Object eval (Object l, Env env)
 
 Object apply (Object func, Object lvals, Env env)
 {
+    if (eq(func,lisp_quit))
+    {
+        quit();
+    }
     if(null(func))
     {
-        throw Evaluation_exception(func,env,"Cannot apply nil");
+        error(func,env,"Cannot apply nil");
     }
     if(func == t())
     {
-        throw Evaluation_exception(func,env,"Cannot apply true");
+        error(func,env,"Cannot apply true");
     }
     if(func == f())
     {
-        throw Evaluation_exception(func,env,"Cannot apply false");
+        error(func,env,"Cannot apply false");
     }
     if(numberp(func))
     {
-        throw Evaluation_exception(func,env,"Cannot apply a number");
+        error(func,env,"Cannot apply a number");
     }
     if(stringp(func))
     {
-        throw Evaluation_exception(func,env,"Cannot apply a string");
+        error(func,env,"Cannot apply a string");
     }
     if (subrp(func))
     {
