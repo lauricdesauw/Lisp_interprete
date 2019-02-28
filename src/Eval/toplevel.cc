@@ -17,10 +17,9 @@ void Toplevel::go(bool use_prompt)
     {
         try
         {
-            check(global_env);
             std::cout << "C++Lisp: ";
             Object curr_obj = read_object();
-            if (listp(curr_obj) || !null(curr_obj) || eq(car(curr_obj),lisp_define))
+            if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
