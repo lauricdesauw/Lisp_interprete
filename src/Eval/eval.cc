@@ -33,10 +33,6 @@ Object eval_list (Object l, Env env)
 
 Object eval (Object l, Env env)
 {
-    if (eq(l,lisp_quit))
-    {
-        throw Quit_exception();
-    }
     if (null(l) || stringp(l) || numberp(l) || boolp(l))
     {
         return l;
@@ -56,6 +52,10 @@ Object eval (Object l, Env env)
 
 Object apply (Object func, Object lvals, Env env)
 {
+    if (eq(func,lisp_quit))
+    {
+        do_quit();
+    }
     if(null(func))
     {
         throw Evaluation_exception(func,env,"Cannot apply nil");

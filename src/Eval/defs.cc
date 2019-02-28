@@ -4,6 +4,11 @@
 #include "library.hh"
 #include <iostream>
 
+void do_quit()
+{
+    throw Quit_exception();
+}
+
 Object do_quote (Object l, Env env)
 {
     return l;
@@ -11,6 +16,10 @@ Object do_quote (Object l, Env env)
 
 Object do_if (Object l, Env env)
 {
+    if (null(l) || null(cdr(l)))
+    {
+        throw Evaluation_exception(l,env,"Cannot apply if: missing few arguements");
+    }
     Object test = car(l);
     Object true_part = cadr(l);
     Object test_value = eval(test,env);
@@ -18,6 +27,10 @@ Object do_if (Object l, Env env)
     if (object_to_bool(test_value))
     {
         return (eval(true_part,env));
+    }
+    if (null(cdr(l,1)))
+    {
+        throw Evaluation_exception(l,env,"Cannot apply if: missing 'else' arguement");
     }
     Object false_part = car(l,2);
     return eval(false_part,env);
