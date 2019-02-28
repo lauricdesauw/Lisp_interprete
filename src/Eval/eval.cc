@@ -7,17 +7,6 @@
 #include "subr.hh"
 #include "defs.hh"
 
-
-Evaluation_exception::Evaluation_exception(Object _obj,
-                                           Env _env,
-                                           string _message):
-    std::runtime_error(_message),
-    obj(_obj),
-    env(_env),
-    message(_message)
-{};
-
-
 Object get_value_env(Object l, Env env)
 {
     return l;
@@ -76,11 +65,11 @@ Object apply (Object func, Object lvals, Env env)
     {
         throw Evaluation_exception(func,env,"Cannot apply a string");
     }
-    if (subrp( func))
+    if (subrp(func))
     {
         return (apply_subr(func,lvals));
     }
-    if(symbolp (func))
+    if(symbolp(func))
     {
         return apply(eval(func,env),lvals,env);
     }
