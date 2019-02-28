@@ -17,8 +17,7 @@ Object eval (Object l, Env env)
     else if (symbolp(l))
     {
         std::string s = object_to_string(l);
-        std::cout << s << std::endl;
-        if (s == "#t ")
+        if (s == "#t")
         {
             return t();
         }
@@ -30,7 +29,7 @@ Object eval (Object l, Env env)
         {
             return nil();
         }
-        return nil();
+        return l;
     }
     else {return nil();}
 }
