@@ -30,6 +30,15 @@ Object do_eq(Object lvals);
 const std::string lisp_inf = ("<");
 Object do_inf(Object lvals);
 
+const std::string lisp_or = ("or");
+Object do_or(Object lvals);
+
+const std::string lisp_and = ("and");
+Object do_and(Object lvals);
+
+const std::string lisp_not = ("not");
+Object do_not(Object lvals);
+
 const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
 
