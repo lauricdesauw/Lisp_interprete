@@ -12,6 +12,7 @@ using Object = Cell *;
 class Cell {
     private:
         uint64_t magic;
+        static int number_of_cells_parent;
         void clean();
 
     protected:
@@ -20,6 +21,7 @@ class Cell {
         virtual ~Cell();
         virtual type get_type() const = 0;
         void check() const;
+        int get_number_of_cells_parent();
 
     friend class API;
     friend class Cell_pair;
