@@ -31,6 +31,7 @@ Object eval (Object l, Env env)
     if (eq(func, lisp_lambda)) {return l;}
     if (eq(func, lisp_quote)) {return do_quote(cdr(l),env);}
     if (eq(func, lisp_if)) {return do_if(cdr(l),env);}
+    if (eq(func,lisp_eval)) {return do_eval(cadr(l),env);}
 
     Object eval_parameters = eval_list(cdr(l), env);
     return apply(func,eval_parameters, env);

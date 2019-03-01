@@ -10,6 +10,8 @@ Object do_plus(Object lvals)
 {
     Object a = car(lvals);
     Object b = cadr(lvals);
+    if (!numberp(a) || !numberp(b))
+        {error (lvals,Env(),"Cannot apply +: not a number");}
     return number_to_object( object_to_number(a)
                             + object_to_number(b) );
 }
@@ -18,6 +20,8 @@ Object do_minus(Object lvals)
 {
     Object a = car(lvals);
     Object b = cadr(lvals);
+    if (!numberp(a) || !numberp(b))
+        {error (lvals,Env(),"Cannot apply -: not a number");}
     return number_to_object( object_to_number(a)
                             - object_to_number(b) );
 }
@@ -26,6 +30,8 @@ Object do_times(Object lvals)
 {
     Object a = car(lvals);
     Object b = cadr(lvals);
+    if (!numberp(a) || !numberp(b))
+        {error (lvals,Env(),"Cannot apply *: not a number");}
     return number_to_object( object_to_number(a)
                             * object_to_number(b) );
 }
@@ -41,6 +47,8 @@ Object do_inf(Object lvals)
 {
     Object a = car(lvals);
     Object b = cadr(lvals);
+    if (!numberp(a) || !numberp(b))
+        {error (lvals,Env(),"Cannot apply <: not a number");}
     return bool_to_object( object_to_number(a) < object_to_number(b) );
 }
 
@@ -176,7 +184,19 @@ Env do_define(Object lvals, Env env)
 
 Object do_eval(Object l, Env env)
 {
-    return (eval(l,env));
+    if (null(l))
+    {
+        return l;
+    }
+    if (symbolp(l))
+    {
+        return eval(eval(l,env),env);
+    }
+    if (listp(l) && eq(car(l),lisp_quote))
+    {
+        return eval(cadr(l),env);
+    }
+    return eval(l,env);
 }
 
 /*
