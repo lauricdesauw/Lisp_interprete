@@ -202,6 +202,26 @@ Env do_define(Object lvals, Env env)
      return add_new_binding(name,value,env);
 }
 
+Env do_let (Object lvals, Env env)
+{
+    if ( null(lvals) || null(cdr(lvals)))
+    {
+        return nil();
+    }
+    Object var = car(lvals);
+    Object param = nil();
+    Object value = nil();
+    while (!null(var))
+    {
+        param = cons(car(car(var)),param);
+        value = cons(cadr(car(var)),value);
+        var = cdr(var);
+    }
+    Object func = cons(lisp_lambda,cons(param,cdr(lvals)));
+    std::cout << cons(func,value) << std::endl;
+    return eval(cons(func,value),env);
+}
+
 Object do_eval(Object lvals, Env env)
 {
     if (null(lvals))

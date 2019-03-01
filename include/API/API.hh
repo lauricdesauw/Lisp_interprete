@@ -50,4 +50,5 @@ class API {
         static Env add_new_binding(std::string name, Object value, Env env);
         static Object find_value(std::string name, Env env);
         static std::ostream& print_env(std::ostream& s, Env env);
+        static void print_stats();
 };
