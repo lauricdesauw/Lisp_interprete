@@ -1,4 +1,5 @@
 #include "env.hh"
+#include "error.hh"
 
 Env make_env()
 {
@@ -28,7 +29,7 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
     {
         if (!null(lvals))
         {
-            throw Number_param_exception("Too many vals");
+            eval_error("Too many vals");
         }
         else
         {
@@ -39,7 +40,7 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
     {
         if (null(lvals))
         {
-            throw Number_param_exception("Too many parameters");
+            eval_error("Too many parameters");
         }
         else
         {
@@ -56,7 +57,7 @@ Object find_value(Object obj, Env env)
     std::string name = object_to_string(obj);
     if (null(env))
     {
-        throw No_binding_exception("'" + name + "' " + "Not found");
+        eval_error("'" + name + "' " + "Not found");
     }
     Object head = car(env);
     std::string h_name = object_to_string(car(head));
@@ -73,7 +74,7 @@ Object find_value(Object obj, Env env)
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
     assert(bidingp(obj));
-    s << "( " << car(obj) << " = " << cadr(obj) << " )";
+    s << "(" << car(obj) << " = " << cadr(obj) << ")";
     return s;
 }
 

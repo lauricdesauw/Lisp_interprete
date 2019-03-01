@@ -42,7 +42,7 @@ void Toplevel::go(bool use_prompt)
                 print_type(std::cout,curr_obj);
             }
             std::cout << std::endl;
-        } catch (Custom_exception& e)
+       } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
                 cout << endl;

@@ -9,6 +9,7 @@ int main(int argc,char* argv[]) {
 
     Toplevel toplevel;
 
+<<<<<<< HEAD
     try
     {
         switch(argc)
@@ -25,7 +26,13 @@ int main(int argc,char* argv[]) {
         }
     }
     catch (Quit_exception e)
+=======
+    try {
+        toplevel.go(true);
+    } catch (Quit_exception e)
+>>>>>>> b9aba96351d1250ab799b3c9fc6cfb7c4509c1d6
         {
+            cout << endl;
             cout << "May Lisp be with you!" << endl;
         }
 }
