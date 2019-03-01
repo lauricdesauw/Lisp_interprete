@@ -15,6 +15,7 @@ int main(int argc,char* argv[]) {
         toplevel.go(true);
     } catch (Quit_exception e)
         {
+            cout << endl;
             cout << "May Lisp be with you!" << endl;
         }
 }
