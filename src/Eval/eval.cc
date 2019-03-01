@@ -23,7 +23,16 @@ Object eval (Object l, Env env)
     {
         return l;
     }
-    if (symbolp(l)) {return find_value(l,env);}
+    if (symbolp(l)) {
+         try
+         {
+              return find_value(l,env);
+         } catch(Evaluation_exception& e)
+         {
+              std::string msg = e.what();
+              toplevel_error(object_to_string(l) + " : "+ msg);
+         };
+    }
 
     assert(listp(l));
     Object func = car(l);
@@ -86,7 +95,8 @@ Object apply (Object func, Object lvals, Env env)
                  return eval(body,new_env);
             } catch(Evaluation_exception& e)
             {
-                 toplevel_error(object_to_string(func) + " : "+ e.what());
+                 std::string msg = e.what();
+                 toplevel_error(object_to_string(func) + " : "+ msg);
             };
 
         }
