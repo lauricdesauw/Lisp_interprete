@@ -4,6 +4,7 @@
 #include "library.hh"
 #include "defs.hh"
 #include "error.hh"
+#include "globals.hh"
 #include <string>
 #include "env.hh"
 #include <iostream>
@@ -32,11 +33,11 @@ void Toplevel::go(bool use_prompt)
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
             }
-            /*else if (listp(curr_obj) && !null(curr_obj)
+            else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_debug))
             {
-                 do_debug(a,global_env);
-            }*/
+                 is_debug = do_debug(cdr(curr_obj));
+            }
             else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_printenv))
             {

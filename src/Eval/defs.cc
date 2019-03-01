@@ -239,6 +239,15 @@ Object do_eval(Object l, Env env)
     return eval(l,env);
 }
 
+bool do_debug(Object l)
+{
+    if (null(l) || !boolp(car(l)))
+    {
+        toplevel_error("Cannot use debug mode: not a bool");
+    }
+    return (object_to_bool(car(l)));
+}
+
 /*
 Object do_list(Object lvals)
 {
