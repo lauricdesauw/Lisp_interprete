@@ -22,6 +22,7 @@ class API {
         static bool stringp(Object l);
         static bool symbolp(Object l);
         static bool boolp(Object l);
+        static bool pairp(Object l);
         static bool listp(Object l);
 
         static Object cons(Object a, Object l);

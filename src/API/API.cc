@@ -87,6 +87,13 @@ bool API::boolp(Object l)
     return l == object_t || l == object_f;
 }
 
+bool API::pairp(Object l)
+{
+    check(l);
+    return l->get_type() == Cell::type::PAIR;
+}
+
+
 bool API::listp(Object l)
 {
     check(l);

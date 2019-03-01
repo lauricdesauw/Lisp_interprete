@@ -70,23 +70,21 @@ Object apply (Object func, Object lvals, Env env)
     {
         return apply(eval(func,env),lvals,env);
     }
-/*    else
+    else
     {
-        assert(pairp(f));
-        if(car(f)  = lisp_lambda)
+        assert(pairp(func));
+        if(car(func) == lisp_lambda)
         {
             // The body of the lambda-expression *)
-            Object body = caddr f;
+            Object body = car(func,2);
             // The list of parameters of the lamba-expression *)
-            Object lpars = cadr f;
-            Env new_env = extend_largs_env lpars lvals env in
-            eval body new_env
+            Object lpars = cadr(func);
+            Env new_env = extend_largs_env(lpars,lvals,env);
+            return eval(body,new_env);
         }
         else
         {
-            throw new Evaluation_exception(f,env,"Cannot apply a list");
-            new_f = eval f env
-            eval (cons new_f lvals) env )
+            throw Evaluation_exception(func,env,"Cannot apply a list");
         }
-    }*/
+    }
 }

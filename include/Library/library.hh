@@ -23,6 +23,7 @@ bool numberp(Object l);
 bool stringp(Object l);
 bool symbolp(Object l);
 bool boolp(Object l);
+bool pairp(Object l);
 bool listp(Object l);
 
 Object number_to_object(int n);
