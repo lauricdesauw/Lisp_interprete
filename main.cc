@@ -29,4 +29,9 @@ int main(int argc,char* argv[]) {
             cout << endl;
             cout << "May Lisp be with you!" << endl;
         }
+    catch (runtime_error e)
+        {
+            cout << endl;
+            cout << "Runtime critical error : " << e.what() << endl;
+        }
 }

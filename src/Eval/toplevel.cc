@@ -74,16 +74,20 @@ void Toplevel::handle_load_core(std::string file_name)
 
 void Toplevel::handle_load(Object obj)
 {
-  Object file_object = cadr( obj);
-  assert(stringp(file_object));
-  std::string file_path = object_to_string( file_object);
-  file_path = file_path.substr(1,file_path.length()-2);
-  FILE* new_stream = fopen((file_path).c_str(),"r");
-  change_lexer_input(new_stream);
-  handle_load_core( file_path);
-  fclose(new_stream);
-  change_lexer_input(stdin);
-  go(true);
+    Object file_object = cadr( obj);
+    assert(stringp(file_object));
+    std::string file_path = object_to_string( file_object);
+    file_path = file_path.substr(1,file_path.length()-2);
+    FILE* new_stream = fopen((file_path).c_str(),"r");
+    if(new_stream == nullptr){throw Toplevel_exception("File does not exists");}
+    else
+    {
+        change_lexer_input(new_stream);
+        handle_load_core( file_path);
+        fclose(new_stream);
+        change_lexer_input(stdin);
+    }
+    go(true);
 }
 
 void Toplevel::handle_load_from_string(std::string path)
