@@ -87,7 +87,7 @@ Object do_let(Object l, Env env);
 const std::string lisp_setq= ("set!");
 Object do_setq(Object l, Env env);
 
-const std::string lisp_cond = ("cond");
+const Object lisp_cond = symbol_to_object("cond");
 Object do_cond(Object l, Env env);
 
 const std::string lisp_begin = ("begin");
