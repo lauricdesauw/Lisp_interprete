@@ -16,7 +16,6 @@ Toplevel::Toplevel()
 
 void Toplevel::go(bool use_prompt)
 {
-    bool b = true;
     while(true)
     {
         try
@@ -33,6 +32,11 @@ void Toplevel::go(bool use_prompt)
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
             }
+            /*else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_debug))
+            {
+                 do_debug(a,global_env);
+            }*/
             else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_printenv))
             {
@@ -48,7 +52,7 @@ void Toplevel::go(bool use_prompt)
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
-                cout << "try............................ CATCH ! :) :) :) :)s" << endl;
+                cout << "try............................ CATCH ! :) :) :) :)" << endl;
                 cout << endl;
             }
     }

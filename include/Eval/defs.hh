@@ -108,3 +108,5 @@ Object do_eval(Object l, Env env);
 
 const std::string lisp_apply = ("apply");
 Object do_apply(Object l, Env env);
+
+const Object lisp_debug = symbol_to_object("debug");
