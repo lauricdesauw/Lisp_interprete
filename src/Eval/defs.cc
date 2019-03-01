@@ -62,16 +62,32 @@ Object do_inf(Object lvals)
     return bool_to_object( object_to_number(a) < object_to_number(b) );
 }
 
-Object do_concat(Object lvals)
+Object do_concat_aux(Object lvals, bool b)
 {
     if (null(lvals))
     {
         return string_to_object("");
     }
+    if (!stringp(car(lvals)))
+    {
+        toplevel_error("Cannot apply concat: arguments must be string");
+    }
     std::string s = object_to_string(car(lvals));
-    std::string t = object_to_string(do_concat(cdr(lvals)));
-
+    if (b)
+    {
+        s = s.substr(0,s.size() - 1);
+    }
+    else
+    {
+        s = s.substr(1,s.size() - 1);
+    }
+    std::string t = object_to_string(do_concat_aux(cdr(lvals),!b));
     return string_to_object(s+t);
+}
+
+Object do_concat(Object lvals)
+{
+    return do_concat_aux(lvals,true);
 }
 
 Object do_car(Object lvals)
@@ -181,7 +197,7 @@ Object do_or (Object lvals, Env env)
     bool first_value = object_to_bool(eval(first_part,env));
     bool second_value = object_to_bool(eval(second_part,env));
     bool value = first_value || second_value;
-    return bool_to_object(value); 
+    return bool_to_object(value);
 }
 
 Object do_and (Object lvals, Env env)
@@ -200,7 +216,7 @@ Object do_and (Object lvals, Env env)
     bool first_value = object_to_bool(eval(first_part,env));
     bool second_value = object_to_bool(eval(second_part,env));
     bool value = first_value && second_value;
-    return bool_to_object(value); 
+    return bool_to_object(value);
  }
 
 Object do_not (Object lvals, Env env)
@@ -213,9 +229,9 @@ Object do_not (Object lvals, Env env)
 
     bool value = object_to_bool(eval(first_part,env));
 
-    return bool_to_object(!value); 
+    return bool_to_object(!value);
 }
-    
+
 Object do_newline(Object lvals)
 {
     std::cout<<std::endl;
