@@ -54,7 +54,7 @@ Object do_eq(Object lvals)
 Object do_inf(Object lvals)
 {
     if (null(lvals) || null(cdr(lvals)))
-        {toplevel_error ("Cannot apply +: missing few arguments");}
+        {toplevel_error ("Cannot apply <: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     if (!numberp(a) || !numberp(b))
@@ -129,7 +129,7 @@ Object do_if (Object l, Env env)
     }
     if (null(cdr(l,1)))
     {
-        toplevel_error("Cannot apply if: missing 'else' argument");
+        return nil();
     }
     Object false_part = car(l,2);
     return eval(false_part,env);
@@ -182,27 +182,37 @@ Object do_listp(Object lvals)
 
 Env do_define(Object lvals, Env env)
 {
-     if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
-     {
-          toplevel_error("Cannot define it: missing few arguments");
-     }
-     Object value;
-     if ( !null(cdr(lvals,1)) && listp(cadr(lvals)) && listp(car(lvals,2)))
-     {
-        Object param = cadr(lvals);
-        Object func = cdr(lvals,1);
-        value = cons(lisp_lambda,cons(param,func));;
-     }
-     else
-     {
+    if (null(lvals) || null(cdr(lvals)))
+    {
+        toplevel_error("Cannot define it: missing few arguments");
+    }
+    if (!symbolp(car(lvals)) && !listp(car(lvals)))
+    {
+        toplevel_error("Cannot define it: first element must be a symbol or a list");
+    }
+    Object value;
+    std::string name;
+    if (listp(car(lvals)))
+    {
+        if (null(car(lvals)))
+            {
+                toplevel_error("Cannot define it: first element cannot be nil");
+            }
+         name = object_to_string(car(car(lvals)));
+         Object param = cdr(car(lvals));
+         Object func = cdr(lvals);
+         value = cons(lisp_lambda,cons(param,func));;
+    }
+    else
+    {
+         name = object_to_string(car(lvals));
          value = eval(cadr(lvals),env);
-     }
-     std::string name = object_to_string(car(lvals));
-     std::cout << name << " = " << value << std::endl;
-     return add_new_binding(name,value,env);
+    }
+    std::cout << name << " = " << value << std::endl;
+    return add_new_binding(name,value,env);
 }
 
-Env do_let (Object lvals, Env env)
+Object do_let (Object lvals, Env env)
 {
     if ( null(lvals) || null(cdr(lvals)))
     {
@@ -213,12 +223,26 @@ Env do_let (Object lvals, Env env)
     Object value = nil();
     while (!null(var))
     {
-        param = cons(car(car(var)),param);
-        value = cons(cadr(car(var)),value);
+        if (!listp(car(var)))
+        {
+            toplevel_error("Cannot apply let: arguments must be lists");
+        }
+        if (!null(car(var)) && null(cdr(car(var))))
+        {
+            toplevel_error("Cannot apply let: arguments must have 2 elements");
+        }
+        if (!null(car(var)))
+        {
+            param = cons(car(car(var)),param);
+            if (!symbolp(param))
+            {
+                toplevel_error("Cannot apply let: names must be symbols");
+            }
+            value = cons(cadr(car(var)),value);
+        }
         var = cdr(var);
     }
     Object func = cons(lisp_lambda,cons(param,cdr(lvals)));
-    std::cout << cons(func,value) << std::endl;
     return eval(cons(func,value),env);
 }
 
@@ -239,7 +263,17 @@ Object do_eval(Object lvals, Env env)
     return eval(lvals,env);
 }
 
-Object do_cond(Object lvals, Env env)
+bool do_debug(Object l)
+{
+    if (null(l) || !boolp(car(l)))
+    {
+        toplevel_error("Cannot use debug mode: not a bool");
+    }
+    return (object_to_bool(car(l)));
+}
+
+
+Object do_cond(Object lvals,Env env)
 {
      if(null(lvals))
      {
