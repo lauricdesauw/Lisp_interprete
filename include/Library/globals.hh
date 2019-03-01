@@ -5,5 +5,5 @@ class Cell;
 using Object = Cell *;
 using Env = Object;
 
-bool is_debug = 0;
-bool is_stats = 0;
+bool DEBUG_MODE = false;
+bool STAT_MODE  = false;

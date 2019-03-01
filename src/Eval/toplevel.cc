@@ -45,6 +45,7 @@ void Toplevel::go(bool use_prompt)
             }
             std::cout << std::endl << "Miracles des miracles !"
                 << std::endl << std::endl;
+            if()
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
