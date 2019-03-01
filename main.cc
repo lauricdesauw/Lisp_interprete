@@ -1,7 +1,6 @@
 #include <cstdio>
 
 #include "toplevel.hh"
-#include "eval.hh"
 #include "error.hh"
 
 using namespace std;
@@ -10,17 +9,22 @@ int main(int argc,char* argv[]) {
 
     Toplevel toplevel;
 
-    switch(argc)
+    try
     {
-        case 0 :
-            break;
-        case 1 :
-            handle_load(string_to_object())
+        switch(argc)
+        {
+            case 1 :
+                toplevel.go(true);
+                break;
+            case 2 :
+                toplevel.handle_load_from_string(argv[1]);
+                break;
+            default :
+                toplevel.go(true);
+                break;
+        }
     }
-
-    try {
-        toplevel.go(true);
-    } catch (Quit_exception e)
+    catch (Quit_exception e)
         {
             cout << "May Lisp be with you!" << endl;
         }

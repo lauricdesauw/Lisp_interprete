@@ -7,12 +7,12 @@ using namespace std;
 class Toplevel {
     private:
         Env global_env;
+        static bool is_load_directive(Object obj);
+        void handle_load_core(std::string file_name);
+        void handle_load(Object obj);
 
     public:
         Toplevel();
         void go(bool use_prompt);
+        void handle_load_from_string(std::string path);
 };
-
-bool is_load_directive(Object obj);
-void handle_load_core(std::string file_name, Toplevel* toplevel);
-void handle_load(Object obj, Toplevel* toplevel);
