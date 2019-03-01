@@ -202,35 +202,45 @@ Env do_define(Object lvals, Env env)
      return add_new_binding(name,value,env);
 }
 
-Object do_eval(Object l, Env env)
+Object do_eval(Object lvals, Env env)
 {
-    if (null(l))
+    if (null(lvals))
     {
-        return l;
+        return lvals;
     }
-    if (symbolp(l))
+    if (symbolp(lvals))
     {
-        return eval(eval(l,env),env);
+        return eval(eval(lvals,env),env);
     }
-    if (listp(l) && eq(car(l),lisp_quote))
+    if (listp(lvals) && eq(car(lvals),lisp_quote))
     {
-        return eval(cadr(l),env);
+        return eval(cadr(lvals),env);
     }
-    return eval(l,env);
+    return eval(lvals,env);
 }
 
-/*
-Object do_list(Object lvals)
+Object do_cond(Object lvals, Env env)
 {
-    return
-}
+     if(null(lvals))
+     {
+          toplevel_error("Cannot apply cond : no valid predicate");
+     }
 
-Object do_end(Object lvals)
-{
-    return
-}
+     Object pred_part = car(lvals);
 
-Object do_toplevel_error(Object lvals)
-{
-    return
-}*/
+     if(null(pred_part) || null(cdr(pred_part)))
+     {
+          toplevel_error("Cannot apply cond : unvalid predicate");
+     }
+
+     Object cond_part = car(pred_part);
+     Object body_part = cadr(pred_part);
+
+     Object test_value = eval(cond_part,env);
+
+     if(object_to_bool(test_value))
+     {
+          return eval(body_part,env);
+     }
+     return do_cond(cdr(lvals),env);
+}
