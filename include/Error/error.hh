@@ -15,7 +15,8 @@ class Custom_exception : public std::runtime_error
         std::string message;
     public:
         Custom_exception(std::string msg);
-        std::string what();
+        std::string what(); // no need to override, it's an overloard of
+                            // virtual const char* what() const throw();
 };
 
 class Evaluation_exception : public Custom_exception

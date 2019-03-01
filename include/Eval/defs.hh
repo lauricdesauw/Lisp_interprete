@@ -15,6 +15,9 @@ Object do_if(Object l, Env env);
 
 const Object lisp_printenv = symbol_to_object("printenv");
 
+const Object lisp_display = symbol_to_object("display");
+Object do_display(Object lvals);
+
 const std::string lisp_plus = ("+");
 Object do_plus(Object lvals);
 
@@ -44,9 +47,6 @@ Object do_cons(Object lvals);
 
 const std::string lisp_read = ("read");
 Object do_read(Object lvals);
-
-const std::string lisp_display = ("display");
-Object do_display(Object lvals);
 
 const std::string lisp_newline = ("newline");
 Object do_newline(Object lvals);
@@ -87,7 +87,7 @@ Object do_let(Object l, Env env);
 const std::string lisp_setq= ("set!");
 Object do_setq(Object l, Env env);
 
-const std::string lisp_cond = ("cond");
+const Object lisp_cond = symbol_to_object("cond");
 Object do_cond(Object l, Env env);
 
 const std::string lisp_begin = ("begin");

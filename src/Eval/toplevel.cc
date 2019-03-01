@@ -10,10 +10,8 @@
 #include <iostream>
 #include <cassert>
 
-Toplevel::Toplevel()
-{
-    global_env = nil();
-}
+Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
+{}
 
 void Toplevel::go(bool use_prompt)
 {
@@ -50,6 +48,10 @@ void Toplevel::go(bool use_prompt)
             }
             std::cout << std::endl << "Miracles des miracles !"
                 << std::endl << std::endl;
+<<<<<<< HEAD
+=======
+            if(STAT_MODE){print_stats();}
+>>>>>>> 18f9b53e2a12a5bf229587a102d56a844ed75cfb
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;

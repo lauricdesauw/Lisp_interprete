@@ -27,12 +27,18 @@ void API::check(Object l)
     }
 }
 
-void print_stats()
-{ /*
+void API::print_stats()
+{
     cout << "Statistiques de création de cellulles. \n" <<
             "(Instances de cette classe/Total des  instances)" << endl;
     cout << "Cell_number : " << Cell_number::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl; */
+            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_symbol : " << Cell_symbol::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_string : " << Cell_string::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_pair : " << Cell_pair::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
 }
 
 
