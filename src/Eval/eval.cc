@@ -45,23 +45,23 @@ Object apply (Object func, Object lvals, Env env)
     }
     if(null(func))
     {
-        error(func,env,"Cannot apply nil");
+        toplevel_error("Cannot apply nil");
     }
     if(func == t())
     {
-        error(func,env,"Cannot apply true");
+        toplevel_error("Cannot apply true");
     }
     if(func == f())
     {
-        error(func,env,"Cannot apply false");
+        toplevel_error("Cannot apply false");
     }
     if(numberp(func))
     {
-        error(func,env,"Cannot apply a number");
+        toplevel_error("Cannot apply a number");
     }
     if(stringp(func))
     {
-        error(func,env,"Cannot apply a string");
+        toplevel_error("Cannot apply a string");
     }
     if (subrp(func))
     {
@@ -80,12 +80,19 @@ Object apply (Object func, Object lvals, Env env)
             Object body = car(func,2);
             // The list of parameters of the lamba-expression *)
             Object lpars = cadr(func);
-            Env new_env = extend_largs_env(lpars,lvals,env);
-            return eval(body,new_env);
+            try
+            {
+                 Env new_env = extend_largs_env(lpars,lvals,env);
+                 return eval(body,new_env);
+            } catch(Evaluation_exception& e)
+            {
+                 toplevel_error(object_to_string(func) + " : "+ e.what());
+            };
+
         }
         else
         {
-            throw Evaluation_exception(func,env,"Cannot apply a list");
+            toplevel_error("Cannot apply a list");
         }
     }
 }
