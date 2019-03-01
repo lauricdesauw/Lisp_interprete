@@ -16,11 +16,13 @@ Toplevel::Toplevel()
 
 void Toplevel::go(bool use_prompt)
 {
+    bool b = true;
     while(true)
     {
         try
         {
-            std::cout << "C++Lisp: ";
+            if (b) {std::cout << "Miracles des miracles: ";b = false;}
+            else {std::cout << "Merveilles des merveilles: ";b = true;}
             Object curr_obj = read_object();
             if(Toplevel::is_load_directive(curr_obj))
             {
