@@ -15,6 +15,9 @@ Object do_if(Object l, Env env);
 
 const Object lisp_printenv = symbol_to_object("printenv");
 
+const Object lisp_display = symbol_to_object("display");
+Object do_display(Object lvals);
+
 const std::string lisp_plus = ("+");
 Object do_plus(Object lvals);
 
@@ -30,15 +33,6 @@ Object do_eq(Object lvals);
 const std::string lisp_inf = ("<");
 Object do_inf(Object lvals);
 
-const std::string lisp_or = ("or");
-Object do_or(Object lvals);
-
-const std::string lisp_and = ("and");
-Object do_and(Object lvals);
-
-const std::string lisp_not = ("not");
-Object do_not(Object lvals);
-
 const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
 
@@ -53,9 +47,6 @@ Object do_cons(Object lvals);
 
 const std::string lisp_read = ("read");
 Object do_read(Object lvals);
-
-const std::string lisp_display = ("display");
-Object do_display(Object lvals);
 
 const std::string lisp_newline = ("newline");
 Object do_newline(Object lvals);

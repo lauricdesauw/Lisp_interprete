@@ -202,35 +202,65 @@ Env do_define(Object lvals, Env env)
      return add_new_binding(name,value,env);
 }
 
-Object do_eval(Object l, Env env)
+Env do_let (Object lvals, Env env)
 {
-    if (null(l))
+    if ( null(lvals) || null(cdr(lvals)))
     {
-        return l;
+        return nil();
     }
-    if (symbolp(l))
+    Object var = car(lvals);
+    Object param = nil();
+    Object value = nil();
+    while (!null(var))
     {
-        return eval(eval(l,env),env);
+        param = cons(car(car(var)),param);
+        value = cons(cadr(car(var)),value);
+        var = cdr(var);
     }
-    if (listp(l) && eq(car(l),lisp_quote))
-    {
-        return eval(cadr(l),env);
-    }
-    return eval(l,env);
+    Object func = cons(lisp_lambda,cons(param,cdr(lvals)));
+    std::cout << cons(func,value) << std::endl;
+    return eval(cons(func,value),env);
 }
 
-/*
-Object do_list(Object lvals)
+Object do_eval(Object lvals, Env env)
 {
-    return
+    if (null(lvals))
+    {
+        return lvals;
+    }
+    if (symbolp(lvals))
+    {
+        return eval(eval(lvals,env),env);
+    }
+    if (listp(lvals) && eq(car(lvals),lisp_quote))
+    {
+        return eval(cadr(lvals),env);
+    }
+    return eval(lvals,env);
 }
 
-Object do_end(Object lvals)
+Object do_cond(Object lvals, Env env)
 {
-    return
-}
+     if(null(lvals))
+     {
+          toplevel_error("Cannot apply cond : no valid predicate");
+     }
 
-Object do_toplevel_error(Object lvals)
-{
-    return
-}*/
+     Object pred_part = car(lvals);
+
+     if(null(pred_part) || null(cdr(pred_part)))
+     {
+          toplevel_error("Cannot apply cond : unvalid predicate");
+     }
+
+     Object cond_part = car(pred_part);
+     Object body_part = cadr(pred_part);
+
+     Object test_value = eval(cond_part,env);
+
+     if(object_to_bool(test_value))
+     {
+          return eval(body_part,env);
+     }
+     return do_cond(cdr(lvals),env);
+}

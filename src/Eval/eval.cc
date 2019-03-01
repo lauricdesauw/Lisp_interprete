@@ -42,7 +42,7 @@ Object eval (Object l, Env env)
     if (eq(func, lisp_quote)) {return do_quote(cdr(l),env);}
     if (eq(func, lisp_if)) {return do_if(cdr(l),env);}
     if (eq(func, lisp_cond)) {return do_cond(cdr(l),env);}
-    if (eq(func, lisp_display)) {return do_display(cdr(l),env;}
+    if (eq(func, lisp_display)) {return do_display(cdr(l));}
     if (eq(func,lisp_eval)) {return do_eval(cadr(l),env);}
 
     Object eval_parameters = eval_list(cdr(l), env);
