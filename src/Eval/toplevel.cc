@@ -13,7 +13,7 @@
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
 {}
 
-void Toplevel::go(bool use_prompt)
+void Toplevel::go()
 {
     while(true)
     {
@@ -78,7 +78,7 @@ void Toplevel::handle_load_core(std::string file_name)
     cout << "Loading file " << file_name << "...\n";
     try
     {
-        go(true);
+        go();
     }
     catch(runtime_error e)
     {

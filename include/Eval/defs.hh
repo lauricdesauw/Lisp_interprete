@@ -85,10 +85,10 @@ Object do_let(Object l, Env env);
 /**************** Evaluation ********************/
 
 const Object lisp_lambda = symbol_to_object("lambda");
-Object do_lambda(Object l, Env env);
+Object do_lambda(Object l);
 
 const Object lisp_quote = symbol_to_object("quote");
-Object do_quote(Object l, Env env);
+Object do_quote(Object l);
 
 const Object lisp_eval = symbol_to_object("eval");
 Object do_eval(Object l, Env env);
@@ -105,10 +105,10 @@ const Object lisp_display = symbol_to_object("display");
 Object do_display(Object lvals);
 
 const std::string lisp_read = ("read");
-Object do_read(Object lvals);
+Object do_read();
 
 const std::string lisp_newline = ("newline");
-Object do_newline(Object lvals);
+Object do_newline();
 
 /**************** Debug and stats mode  ***********/
 

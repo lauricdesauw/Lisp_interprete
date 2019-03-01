@@ -62,6 +62,7 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
             return extend_largs_env(cdr(lpars),cdr(lvals),new_env);
         }
     }
+    return nil();
 }
 
 Object find_value(Object obj, Env env)
@@ -102,6 +103,7 @@ std::ostream& print_env_aux(std::ostream& s, Env env)
         s << " | ";
     }
     print_env_aux(s,cdr(env));
+    return s;
 }
 
 std::ostream& print_env(std::ostream& s, Env env)

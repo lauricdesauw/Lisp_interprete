@@ -38,8 +38,8 @@ Object eval (Object l, Env env)
     Object func = car(l);
 
     if (eq(func,lisp_let)) {return do_let(cdr(l),env);}
-    if (eq(func, lisp_lambda)) {return do_lambda(l,env);}
-    if (eq(func, lisp_quote)) {return do_quote(cdr(l),env);}
+    if (eq(func, lisp_lambda)) {return do_lambda(l);}
+    if (eq(func, lisp_quote)) {return do_quote(cdr(l));}
     if (eq(func, lisp_if)) {return do_if(cdr(l),env);}
     if (eq(func, lisp_or)) {return do_or(cdr(l),env);}
     if (eq(func, lisp_and)) {return do_and(cdr(l),env);}
@@ -86,29 +86,26 @@ Object apply (Object func, Object lvals, Env env)
     {
         return apply(eval(func,env),lvals,env);
     }
+    assert(pairp(func));
+    if(eq(car(func),lisp_lambda))
+    {
+        // The body of the lambda-expression *)
+        Object body = car(func,2);
+        // The list of parameters of the lamba-expression *)
+        Object lpars = cadr(func);
+        try
+        {
+             Env new_env = extend_largs_env(lpars,lvals,env);
+             return eval(body,new_env);
+        } catch(Evaluation_exception& e)
+            {
+             std::string msg = e.what();
+             toplevel_error(object_to_string(func) + " : "+ msg);
+            };
+        }
     else
     {
-        assert(pairp(func));
-        if(eq(car(func),lisp_lambda))
-        {
-            // The body of the lambda-expression *)
-            Object body = car(func,2);
-            // The list of parameters of the lamba-expression *)
-            Object lpars = cadr(func);
-            try
-            {
-                 Env new_env = extend_largs_env(lpars,lvals,env);
-                 return eval(body,new_env);
-            } catch(Evaluation_exception& e)
-            {
-                 std::string msg = e.what();
-                 toplevel_error(object_to_string(func) + " : "+ msg);
-            };
-
-        }
-        else
-        {
-            toplevel_error("Cannot apply a list");
-        }
+        toplevel_error("Cannot apply a list");
     }
+    return nil();
 }

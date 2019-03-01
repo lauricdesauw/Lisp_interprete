@@ -117,7 +117,7 @@ Object do_cons(Object lvals)
     return cons(car(lvals),(cadr(lvals)));
 }
 
-Object do_read(Object lvals)
+Object do_read()
 {
     return read_object();
 }
@@ -132,7 +132,7 @@ Object do_display(Object lvals)
 
 /*******************************************/
 
-Object do_quote (Object lvals, Env env)
+Object do_quote (Object lvals)
 {
     if (null(lvals))
     {
@@ -163,7 +163,7 @@ Object do_if (Object lvals, Env env)
     return eval(false_part,env);
 }
 
-Object do_lambda (Object lvals, Env env)
+Object do_lambda (Object lvals)
 {
     return lvals;
 }
@@ -179,6 +179,7 @@ Object do_while(Object lvals, Env env)
     {
         eval(body_part,env);
     }
+    return nil();
 }
 
 Object do_or (Object lvals, Env env)
@@ -232,7 +233,7 @@ Object do_not (Object lvals, Env env)
     return bool_to_object(!value);
 }
 
-Object do_newline(Object lvals)
+Object do_newline()
 {
     std::cout<<std::endl;
     return nil();

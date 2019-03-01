@@ -15,6 +15,6 @@ class Toplevel {
 
     public:
         Toplevel();
-        void go(bool use_prompt);
+        void go();
         void handle_load_from_string(std::string path);
 };
