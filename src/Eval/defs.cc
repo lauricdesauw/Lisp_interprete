@@ -180,11 +180,24 @@ Object do_listp(Object lvals)
     return bool_to_object(listp(car(lvals)));
 }
 
+Env do_define_lambda (Object name, Object param, Object func,Env env)
+{
+    std::cout << name << " " << param << " " << func << std::endl;
+    std::string name_s = object_to_string(name);
+    Object value = cons(lisp_lambda,cons(param,func));
+    std::cout << name << " = " << value << std::endl;
+    return add_new_binding(name_s,value,env);
+}
+
 Env do_define(Object lvals, Env env)
 {
      if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
      {
           toplevel_error("Cannot define it: missing few arguments");
+     }
+     if ( !null(cdr(lvals,1)) && listp(cadr(lvals)) && listp(car(lvals,2)))
+     {
+         return do_define_lambda (car(lvals), cadr(lvals), cdr(lvals,1),env);
      }
      std::string name = object_to_string(car(lvals));
      Object value = eval(cadr(lvals),env);
