@@ -28,11 +28,11 @@ void API::check(Object l)
 }
 
 void print_stats()
-{
+{ /*
     cout << "Statistiques de création de cellulles. \n" <<
             "(Instances de cette classe/Total des  instances)" << endl;
-    cout << "Number_cell : " << Number_cell::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_number : " << Cell_number::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl; */
 }
 
 
