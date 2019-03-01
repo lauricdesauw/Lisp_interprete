@@ -116,40 +116,40 @@ Object do_display(Object lvals)
 
 /*******************************************/
 
-Object do_quote (Object l, Env env)
+Object do_quote (Object lvals, Env env)
 {
-    if (null(l))
+    if (null(lvals))
     {
         toplevel_error("Cannot quote");
     }
-    return car(l);
+    return car(lvals);
 }
 
-Object do_if (Object l, Env env)
+Object do_if (Object lvals, Env env)
 {
-    if (null(l) || null(cdr(l)))
+    if (null(lvals) || null(cdr(lvals)))
     {
         toplevel_error("Cannot apply if: missing few arguements");
     }
-    Object test = car(l);
-    Object true_part = cadr(l);
+    Object test = car(lvals);
+    Object true_part = cadr(lvals);
     Object test_value = eval(test,env);
 
     if (object_to_bool(test_value))
     {
         return (eval(true_part,env));
     }
-    if (null(cdr(l,1)))
+    if (null(cdr(lvals,1)))
     {
         return nil();
     }
-    Object false_part = car(l,2);
+    Object false_part = car(lvals,2);
     return eval(false_part,env);
 }
 
-Object do_lambda (Object l, Env env)
+Object do_lambda (Object lvals, Env env)
 {
-    return l;
+    return lvals;
 }
 
 Object do_while(Object lvals, Env env)
@@ -165,6 +165,57 @@ Object do_while(Object lvals, Env env)
     }
 }
 
+Object do_or (Object lvals, Env env)
+{
+    if(null(lvals))
+    {
+        toplevel_error("Cannot apply or : not enough arguments");
+    }
+    if(null(cdr(lvals)))
+    {
+        toplevel_error("Cannot apply or : not enough arguments");
+    }
+    Object first_part = car(lvals);
+    Object second_part = cadr(lvals);
+
+    bool first_value = object_to_bool(eval(first_part,env));
+    bool second_value = object_to_bool(eval(second_part,env));
+    bool value = first_value || second_value;
+    return bool_to_object(value); 
+}
+
+Object do_and (Object lvals, Env env)
+{
+    if(null(lvals))
+    {
+        toplevel_error("Cannot apply and : not enough arguments");
+    }
+    if(null(cdr(lvals)))
+    {
+        toplevel_error("Cannot apply and : not enough arguments");
+    }
+    Object first_part = car(lvals);
+    Object second_part = cadr(lvals);
+
+    bool first_value = object_to_bool(eval(first_part,env));
+    bool second_value = object_to_bool(eval(second_part,env));
+    bool value = first_value && second_value;
+    return bool_to_object(value); 
+ }
+
+Object do_not (Object lvals, Env env)
+{
+    if(null(lvals))
+    {
+        toplevel_error("Cannot apply not : not enough arguments");
+    }
+    Object first_part = car(lvals);
+
+    bool value = object_to_bool(eval(first_part,env));
+
+    return bool_to_object(!value); 
+}
+    
 Object do_newline(Object lvals)
 {
     std::cout<<std::endl;
@@ -297,7 +348,7 @@ Object do_cond(Object lvals,Env env)
 {
      if(null(lvals))
      {
-          toplevel_error("Cannot apply cond : no valid predicate");
+          return nil();
      }
 
      Object pred_part = car(lvals);
