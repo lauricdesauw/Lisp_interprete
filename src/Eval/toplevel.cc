@@ -5,6 +5,7 @@
 #include "defs.hh"
 #include "error.hh"
 #include <string>
+#include "env.hh"
 #include <iostream>
 #include <cassert>
 
@@ -25,11 +26,15 @@ void Toplevel::go(bool use_prompt)
             {
                 handle_load(curr_obj, this);
             }
-            /*else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
+            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
-            }*/
+            }
+            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_printenv))
+            {
+                print_env(std::cout,global_env);
+            }
             else
             {
                 curr_obj = eval(curr_obj,global_env);

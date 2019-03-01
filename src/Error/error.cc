@@ -11,6 +11,11 @@ void error(Object obj, Env env, std::string s)
     throw Evaluation_exception(obj,env,s);
 }
 
+void error (std::string s)
+{
+    throw Evaluation_exception(t(),Env(),s);
+}
+
 void quit()
 {
     throw Quit_exception();

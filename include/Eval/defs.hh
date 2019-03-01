@@ -14,7 +14,6 @@ const Object lisp_if = symbol_to_object("if");
 Object do_if(Object l, Env env);
 
 const Object lisp_printenv = symbol_to_object("printenv");
-Object do_printenv(Object l, Env env);
 
 const std::string lisp_plus = ("+");
 Object do_plus(Object lvals);
@@ -101,7 +100,7 @@ Object do_load(Object l, Env env);
 const std::string lisp_callcc = ("call/cc");
 Object do_callcc(Object l, Env env);
 
-const std::string lisp_eval = ("eval");
+const Object lisp_eval = symbol_to_object("eval");
 Object do_eval(Object l, Env env);
 
 const std::string lisp_apply = ("apply");

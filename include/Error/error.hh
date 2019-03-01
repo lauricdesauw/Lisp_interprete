@@ -8,6 +8,7 @@
 #include "globals.hh"
 
 void error(Object obj, Env env, std::string s);
+void error(std::string s);
 void quit();
 
 class Custom_exception : public std::runtime_error
