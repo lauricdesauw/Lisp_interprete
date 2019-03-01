@@ -10,6 +10,8 @@ class Toplevel {
         static bool is_load_directive(Object obj);
         void handle_load_core(std::string file_name);
         void handle_load(Object obj);
+        bool DEBUG_MODE;
+        bool STAT_MODE;
 
     public:
         Toplevel();

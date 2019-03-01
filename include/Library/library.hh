@@ -40,6 +40,7 @@ std::ostream& print_object_aux(std::ostream& s, Object l,bool b);
 std::ostream& print_object(std::ostream& s, Object l);
 std::ostream& operator<<(std::ostream& s, Object l);
 std::ostream& print_type(std::ostream& s, Object l);
+void print_stats();
 
 // Derived function
 

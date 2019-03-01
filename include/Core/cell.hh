@@ -21,7 +21,8 @@ class Cell {
         virtual ~Cell();
         virtual type get_type() const = 0;
         void check() const;
-        int get_number_of_cells_parent();
+    public :
+        static int get_number_of_cells_parent();
 
     friend class API;
     friend class Cell_pair;
