@@ -21,15 +21,6 @@ bool eq(Object a, Object b)
 {
     check(a);
     check(b);
-    if(API::const_objectp(a) || API::const_objectp(b))
-    {
-        return a == b;
-    }
-
-    if(listp(a) && listp(b))
-    {
-        return a == b;
-    }
     if (numberp(a) && numberp(b))
     {
         return object_to_number(a) == object_to_number(b);
@@ -38,7 +29,7 @@ bool eq(Object a, Object b)
     {
         return object_to_string(a) == object_to_string(b);
     }
-    return false;
+    return a == b;
 }
 
 bool numberp(Object l) {return API::numberp(l);}

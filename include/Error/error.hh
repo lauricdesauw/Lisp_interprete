@@ -19,6 +19,7 @@ class Evaluation_exception : public std::runtime_error
         Evaluation_exception(Object _obj, Env _env, std::string _message);
 };
 void error(Object obj, Env env, std::string s);
+void error(std::string s);
 
 class Zipping_exception : public std::runtime_error
 {

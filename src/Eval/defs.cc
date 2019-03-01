@@ -8,36 +8,44 @@
 
 Object do_plus(Object lvals)
 {
+    if (null(lvals) || null(cdr(lvals)))
+        {error ("Cannot apply +: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     if (!numberp(a) || !numberp(b))
-        {error (lvals,Env(),"Cannot apply +: not a number");}
+        {error ("Cannot apply +: not a number");}
     return number_to_object( object_to_number(a)
                             + object_to_number(b) );
 }
 
 Object do_minus(Object lvals)
 {
+    if (null(lvals) || null(cdr(lvals)))
+        {error ("Cannot apply -: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     if (!numberp(a) || !numberp(b))
-        {error (lvals,Env(),"Cannot apply -: not a number");}
+        {error ("Cannot apply -: not a number");}
     return number_to_object( object_to_number(a)
                             - object_to_number(b) );
 }
 
 Object do_times(Object lvals)
 {
+    if (null(lvals) || null(cdr(lvals)))
+        {error ("Cannot apply *: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     if (!numberp(a) || !numberp(b))
-        {error (lvals,Env(),"Cannot apply *: not a number");}
+        {error ("Cannot apply *: not a number");}
     return number_to_object( object_to_number(a)
                             * object_to_number(b) );
 }
 
 Object do_eq(Object lvals)
 {
+    if (null(lvals) || null(cdr(lvals)))
+        {error ("Cannot apply =: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     return bool_to_object( eq(a,b) );
@@ -45,10 +53,12 @@ Object do_eq(Object lvals)
 
 Object do_inf(Object lvals)
 {
+    if (null(lvals) || null(cdr(lvals)))
+        {error ("Cannot apply +: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     if (!numberp(a) || !numberp(b))
-        {error (lvals,Env(),"Cannot apply <: not a number");}
+        {error ("Cannot apply <: not a number");}
     return bool_to_object( object_to_number(a) < object_to_number(b) );
 }
 
@@ -98,7 +108,7 @@ Object do_quote (Object l, Env env)
 {
     if (null(l))
     {
-        error(l,env,"Cannot quote");
+        error("Cannot quote");
     }
     return car(l);
 }
@@ -107,7 +117,7 @@ Object do_if (Object l, Env env)
 {
     if (null(l) || null(cdr(l)))
     {
-        error(l,env,"Cannot apply if: missing few arguements");
+        error("Cannot apply if: missing few arguements");
     }
     Object test = car(l);
     Object true_part = cadr(l);
@@ -119,7 +129,7 @@ Object do_if (Object l, Env env)
     }
     if (null(cdr(l,1)))
     {
-        error(l,env,"Cannot apply if: missing 'else' argument");
+        error("Cannot apply if: missing 'else' argument");
     }
     Object false_part = car(l,2);
     return eval(false_part,env);
@@ -174,7 +184,7 @@ Env do_define(Object lvals, Env env)
 {
      if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
      {
-          error(lvals,env,"Cannot define it: missing few arguments");
+          error("Cannot define it: missing few arguments");
      }
      std::string name = object_to_string(car(lvals));
      Object value = eval(cadr(lvals),env);
