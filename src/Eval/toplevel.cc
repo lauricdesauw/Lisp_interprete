@@ -3,6 +3,8 @@
 #include "eval.hh"
 #include "library.hh"
 #include "defs.hh"
+#include "error.hh"
+#include <string>
 #include <iostream>
 #include <cassert>
 
@@ -23,11 +25,11 @@ void Toplevel::go(bool use_prompt)
             {
                 handle_load(curr_obj, this);
             }
-            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
+            /*else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
-            }
+            }*/
             else
             {
                 curr_obj = eval(curr_obj,global_env);
@@ -58,10 +60,9 @@ void handle_load_core(std::string file_name, Toplevel* toplevel)
     {
         toplevel->go(true);
     }
-    catch(exception e)
+    catch(runtime_error e)
     {
         cout << "File " << file_name << " loaded!\n";
-        throw std::runtime_error("");
     }
 }
 
@@ -70,11 +71,11 @@ void handle_load(Object obj, Toplevel* toplevel)
   Object file_object = cadr( obj);
   assert(stringp(file_object));
   std::string file_path = object_to_string( file_object);
-  FILE* new_stream = fopen("test.lisp","r");
+  file_path = file_path.substr(1,file_path.length()-2);
+  cout << "CHEMIN = " << file_path << endl;
+  FILE* new_stream = fopen((file_path).c_str(),"r");
   change_lexer_input(new_stream);
-  cout << "Test test4"<< endl;
   handle_load_core( file_path, toplevel);
-  cout << "Test test5"<< endl;
   fclose(new_stream);
   change_lexer_input(stdin);
   toplevel->go(true);

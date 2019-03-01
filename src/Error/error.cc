@@ -16,8 +16,8 @@ void quit()
     throw Quit_exception();
 }
 
-Custom_exception::Custom_exception(msg) :
-    public std::runtime_error(msg)
+Custom_exception::Custom_exception(std::string msg) :
+    std::runtime_error(msg),
     message(msg)
 {};
 
