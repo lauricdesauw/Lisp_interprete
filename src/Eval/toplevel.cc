@@ -22,9 +22,9 @@ void Toplevel::go(bool use_prompt)
         {
             std::cout << "C++Lisp: ";
             Object curr_obj = read_object();
-            if(is_load_directive(curr_obj))
+            if(Toplevel::is_load_directive(curr_obj))
             {
-                handle_load(curr_obj, this);
+                handle_load(curr_obj);
             }
             else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
             {
@@ -42,7 +42,7 @@ void Toplevel::go(bool use_prompt)
                 print_type(std::cout,curr_obj);
             }
             std::cout << std::endl;
-        } catch (Custom_exception& e)
+       } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
                 cout << endl;
@@ -52,19 +52,19 @@ void Toplevel::go(bool use_prompt)
 
 // ----------------------------------------------------------//
 
-bool is_load_directive(Object obj)
+bool Toplevel::is_load_directive(Object obj)
 {
     if(!pairp(obj)){return false;}
     else if (!symbolp(car(obj))) {return false;}
     else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
 }
 
-void handle_load_core(std::string file_name, Toplevel* toplevel)
+void Toplevel::handle_load_core(std::string file_name)
 {
     cout << "Loading file " << file_name << "...\n";
     try
     {
-        toplevel->go(true);
+        go(true);
     }
     catch(runtime_error e)
     {
@@ -72,7 +72,7 @@ void handle_load_core(std::string file_name, Toplevel* toplevel)
     }
 }
 
-void handle_load(Object obj, Toplevel* toplevel)
+void Toplevel::handle_load(Object obj)
 {
   Object file_object = cadr( obj);
   assert(stringp(file_object));
@@ -80,8 +80,15 @@ void handle_load(Object obj, Toplevel* toplevel)
   file_path = file_path.substr(1,file_path.length()-2);
   FILE* new_stream = fopen((file_path).c_str(),"r");
   change_lexer_input(new_stream);
-  handle_load_core( file_path, toplevel);
+  handle_load_core( file_path);
   fclose(new_stream);
   change_lexer_input(stdin);
-  toplevel->go(true);
+  go(true);
+}
+
+void Toplevel::handle_load_from_string(std::string path)
+{
+    Object path_o = string_to_object("\"" + path +"\"");
+    Object load_o = symbol_to_object("load");
+    handle_load(cons(load_o,cons(path_o,nil())));
 }
