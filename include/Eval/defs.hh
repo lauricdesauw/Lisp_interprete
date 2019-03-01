@@ -103,10 +103,6 @@ Object do_cond(Object l, Env env);
 const std::string lisp_begin = ("begin");
 Object do_begin(Object l, Env env);
 
-
-const std::string lisp_debug = ("debug");
-Object do_debug(Object l, Env env);
-
 const std::string lisp_load = ("load");
 Object do_load(Object l, Env env);
 
@@ -118,3 +114,6 @@ Object do_eval(Object l, Env env);
 
 const std::string lisp_apply = ("apply");
 Object do_apply(Object l, Env env);
+
+const Object lisp_debug = symbol_to_object("debug");
+bool do_debug(Object l);

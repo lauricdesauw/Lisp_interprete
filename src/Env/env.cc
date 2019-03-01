@@ -1,26 +1,39 @@
 #include "env.hh"
 #include "error.hh"
 
+bool bindingp(Object obj)
+{
+    if (!pairp(obj)) {return false;}
+    if (!stringp(car(obj))) {return false;}
+    if (null(cdr(obj))) {return false;}
+    if (!null(cddr(obj))) {return false;}
+    else {return true;}
+}
+
+Object binding_value(Object obj)
+{
+    return cadr(obj);
+}
+
+std::string binding_name(Object obj)
+{
+    return object_to_string(car(obj));
+}
+
+
 Env make_env()
 {
     Env new_env = Env();
     return new_env;
 }
 
-bool bidingp(Object obj)
-{
-    bool b0 = listp(obj);
-    bool b1 = stringp(car(obj));
-    bool b2 = null(cddr(obj));
-    return (b0 && b1 && b2);
-}
 
 Env add_new_binding(std::string name, Object value, Env env)
 {
     check(value);
     Object s = string_to_object(name);
     Object res = cons (s,cons(value,nil()));
-    assert(bidingp(res));
+    assert(bindingp(res));
     return cons(res,env);
 }
 
@@ -60,7 +73,7 @@ Object find_value(Object obj, Env env)
         eval_error("'" + name + "' " + "Not found");
     }
     Object head = car(env);
-    std::string h_name = object_to_string(car(head));
+    std::string h_name = binding_name(head);
     if (h_name == name)
     {
         return(car(cdr(head)));
@@ -73,8 +86,8 @@ Object find_value(Object obj, Env env)
 
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
-    assert(bidingp(obj));
-    s << "(" << car(obj) << " = " << cadr(obj) << ")";
+    assert(bindingp(obj));
+    s << "(" << binding_name(obj) << " = " << binding_value(obj) << ")";
     return s;
 }
 
