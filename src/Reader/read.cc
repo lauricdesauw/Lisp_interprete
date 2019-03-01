@@ -9,11 +9,17 @@ using namespace std;
 
 extern Object get_read_object();
 extern int yyparse();
+extern FILE* yyin;
 extern void yyrestart(FILE* f);
 
 void change_lexer_input(FILE* stream)
 {
     yyrestart(stream);
+}
+
+FILE* get_lexer_input()
+{
+    return yyin;
 }
 
 Object read_object() {
