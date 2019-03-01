@@ -2,5 +2,5 @@ make
 echo
 echo Write quit to quit the interpretor
 
-./main
+./main init.lsp
 make mrproper
