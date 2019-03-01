@@ -80,5 +80,4 @@ const Object apply_subr(Object sub, Object lvals)
     {
         return do_newline(lvals);
     }
-
 }
