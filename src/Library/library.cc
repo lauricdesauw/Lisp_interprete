@@ -134,7 +134,7 @@ std::ostream& print_object_aux (std::ostream& s, Object l, bool b)
 
 std::ostream& print_object(std::ostream& s, Object l)
 {
-    print_object_aux(s,l,true);
+    print_object_aux(s,l,false);
     return s;
 }
 
