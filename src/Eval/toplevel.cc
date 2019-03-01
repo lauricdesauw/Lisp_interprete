@@ -55,6 +55,7 @@ void Toplevel::go(bool use_prompt)
 bool is_load_directive(Object obj)
 {
     if(!pairp(obj)){return false;}
+    else if (!symbolp(car(obj))) {return false;}
     else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
 }
 
@@ -77,7 +78,6 @@ void handle_load(Object obj, Toplevel* toplevel)
   assert(stringp(file_object));
   std::string file_path = object_to_string( file_object);
   file_path = file_path.substr(1,file_path.length()-2);
-  cout << "CHEMIN = " << file_path << endl;
   FILE* new_stream = fopen((file_path).c_str(),"r");
   change_lexer_input(new_stream);
   handle_load_core( file_path, toplevel);

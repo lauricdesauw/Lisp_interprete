@@ -62,8 +62,8 @@ std::string Cell_symbol::get_contents () const
 
 Cell_pair::Cell_pair (Cell* car_p, Cell* cdr_p) : Cell()
 {
-    //car -> check();
-    //cdr -> check();
+    car_p -> check();
+    cdr_p -> check();
     car = car_p;
     cdr = cdr_p;
 }

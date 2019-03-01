@@ -4,7 +4,7 @@
 const bool subrp(Object obj)
 {
     check(obj);
-    assert(symbolp(obj));
+    if (!symbolp(obj)) {return false;}
     std::string obj_s = object_to_string(obj);
     return ((obj_s == lisp_plus) ||
             (obj_s == lisp_times) ||
