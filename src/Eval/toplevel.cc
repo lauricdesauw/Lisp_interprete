@@ -3,6 +3,7 @@
 #include "eval.hh"
 #include "library.hh"
 #include "defs.hh"
+#include "env.hh"
 #include <iostream>
 
 Toplevel::Toplevel()
@@ -23,6 +24,15 @@ void Toplevel::go(bool use_prompt)
             {
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
+            }
+            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_printenv))
+            {
+                print_env(std::cout,global_env);
+            }
+            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_eval))
+            {
+                curr_obj = do_eval(do_eval(cadr(curr_obj),global_env),global_env);
+                std::cout << curr_obj << std::endl;
             }
             else
             {
