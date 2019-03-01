@@ -48,7 +48,7 @@ void Toplevel::go(bool use_prompt)
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
-                cout << "try............................ CATCH ! :) :) :) :)" << endl;
+                cout << "try............................ CATCH ! :) :) :) :)s" << endl;
                 cout << endl;
             }
     }
