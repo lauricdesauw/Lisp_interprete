@@ -45,7 +45,7 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
         {
             std::string name = object_to_string(car(lpars));
             Env new_env = add_new_binding(name,car(lvals),env);
-            return extend_largs_env(cdr(lpars),cdr(lvals),env);
+            return extend_largs_env(cdr(lpars),cdr(lvals),new_env);
         }
     }
 }

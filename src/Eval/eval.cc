@@ -74,7 +74,7 @@ Object apply (Object func, Object lvals, Env env)
     else
     {
         assert(pairp(func));
-        if(car(func) == lisp_lambda)
+        if(eq(car(func),lisp_lambda))
         {
             // The body of the lambda-expression *)
             Object body = car(func,2);
