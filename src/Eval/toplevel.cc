@@ -21,19 +21,20 @@ void Toplevel::go(bool use_prompt)
     {
         try
         {
-            if (b) {std::cout << "Miracles des miracles: ";b = false;}
-            else {std::cout << "Merveilles des merveilles: ";b = true;}
+            std::cout << std::endl << "Merveilles des merveilles: " ;
             Object curr_obj = read_object();
             if(Toplevel::is_load_directive(curr_obj))
             {
                 handle_load(curr_obj);
             }
-            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_define))
+            else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_define))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
             }
-            else if (listp(curr_obj) && !null(curr_obj) && eq(car(curr_obj),lisp_printenv))
+            else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_printenv))
             {
                 print_env(std::cout,global_env);
             }
@@ -41,12 +42,13 @@ void Toplevel::go(bool use_prompt)
             {
                 curr_obj = eval(curr_obj,global_env);
                 std::cout << curr_obj << std::endl;
-                print_type(std::cout,curr_obj);
             }
-            std::cout << std::endl;
+            std::cout << std::endl << "Miracles des miracles !"
+                << std::endl << std::endl;
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
+                cout << "try............................ CATCH ! :) :) :) :)" << endl;
                 cout << endl;
             }
     }
