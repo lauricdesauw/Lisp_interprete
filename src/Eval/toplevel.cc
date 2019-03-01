@@ -37,6 +37,11 @@ void Toplevel::go(bool use_prompt)
                  //DEBUG_MODE = do_debug(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_stats))
+            {
+                 STAT_MODE = do_stats(cdr(curr_obj));
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_printenv))
             {
                 print_env(std::cout,global_env);

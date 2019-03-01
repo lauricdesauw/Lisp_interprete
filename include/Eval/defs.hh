@@ -107,3 +107,6 @@ Object do_apply(Object l, Env env);
 
 const Object lisp_debug = symbol_to_object("debug");
 bool do_debug(Object l);
+
+const Object lisp_stats = symbol_to_object("stats");
+bool do_stats(Object l);

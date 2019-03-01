@@ -76,16 +76,28 @@ Object do_concat(Object lvals)
 
 Object do_car(Object lvals)
 {
+    if (null(lvals) || !listp(lvals) || null(car(lvals)))
+    {
+        toplevel_error("Cannot apply car: must a no-empty list in argument");
+    }
     return car(car(lvals));
 }
 
 Object do_cdr(Object lvals)
 {
+    if (null(lvals) || !listp(lvals) || null(car(lvals)))
+    {
+        toplevel_error("Cannot apply cdr: must a no-empty list in argument");
+    }
     return cdr(car(lvals));
 }
 
 Object do_cons(Object lvals)
 {
+    if (null(lvals) || !listp(lvals) || null(car(lvals)) || null(cdr(lvals)))
+    {
+        toplevel_error("Cannot apply car: must a no-empty list in argument");
+    }
     return cons(car(lvals),(cadr(lvals)));
 }
 
@@ -272,6 +284,14 @@ bool do_debug(Object l)
     return (object_to_bool(car(l)));
 }
 
+bool do_stats(Object l)
+{
+    if (null(l) || !boolp(car(l)))
+    {
+        toplevel_error("Cannot use stats mode: not a bool");
+    }
+    return (object_to_bool(car(l)));
+}
 
 Object do_cond(Object lvals,Env env)
 {
