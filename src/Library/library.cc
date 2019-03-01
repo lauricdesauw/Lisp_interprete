@@ -168,3 +168,8 @@ std::ostream& print_type(std::ostream& s, Object l)
     }
     return s;
 }
+
+void print_stats()
+{
+    API::print_stats(); 
+}
