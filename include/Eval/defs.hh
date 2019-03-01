@@ -18,6 +18,15 @@ const Object lisp_printenv = symbol_to_object("printenv");
 const Object lisp_display = symbol_to_object("display");
 Object do_display(Object lvals);
 
+const Object lisp_or = symbol_to_object("or");
+Object do_or(Object lvals, Env env);
+
+const Object lisp_and = symbol_to_object("and");
+Object do_and(Object lvals, Env env);
+
+const Object lisp_not = symbol_to_object("not");
+Object do_not(Object lvals, Env env);
+
 const std::string lisp_plus = ("+");
 Object do_plus(Object lvals);
 
@@ -32,6 +41,7 @@ Object do_eq(Object lvals);
 
 const std::string lisp_inf = ("<");
 Object do_inf(Object lvals);
+
 
 const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
@@ -93,10 +103,6 @@ Object do_cond(Object l, Env env);
 const std::string lisp_begin = ("begin");
 Object do_begin(Object l, Env env);
 
-
-const std::string lisp_debug = ("debug");
-Object do_debug(Object l, Env env);
-
 const std::string lisp_load = ("load");
 Object do_load(Object l, Env env);
 
@@ -108,3 +114,9 @@ Object do_eval(Object l, Env env);
 
 const std::string lisp_apply = ("apply");
 Object do_apply(Object l, Env env);
+
+const Object lisp_debug = symbol_to_object("debug");
+bool do_debug(Object l);
+
+const Object lisp_stats = symbol_to_object("stats");
+bool do_stats(Object l);

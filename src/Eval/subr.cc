@@ -11,12 +11,15 @@ const bool subrp(Object obj)
             (obj_s == lisp_minus) ||
             (obj_s == lisp_eq) ||
             (obj_s == lisp_inf) ||
-            (obj_s == lisp_concat)||
-            (obj_s == lisp_numberp)||
-            (obj_s == lisp_stringp)||
-            (obj_s == lisp_listp)||
-            (obj_s == lisp_nullp)||
-            (obj_s == lisp_newline));
+            (obj_s == lisp_concat) ||
+            (obj_s == lisp_numberp) ||
+            (obj_s == lisp_stringp) ||
+            (obj_s == lisp_listp) ||
+            (obj_s == lisp_nullp) ||
+            (obj_s == lisp_newline) ||
+            (obj_s == lisp_car) ||
+            (obj_s == lisp_cdr) ||
+            (obj_s == lisp_cons));
 }
 
 const Object apply_subr(Object sub, Object lvals)
@@ -80,5 +83,16 @@ const Object apply_subr(Object sub, Object lvals)
     {
         return do_newline(lvals);
     }
-
+    if (sub_string == lisp_car)
+    {
+        return do_car(lvals);
+    }
+    if (sub_string == lisp_cdr)
+    {
+        return do_cdr(lvals);
+    }
+    if (sub_string == lisp_cons)
+    {
+        return do_cons(lvals);
+    }
 }

@@ -2,5 +2,5 @@
 
 class Cell;
 
-using Object = Cell *;
+using Object = Cell*;
 using Env = Object;

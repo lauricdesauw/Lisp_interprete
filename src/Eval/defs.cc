@@ -54,7 +54,7 @@ Object do_eq(Object lvals)
 Object do_inf(Object lvals)
 {
     if (null(lvals) || null(cdr(lvals)))
-        {toplevel_error ("Cannot apply +: missing few arguments");}
+        {toplevel_error ("Cannot apply <: missing few arguments");}
     Object a = car(lvals);
     Object b = cadr(lvals);
     if (!numberp(a) || !numberp(b))
@@ -76,16 +76,28 @@ Object do_concat(Object lvals)
 
 Object do_car(Object lvals)
 {
+    if (null(lvals) || !listp(lvals) || null(car(lvals)))
+    {
+        toplevel_error("Cannot apply car: must a no-empty list in argument");
+    }
     return car(car(lvals));
 }
 
 Object do_cdr(Object lvals)
 {
+    if (null(lvals) || !listp(lvals) || null(car(lvals)))
+    {
+        toplevel_error("Cannot apply cdr: must a no-empty list in argument");
+    }
     return cdr(car(lvals));
 }
 
 Object do_cons(Object lvals)
 {
+    if (null(lvals) || !listp(lvals) || null(car(lvals)) || null(cdr(lvals)))
+    {
+        toplevel_error("Cannot apply car: must a no-empty list in argument");
+    }
     return cons(car(lvals),(cadr(lvals)));
 }
 
@@ -104,40 +116,40 @@ Object do_display(Object lvals)
 
 /*******************************************/
 
-Object do_quote (Object l, Env env)
+Object do_quote (Object lvals, Env env)
 {
-    if (null(l))
+    if (null(lvals))
     {
         toplevel_error("Cannot quote");
     }
-    return car(l);
+    return car(lvals);
 }
 
-Object do_if (Object l, Env env)
+Object do_if (Object lvals, Env env)
 {
-    if (null(l) || null(cdr(l)))
+    if (null(lvals) || null(cdr(lvals)))
     {
         toplevel_error("Cannot apply if: missing few arguements");
     }
-    Object test = car(l);
-    Object true_part = cadr(l);
+    Object test = car(lvals);
+    Object true_part = cadr(lvals);
     Object test_value = eval(test,env);
 
     if (object_to_bool(test_value))
     {
         return (eval(true_part,env));
     }
-    if (null(cdr(l,1)))
+    if (null(cdr(lvals,1)))
     {
-        toplevel_error("Cannot apply if: missing 'else' argument");
+        return nil();
     }
-    Object false_part = car(l,2);
+    Object false_part = car(lvals,2);
     return eval(false_part,env);
 }
 
-Object do_lambda (Object l, Env env)
+Object do_lambda (Object lvals, Env env)
 {
-    return l;
+    return lvals;
 }
 
 Object do_while(Object lvals, Env env)
@@ -153,6 +165,57 @@ Object do_while(Object lvals, Env env)
     }
 }
 
+Object do_or (Object lvals, Env env)
+{
+    if(null(lvals))
+    {
+        toplevel_error("Cannot apply or : not enough arguments");
+    }
+    if(null(cdr(lvals)))
+    {
+        toplevel_error("Cannot apply or : not enough arguments");
+    }
+    Object first_part = car(lvals);
+    Object second_part = cadr(lvals);
+
+    bool first_value = object_to_bool(eval(first_part,env));
+    bool second_value = object_to_bool(eval(second_part,env));
+    bool value = first_value || second_value;
+    return bool_to_object(value); 
+}
+
+Object do_and (Object lvals, Env env)
+{
+    if(null(lvals))
+    {
+        toplevel_error("Cannot apply and : not enough arguments");
+    }
+    if(null(cdr(lvals)))
+    {
+        toplevel_error("Cannot apply and : not enough arguments");
+    }
+    Object first_part = car(lvals);
+    Object second_part = cadr(lvals);
+
+    bool first_value = object_to_bool(eval(first_part,env));
+    bool second_value = object_to_bool(eval(second_part,env));
+    bool value = first_value && second_value;
+    return bool_to_object(value); 
+ }
+
+Object do_not (Object lvals, Env env)
+{
+    if(null(lvals))
+    {
+        toplevel_error("Cannot apply not : not enough arguments");
+    }
+    Object first_part = car(lvals);
+
+    bool value = object_to_bool(eval(first_part,env));
+
+    return bool_to_object(!value); 
+}
+    
 Object do_newline(Object lvals)
 {
     std::cout<<std::endl;
@@ -182,27 +245,37 @@ Object do_listp(Object lvals)
 
 Env do_define(Object lvals, Env env)
 {
-     if (null(lvals) || !symbolp(car(lvals)) || null(cdr(lvals)))
-     {
-          toplevel_error("Cannot define it: missing few arguments");
-     }
-     Object value;
-     if ( !null(cdr(lvals,1)) && listp(cadr(lvals)) && listp(car(lvals,2)))
-     {
-        Object param = cadr(lvals);
-        Object func = cdr(lvals,1);
-        value = cons(lisp_lambda,cons(param,func));;
-     }
-     else
-     {
+    if (null(lvals) || null(cdr(lvals)))
+    {
+        toplevel_error("Cannot define it: missing few arguments");
+    }
+    if (!symbolp(car(lvals)) && !listp(car(lvals)))
+    {
+        toplevel_error("Cannot define it: first element must be a symbol or a list");
+    }
+    Object value;
+    std::string name;
+    if (listp(car(lvals)))
+    {
+        if (null(car(lvals)))
+            {
+                toplevel_error("Cannot define it: first element cannot be nil");
+            }
+         name = object_to_string(car(car(lvals)));
+         Object param = cdr(car(lvals));
+         Object func = cdr(lvals);
+         value = cons(lisp_lambda,cons(param,func));;
+    }
+    else
+    {
+         name = object_to_string(car(lvals));
          value = eval(cadr(lvals),env);
-     }
-     std::string name = object_to_string(car(lvals));
-     std::cout << name << " = " << value << std::endl;
-     return add_new_binding(name,value,env);
+    }
+    std::cout << name << " = " << value << std::endl;
+    return add_new_binding(name,value,env);
 }
 
-Env do_let (Object lvals, Env env)
+Object do_let (Object lvals, Env env)
 {
     if ( null(lvals) || null(cdr(lvals)))
     {
@@ -213,12 +286,26 @@ Env do_let (Object lvals, Env env)
     Object value = nil();
     while (!null(var))
     {
-        param = cons(car(car(var)),param);
-        value = cons(cadr(car(var)),value);
+        if (!listp(car(var)))
+        {
+            toplevel_error("Cannot apply let: arguments must be lists");
+        }
+        if (!null(car(var)) && null(cdr(car(var))))
+        {
+            toplevel_error("Cannot apply let: arguments must have 2 elements");
+        }
+        if (!null(car(var)))
+        {
+            param = cons(car(car(var)),param);
+            if (!symbolp(param))
+            {
+                toplevel_error("Cannot apply let: names must be symbols");
+            }
+            value = cons(cadr(car(var)),value);
+        }
         var = cdr(var);
     }
     Object func = cons(lisp_lambda,cons(param,cdr(lvals)));
-    std::cout << cons(func,value) << std::endl;
     return eval(cons(func,value),env);
 }
 
@@ -239,11 +326,29 @@ Object do_eval(Object lvals, Env env)
     return eval(lvals,env);
 }
 
-Object do_cond(Object lvals, Env env)
+bool do_debug(Object l)
+{
+    if (null(l) || !boolp(car(l)))
+    {
+        toplevel_error("Cannot use debug mode: not a bool");
+    }
+    return (object_to_bool(car(l)));
+}
+
+bool do_stats(Object l)
+{
+    if (null(l) || !boolp(car(l)))
+    {
+        toplevel_error("Cannot use stats mode: not a bool");
+    }
+    return (object_to_bool(car(l)));
+}
+
+Object do_cond(Object lvals,Env env)
 {
      if(null(lvals))
      {
-          toplevel_error("Cannot apply cond : no valid predicate");
+          return nil();
      }
 
      Object pred_part = car(lvals);

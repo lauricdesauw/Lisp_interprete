@@ -4,6 +4,7 @@
 #include "library.hh"
 #include "defs.hh"
 #include "error.hh"
+#include "globals.hh"
 #include <string>
 #include "env.hh"
 #include <iostream>
@@ -14,7 +15,6 @@ Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
 
 void Toplevel::go(bool use_prompt)
 {
-    bool b = true;
     while(true)
     {
         try
@@ -32,6 +32,16 @@ void Toplevel::go(bool use_prompt)
                 global_env = do_define(a,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_debug))
+            {
+                 //DEBUG_MODE = do_debug(cdr(curr_obj));
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_stats))
+            {
+                 STAT_MODE = do_stats(cdr(curr_obj));
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_printenv))
             {
                 print_env(std::cout,global_env);
@@ -43,11 +53,12 @@ void Toplevel::go(bool use_prompt)
             }
             std::cout << std::endl << "Miracles des miracles !"
                 << std::endl << std::endl;
+
             if(STAT_MODE){print_stats();}
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
-                cout << "try............................ CATCH ! :) :) :) :)s" << endl;
+                cout << "try............................ CATCH! :) :) :) :)" << endl;
                 cout << endl;
             }
     }
