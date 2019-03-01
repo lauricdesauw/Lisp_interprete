@@ -55,6 +55,7 @@ void Toplevel::go(bool use_prompt)
 bool is_load_directive(Object obj)
 {
     if(!pairp(obj)){return false;}
+    else if (!symbolp(car(obj))) {return false;}
     else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
 }
 
