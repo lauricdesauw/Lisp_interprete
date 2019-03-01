@@ -14,7 +14,14 @@ extern void yyrestart(FILE* f);
 
 void change_lexer_input(FILE* stream)
 {
-    yyrestart(stream);
+    if(stream == stdin)
+    {
+        yyrestart(stream);
+    }
+    else
+    {
+        yyin = stream;
+    }
 }
 
 FILE* get_lexer_input()
