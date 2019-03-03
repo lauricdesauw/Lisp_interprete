@@ -43,6 +43,11 @@ void Toplevel::go(bool use_prompt)
                  //DEBUG_MODE = do_debug(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_stats))
+            {
+                 STAT_MODE = do_stats(cdr(curr_obj));
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_printenv))
             {
                 print_env(std::cout,global_env);
@@ -97,12 +102,12 @@ void Toplevel::handle_load(Object obj)
     if(new_stream == nullptr){throw Toplevel_exception("File does not exists");}
     else
     {
+        FILE* current_input = get_lexer_input();
         change_lexer_input(new_stream);
         handle_load_core( file_path);
         fclose(new_stream);
-        change_lexer_input(stdin);
+        change_lexer_input(current_input);
     }
-    go(true);
 }
 
 void Toplevel::handle_load_from_string(std::string path)

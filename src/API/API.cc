@@ -137,7 +137,10 @@ Object API::car(Object l)
 {
     check(l);
     assert(l->get_type() == Cell::type::PAIR);
-    return dynamic_cast<Cell_pair*>(l)->Cell_pair::get_car();
+    Cell_pair* pair = dynamic_cast<Cell_pair*>(l);
+    if(pair == nullptr){return nil();}
+    else {return pair->Cell_pair::get_car();}
+
 }
 
 
@@ -145,7 +148,9 @@ Object API::cdr(Object l)
 {
     check(l);
     assert(l->get_type() == Cell::type::PAIR);
-    return dynamic_cast<Cell_pair*>(l)->Cell_pair::get_cdr();
+    Cell_pair* pair = dynamic_cast<Cell_pair*>(l);
+    if(pair == nullptr){return nil();}
+    else{return pair->Cell_pair::get_cdr();}
 }
 
 // Object conversion
@@ -177,7 +182,9 @@ int API::object_to_number (Object l)
 {
     check(l);
     assert(numberp(l));
-    return dynamic_cast<Cell_number*>(l)->get_contents();
+    Cell_number* number = dynamic_cast<Cell_number*>(l);
+    assert(number != nullptr);
+    return number->get_contents();
 }
 
 std::string API::object_to_string (Object l)
@@ -186,9 +193,13 @@ std::string API::object_to_string (Object l)
     assert(stringp(l) || symbolp(l));
     if (stringp(l))
     {
-        return dynamic_cast<Cell_string*>(l)->get_contents();
+        Cell_string* str = dynamic_cast<Cell_string*>(l);
+        assert(str != nullptr);
+        return str->get_contents();
     }
-    return dynamic_cast<Cell_symbol*>(l)->get_contents();
+    Cell_symbol* symbol = dynamic_cast<Cell_symbol*>(l);
+    assert(symbol != nullptr);
+    return symbol->get_contents();
 }
 
 bool API::object_to_bool (Object l)

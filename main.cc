@@ -17,6 +17,7 @@ int main(int argc,char* argv[]) {
                 break;
             case 2 :
                 toplevel.handle_load_from_string(argv[1]);
+                toplevel.go(true);
                 break;
             default :
                 toplevel.go(true);
