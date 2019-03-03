@@ -99,7 +99,13 @@ Object find_value(Object obj, Env env)
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
     assert(bindingp(obj));
-    s << "(" << binding_name(obj) << " = " << binding_value(obj) << ")";
+    Object val = binding_value(obj);
+    s << "(" << binding_name(obj) << " = " << val;
+    if(!is_static(val)) {
+        s << " : closure";
+        print_env(s,get_closure(val));
+    }
+    s << ")";
     return s;
 }
 
