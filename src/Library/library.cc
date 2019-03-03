@@ -47,6 +47,19 @@ int object_to_number(Object l) {return API::object_to_number(l);}
 std::string object_to_string(Object l) {return API::object_to_string(l);}
 bool object_to_bool(Object l) {return API::object_to_bool(l);}
 
+bool is_static(Object obj){
+    return (API::is_static(obj));
+}
+
+Env get_closure(Object obj){
+    return (API::get_closure(obj));
+}
+
+void set_closure(Object obj, Env env)
+{
+    API::set_closure(obj,env);
+}
+
 Object car(Object l, int n)
 {
     assert(n >= 0);
@@ -170,5 +183,5 @@ std::ostream& print_type(std::ostream& s, Object l)
 
 void print_stats()
 {
-    API::print_stats(); 
+    API::print_stats();
 }

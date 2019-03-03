@@ -36,6 +36,10 @@ int object_to_number(Object l);
 std::string object_to_string(Object l);
 bool object_to_bool(Object l);
 
+bool is_static(Object obj);
+Env get_closure(Object obj);
+void set_closure(Object obj, Env env);
+
 std::ostream& print_object_aux(std::ostream& s, Object l,bool b);
 std::ostream& print_object(std::ostream& s, Object l);
 std::ostream& operator<<(std::ostream& s, Object l);

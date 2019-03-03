@@ -32,6 +32,12 @@ void Toplevel::go()
                 global_env = do_define(a,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
+                                    && eq(car(curr_obj),lisp_definestat))
+            {
+                Object a = cdr(curr_obj);
+                global_env = do_definestat(a,global_env);
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_debug))
             {
                  //DEBUG_MODE = do_debug(cdr(curr_obj));

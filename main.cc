@@ -8,7 +8,6 @@ using namespace std;
 int main(int argc,char* argv[]) {
 
     Toplevel toplevel;
-
     try
     {
         switch(argc)

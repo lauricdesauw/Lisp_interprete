@@ -7,7 +7,9 @@ Cell::Cell()
 {
     magic = (uint64_t) this;
     ++ number_of_cells_parent;
+    closure = Env();
 }
+
 
 void Cell::check() const
 {
@@ -24,6 +26,18 @@ Cell::~Cell()
 {
     check();
     clean();
+}
+
+void Cell::set_closure(Env env){
+    closure = env;
+}
+
+Env Cell::get_closure(){
+    return closure;
+}
+
+bool Cell::is_static(){
+    return(closure == nullptr);
 }
 
 int Cell::get_number_of_cells_parent()

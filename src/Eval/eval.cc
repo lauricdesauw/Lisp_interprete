@@ -84,7 +84,11 @@ Object apply (Object func, Object lvals, Env env)
     }
     if(symbolp(func))
     {
-        return apply(eval(func,env),lvals,env);
+        Object new_func = eval(func,env);
+        if(!is_static(new_func)) {
+            return apply(new_func,lvals,get_closure(new_func));
+        }
+        return apply(new_func,lvals,env);
     }
     assert(pairp(func));
     if(eq(car(func),lisp_lambda))
