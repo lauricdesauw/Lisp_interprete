@@ -37,7 +37,19 @@ Env add_new_binding(std::string name, Object value, Env env)
     return cons(res,env);
 }
 
-Env extend_largs_env(Object lpars, Object lvals, Env env) {
+Env add_new_binding_stat(std::string name, Object value, Env env)
+{
+    check(value);
+    Object s = string_to_object(name);
+    set_closure(value,env);
+    Object res = cons (s,cons(value,nil()));
+    assert(bindingp(res));
+    return cons(res,env);
+}
+
+
+Env extend_largs_env(Object lpars, Object lvals, Env env)
+{
     if (null(lpars))
     {
         if (!null(lvals))

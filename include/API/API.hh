@@ -38,6 +38,10 @@ class API {
         static std::string object_to_string(Object l);
         static bool object_to_bool(Object l);
 
+        static bool is_static(Object l);
+        static Env get_closure(Object l);
+        static void set_closure(Object l, Env env);
+
     private:
         static const Object object_nil;
         static const Object object_t;

@@ -81,6 +81,9 @@ Object do_while(Object l, Env env);
 const Object lisp_define = symbol_to_object("define");
 Env do_define(Object l, Env env);
 
+const Object lisp_definestat = symbol_to_object("definestat");
+Env do_definestat(Object l, Env env);
+
 const Object lisp_let = symbol_to_object("let");
 Object do_let(Object l, Env env);
 

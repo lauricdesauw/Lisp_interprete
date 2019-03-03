@@ -200,3 +200,15 @@ bool API::object_to_bool (Object l)
     }
     return true;
 }
+
+bool API::is_static(Object l){
+    return l->is_static();
+}
+
+Env API::get_closure(Object l){
+    return l->get_closure();
+}
+
+void API::set_closure(Object l, Env env) {
+    l->set_closure(env);
+}

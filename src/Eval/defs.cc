@@ -212,6 +212,38 @@ Env do_define(Object lvals, Env env)
     return add_new_binding(name,value,env);
 }
 
+Env do_definestat(Object lvals, Env env)
+{
+    if (null(lvals) || null(cdr(lvals)))
+    {
+        toplevel_error("Cannot define it: missing few arguments");
+    }
+    if (!symbolp(car(lvals)) && !listp(car(lvals)))
+    {
+        toplevel_error("Cannot define it: first element must be a symbol or a list");
+    }
+    Object value;
+    std::string name;
+    if (listp(car(lvals)))
+    {
+        if (null(car(lvals)))
+            {
+                toplevel_error("Cannot define it: first element cannot be nil");
+            }
+         name = object_to_string(car(car(lvals)));
+         Object param = cdr(car(lvals));
+         Object func = cdr(lvals);
+         value = cons(lisp_lambda,cons(param,func));;
+    }
+    else
+    {
+         name = object_to_string(car(lvals));
+         value = eval(cadr(lvals),env);
+    }
+    std::cout << name << " = " << value << std::endl;
+    return add_new_binding_stat(name,value,env);
+}
+
 Object do_let (Object lvals, Env env)
 {
     if ( null(lvals) || null(cdr(lvals)))

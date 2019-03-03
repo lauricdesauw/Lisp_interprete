@@ -81,7 +81,12 @@ Object apply (Object func, Object lvals, Env env)
     }
     if(symbolp(func))
     {
-        return apply(eval(func,env),lvals,env);
+        Object new_func = eval(func,env);
+        std::cout << new_func << std::endl;
+        if(!is_static(new_func)) {
+            return apply(new_func,lvals,get_closure(new_func));
+        }
+        return apply(new_func,lvals,env);
     }
     else
     {
