@@ -6,6 +6,8 @@
 #include "env.hh"
 #include <iostream>
 
+/************* Arithmetic operations **********/
+
 Object do_plus(Object lvals)
 {
     if (null(lvals) || null(cdr(lvals)))
@@ -62,6 +64,8 @@ Object do_inf(Object lvals)
     return bool_to_object( object_to_number(a) < object_to_number(b) );
 }
 
+/************* String operations **********/
+
 Object do_concat_aux(Object lvals, bool b)
 {
     if (null(lvals))
@@ -90,6 +94,8 @@ Object do_concat(Object lvals)
     return do_concat_aux(lvals,true);
 }
 
+/************* List operations **********/
+
 Object do_car(Object lvals)
 {
     if (null(lvals) || !listp(lvals) || null(car(lvals)))
@@ -117,29 +123,34 @@ Object do_cons(Object lvals)
     return cons(car(lvals),(cadr(lvals)));
 }
 
-Object do_read()
+/************* Type tests **********/
+
+Object do_nullp(Object lvals)
 {
-    return read_object();
+    return bool_to_object(null(car(lvals)));
 }
 
-Object do_display(Object lvals)
+Object do_stringp(Object lvals)
 {
-    Object obj = car(lvals);
-    print_object(std::cout,obj);
-    std::cout<<std::flush;
-    return obj;
+    return bool_to_object(stringp(car(lvals)));
 }
 
-/*******************************************/
-
-Object do_quote (Object lvals)
+Object do_numberp(Object lvals)
 {
-    if (null(lvals))
-    {
-        toplevel_error("Cannot quote");
-    }
-    return car(lvals);
+    return bool_to_object(numberp(car(lvals)));
 }
+
+Object do_symbolp(Object lvals)
+{
+    return bool_to_object(symbolp(car(lvals)));
+}
+
+Object do_listp(Object lvals)
+{
+    return bool_to_object(listp(car(lvals)));
+}
+
+/***************** Loops and conditions ************/
 
 Object do_if (Object lvals, Env env)
 {
@@ -163,11 +174,6 @@ Object do_if (Object lvals, Env env)
     return eval(false_part,env);
 }
 
-Object do_lambda (Object lvals)
-{
-    return lvals;
-}
-
 Object do_while(Object lvals, Env env)
 {
     Object test_part = car(lvals);
@@ -180,6 +186,32 @@ Object do_while(Object lvals, Env env)
         eval(body_part,env);
     }
     return nil();
+}
+
+Object do_cond(Object lvals,Env env)
+{
+    if(null(lvals))
+    {
+        return nil();
+    }
+
+    Object pred_part = car(lvals);
+
+    if(null(pred_part) || null(cdr(pred_part)))
+    {
+        toplevel_error("Cannot apply cond : unvalid predicate");
+    }
+
+    Object cond_part = car(pred_part);
+    Object body_part = cadr(pred_part);
+
+    Object test_value = eval(cond_part,env);
+
+    if(object_to_bool(test_value))
+    {
+        return eval(body_part,env);
+    }
+    return do_cond(cdr(lvals),env);
 }
 
 Object do_or (Object lvals, Env env)
@@ -218,7 +250,7 @@ Object do_and (Object lvals, Env env)
     bool second_value = object_to_bool(eval(second_part,env));
     bool value = first_value && second_value;
     return bool_to_object(value);
- }
+}
 
 Object do_not (Object lvals, Env env)
 {
@@ -233,32 +265,7 @@ Object do_not (Object lvals, Env env)
     return bool_to_object(!value);
 }
 
-Object do_newline()
-{
-    std::cout<<std::endl;
-    return nil();
-}
-
-
-Object do_nullp(Object lvals)
-{
-    return bool_to_object(null(car(lvals)));
-}
-
-Object do_stringp(Object lvals)
-{
-    return bool_to_object(stringp(car(lvals)));
-}
-
-Object do_numberp(Object lvals)
-{
-    return bool_to_object(numberp(car(lvals)));
-}
-
-Object do_listp(Object lvals)
-{
-    return bool_to_object(listp(car(lvals)));
-}
+/****************** Environnement gestion *********************/
 
 Env do_define(Object lvals, Env env)
 {
@@ -275,18 +282,18 @@ Env do_define(Object lvals, Env env)
     if (listp(car(lvals)))
     {
         if (null(car(lvals)))
-            {
-                toplevel_error("Cannot define it: first element cannot be nil");
-            }
-         name = object_to_string(car(car(lvals)));
-         Object param = cdr(car(lvals));
-         Object func = cdr(lvals);
-         value = cons(lisp_lambda,cons(param,func));;
+        {
+            toplevel_error("Cannot define it: first element cannot be nil");
+        }
+        name = object_to_string(car(car(lvals)));
+        Object param = cdr(car(lvals));
+        Object func = cdr(lvals);
+        value = cons(lisp_lambda,cons(param,func));;
     }
     else
     {
-         name = object_to_string(car(lvals));
-         value = eval(cadr(lvals),env);
+        name = object_to_string(car(lvals));
+        value = eval(cadr(lvals),env);
     }
     std::cout << name << " = " << value << std::endl;
     return add_new_binding(name,value,env);
@@ -307,18 +314,18 @@ Env do_definestat(Object lvals, Env env)
     if (listp(car(lvals)))
     {
         if (null(car(lvals)))
-            {
-                toplevel_error("Cannot define it: first element cannot be nil");
-            }
-         name = object_to_string(car(car(lvals)));
-         Object param = cdr(car(lvals));
-         Object func = cdr(lvals);
-         value = cons(lisp_lambda,cons(param,func));;
+        {
+            toplevel_error("Cannot define it: first element cannot be nil");
+        }
+        name = object_to_string(car(car(lvals)));
+        Object param = cdr(car(lvals));
+        Object func = cdr(lvals);
+        value = cons(lisp_lambda,cons(param,func));;
     }
     else
     {
-         name = object_to_string(car(lvals));
-         value = eval(cadr(lvals),env);
+        name = object_to_string(car(lvals));
+        value = eval(cadr(lvals),env);
     }
     std::cout << name << " = " << value << std::endl;
     return add_new_binding_stat(name,value,env);
@@ -358,6 +365,22 @@ Object do_let (Object lvals, Env env)
     return eval(cons(func,value),env);
 }
 
+/**************** Evaluation ********************/
+
+Object do_lambda (Object lvals)
+{
+    return lvals;
+}
+
+Object do_quote (Object lvals)
+{
+    if (null(lvals))
+    {
+        toplevel_error("Cannot quote");
+    }
+    return car(lvals);
+}
+
 Object do_eval(Object lvals, Env env)
 {
     if (null(lvals))
@@ -375,6 +398,29 @@ Object do_eval(Object lvals, Env env)
     return eval(lvals,env);
 }
 
+/********************* Global gestion ***************/
+
+Object do_display(Object lvals)
+{
+    Object obj = car(lvals);
+    print_object(std::cout,obj);
+    std::cout<<std::flush;
+    return obj;
+}
+
+Object do_read()
+{
+    return read_object();
+}
+
+Object do_newline()
+{
+    std::cout<<std::endl;
+    return nil();
+}
+
+/**************** Debug and stats mode  ***********/
+
 bool do_debug(Object l)
 {
     if (null(l) || !boolp(car(l)))
@@ -391,30 +437,4 @@ bool do_stats(Object l)
         toplevel_error("Cannot use stats mode: not a bool");
     }
     return (object_to_bool(car(l)));
-}
-
-Object do_cond(Object lvals,Env env)
-{
-     if(null(lvals))
-     {
-          return nil();
-     }
-
-     Object pred_part = car(lvals);
-
-     if(null(pred_part) || null(cdr(pred_part)))
-     {
-          toplevel_error("Cannot apply cond : unvalid predicate");
-     }
-
-     Object cond_part = car(pred_part);
-     Object body_part = cadr(pred_part);
-
-     Object test_value = eval(cond_part,env);
-
-     if(object_to_bool(test_value))
-     {
-          return eval(body_part,env);
-     }
-     return do_cond(cdr(lvals),env);
 }

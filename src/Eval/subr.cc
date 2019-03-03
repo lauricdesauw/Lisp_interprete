@@ -14,6 +14,7 @@ bool subrp(Object obj)
             (obj_s == lisp_concat) ||
             (obj_s == lisp_numberp) ||
             (obj_s == lisp_stringp) ||
+            (obj_s == lisp_symbolp) ||
             (obj_s == lisp_listp) ||
             (obj_s == lisp_nullp) ||
             (obj_s == lisp_newline) ||
@@ -70,6 +71,10 @@ Object apply_subr(Object sub, Object lvals)
     if (sub_string == lisp_stringp)
     {
         return do_stringp(lvals);
+    }
+    if (sub_string == lisp_symbolp)
+    {
+        return do_symbolp(lvals);
     }
     if (sub_string == lisp_listp)
     {

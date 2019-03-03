@@ -2,14 +2,6 @@
 
 #include "library.hh"
 
-/************* Logical operations *************/
-
-const std::string lisp_eq = ("=");
-Object do_eq(Object lvals);
-
-const std::string lisp_inf = ("<");
-Object do_inf(Object lvals);
-
 /************* Arithmetic operations **********/
 
 const std::string lisp_plus = ("+");
@@ -20,6 +12,12 @@ Object do_minus(Object lvals);
 
 const std::string lisp_times = ("*");
 Object do_times(Object lvals);
+
+const std::string lisp_eq = ("=");
+Object do_eq(Object lvals);
+
+const std::string lisp_inf = ("<");
+Object do_inf(Object lvals);
 
 /************** String operations ***********/
 
