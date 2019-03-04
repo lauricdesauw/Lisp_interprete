@@ -1,7 +1,7 @@
 #pragma once
 
-#include "library.hh"
 #include "error.hh"
+#include "library.hh"
 
 // Binding related functions
 bool bindingp(Object obj);
@@ -21,4 +21,4 @@ Env extend_largs_env(Object lpars, Object lvals, Env env);
 Object find_value(Object obj, Env env);
 
 // Print data
-std::ostream& print_env(std::ostream& s, Env env);
+std::ostream &print_env(std::ostream &s, Env env);

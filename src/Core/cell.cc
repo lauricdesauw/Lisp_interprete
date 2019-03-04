@@ -3,35 +3,24 @@
 
 int Cell::number_of_cells_parent = 0;
 
-Cell::Cell() : Collectable()
-{
-    ++ number_of_cells_parent;
-    closure = Env();
+Cell::Cell() : Collectable() {
+  ++number_of_cells_parent;
+  closure = Env();
 }
 
-Cell::~Cell()
-{
-    check();
-    magic = 0;
+Cell::~Cell() {
+  check();
+  magic = 0;
 }
 
 /********** Static***********/
 
-void Cell::set_closure(Env env){
-    closure = env;
-}
+void Cell::set_closure(Env env) { closure = env; }
 
-Env Cell::get_closure(){
-    return closure;
-}
+Env Cell::get_closure() { return closure; }
 
-bool Cell::is_static(){
-    return(closure != nullptr);
-}
+bool Cell::is_static() { return (closure != nullptr); }
 
- /********** Stats ***********/
+/********** Stats ***********/
 
-int Cell::get_number_of_cells_parent()
-{
-    return number_of_cells_parent;
-}
+int Cell::get_number_of_cells_parent() { return number_of_cells_parent; }
