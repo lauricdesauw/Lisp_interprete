@@ -11,7 +11,12 @@ void Garbage_collector::clean()
     {
         if((*it) != nullptr)
         {
-            (*it) -> clean_used();
+            try
+            {
+                (*it) -> check();
+                (*it) -> clean_used();
+            }
+            catch(std::exception &e){}
         }
     }
 }
@@ -22,7 +27,12 @@ void Garbage_collector::mark()
     {
         if((*it) != nullptr)
         {
-            (*it) -> mark_used();
+            try
+            {
+                (*it) -> check();
+                (*it) -> mark_used();
+            }
+            catch(std::exception &e){}
         }
     }
 }
@@ -48,6 +58,8 @@ std::vector<Collectable*> Garbage_collector::used_test(std::vector<Collectable*>
         }
         catch(std::exception &e){ std::cout << "Check invalide" << std::endl; vect.pop_back(); return used_test(vect);}
     }
+    vect.pop_back();
+    return used_test(vect);
 }
 
 void Garbage_collector::sweep()
@@ -71,34 +83,7 @@ void Garbage_collector::remove_last_from_root()
 }
 void Garbage_collector::clean_memory()
 {
-    //print_root();
-    //print_all();
-    //std::cout << "Cleaning Memory" << std::endl;
     clean();
-    //std::cout << "Marking Reachables" << std::endl;
     mark();
-    //std::cout << "Sweeping Unmarked" << std::endl;
     sweep();
-    //print_root();
-    //print_all();
-    //std::cout << "Finished !" << std::endl;
-}
-
-void Garbage_collector::print_root()
-{
-    std::cout << "Root :" << std::endl;
-    for(std::vector<Collectable*>::iterator it = root.begin(); it != root.end(); ++it)
-    {
-        (*it)->print();
-        std::cout << std::endl;
-    }
-}
-void Garbage_collector::print_all()
-{
-    std::cout << "All :" << std::endl;
-    for(std::vector<Collectable*>::iterator it = all.begin(); it != all.end(); ++it)
-    {
-        (*it)->print();
-        std::cout << std::endl;
-    }
 }

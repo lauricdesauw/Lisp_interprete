@@ -34,11 +34,6 @@ int Cell_number::get_number_of_cells()
     return number_of_cells;
 }
 
-void Cell_number::print()
-{
-    std::cout << contents << " / used = " << used;
-}
-
 // Garbage collection
 
 void Cell_number::mark_used()
@@ -71,11 +66,6 @@ int Cell_string::get_number_of_cells()
     return number_of_cells;
 }
 
-void Cell_string::print()
-{
-    std::cout << contents << " / used = " << used;
-}
-
 // Garbage collection
 
 void Cell_string::mark_used()
@@ -106,11 +96,6 @@ std::string Cell_symbol::get_contents () const
 int Cell_symbol::get_number_of_cells()
 {
     return number_of_cells;
-}
-
-void Cell_symbol::print()
-{
-    std::cout << contents << " / used = " << used;
 }
 
 // Garbage collection
@@ -152,15 +137,6 @@ Cell* Cell_pair::get_cdr () const
 int Cell_pair::get_number_of_cells()
 {
     return number_of_cells;
-}
-
-void Cell_pair::print()
-{
-    std::cout << "( ";
-    car->print();
-    std::cout << " ";
-    cdr->print();
-    std::cout << " )"  << " / used = " << used;
 }
 
 // Garbage collection

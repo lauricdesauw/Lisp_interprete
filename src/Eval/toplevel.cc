@@ -12,7 +12,7 @@
 #include "env.hh"
 #include "garbage_collector.hh"
 
-Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
+Toplevel::Toplevel() : global_env(nil()), STAT_MODE(false)
 {init_GC();add_to_GC_root(global_env);}
 
 void Toplevel::go()
@@ -40,12 +40,6 @@ void Toplevel::go()
             {
                 Object a = cdr(curr_obj);
                 global_env = do_definestat(a,global_env);
-            }
-            else if (listp(curr_obj) && !null(curr_obj)
-                    && symbolp(car(curr_obj))
-                    && (object_to_string(car(curr_obj)) == lisp_debug))
-            {
-                 DEBUG_MODE = do_debug(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
@@ -123,6 +117,5 @@ void Toplevel::handle_load_from_string(std::string path)
 {
     Object path_o = string_to_object("\"" + path +"\"");
     Object load_o = symbol_to_object("load");
-    Object truc = cons(load_o,cons(path_o,nil()));
     handle_load(cons(load_o,cons(path_o,nil())));
 }

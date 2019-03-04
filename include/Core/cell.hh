@@ -30,7 +30,6 @@ class Cell : public Collectable
     public :
         static int get_number_of_cells_parent();
         ~Cell();
-        virtual void print() override {};
         void set_closure(Env env);
         Env get_closure();
         bool is_static();
