@@ -319,6 +319,10 @@ Env do_definestat(Object lvals, Env env)
     {
         toplevel_error("Cannot define it: missing few arguments");
     }
+    if (subrp(car(lvals)))
+    {
+        toplevel_error("Cannot change subr value");
+    }
     if (!symbolp(car(lvals)) && !listp(car(lvals)))
     {
         toplevel_error("Cannot define it: first element must be a symbol or a list");
@@ -365,6 +369,10 @@ Object do_let (Object lvals, Env env)
         if (!listp(car(var)))
         {
             toplevel_error("Cannot apply let: arguments must be lists");
+        }
+        if (subrp(car(lvals)))
+        {
+            toplevel_error("Cannot change subr value");
         }
         if (!null(car(var)) && null(cdr(car(var))))
         {
