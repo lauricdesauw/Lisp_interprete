@@ -115,5 +115,6 @@ void Toplevel::handle_load_from_string(std::string path)
 {
     Object path_o = string_to_object("\"" + path +"\"");
     Object load_o = symbol_to_object("load");
+    Object truc = cons(load_o,cons(path_o,nil()));
     handle_load(cons(load_o,cons(path_o,nil())));
 }
