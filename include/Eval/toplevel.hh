@@ -1,8 +1,7 @@
 #pragma once
 
-#include "library.hh"
-
-using namespace std;
+#include <string>
+#include "globals.hh"
 
 class Toplevel {
     private:

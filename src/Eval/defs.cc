@@ -275,7 +275,7 @@ Object do_not (Object lvals, Env env)
     return bool_to_object(!value);
 }
 
-/****************** Environnement gestion *********************/
+/****************** Environnement management *********************/
 
 Env do_define(Object lvals, Env env)
 {
@@ -351,11 +351,10 @@ Env do_definestat(Object lvals, Env env)
 
 void do_setb(Object lvals, Env env)
 {
-    if (null(lvals)) {toplevel_error("Cannot apply set! : Missing few arguments");}
+    if (null(lvals) || null(cdr(lvals)))
+        {toplevel_error("Cannot apply setb : Missing few arguments");}
     if (!symbolp(car(lvals)))
-    {toplevel_error("Can only set variables");}
-    if(null(cadr(lvals)))
-    {toplevel_error("Cannot apply set! : Missing few arguments");}
+        {toplevel_error("Can only set variables");}
     replace_binding(car(lvals),cadr(lvals), env);
 }
 
@@ -431,7 +430,7 @@ Object do_eval(Object lvals, Env env)
     return eval(lvals,env);
 }
 
-/********************* Global gestion ***************/
+/************** Global gestion **************/
 
 Object do_display(Object lvals)
 {
@@ -452,7 +451,7 @@ Object do_newline()
     return nil();
 }
 
-/**************** Debug and stats mode  ***********/
+/********** Debug and stats mode  *********/
 
 bool do_debug(Object l)
 {
