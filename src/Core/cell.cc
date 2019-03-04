@@ -12,7 +12,6 @@ Cell::Cell() : Collectable()
 Cell::~Cell()
 {
     check();
-    -- number_of_cells_parent;
     magic = 0;
 }
 
@@ -27,7 +26,7 @@ Env Cell::get_closure(){
 }
 
 bool Cell::is_static(){
-    return(closure == nullptr);
+    return(closure != nullptr);
 }
 
  /********** Stats ***********/

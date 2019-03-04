@@ -3,7 +3,7 @@ echo
 echo Write quit to quit the interpretor
 read x
 
-./main init.lsp
+./main demo.lsp
 
 echo
 echo We will now show you the effect of the garbage collector

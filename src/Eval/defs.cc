@@ -6,6 +6,7 @@
 #include "error.hh"
 #include "library.hh"
 #include "env.hh"
+#include "subr.hh"
 
 /********* Adds to garbage collector root cells ***********/
 void init_GC()
@@ -282,6 +283,10 @@ Env do_define(Object lvals, Env env)
     {
         toplevel_error("Cannot define it: missing few arguments");
     }
+    if (subrp(car(lvals)))
+    {
+        toplevel_error("Cannot change subr value");
+    }
     if (!symbolp(car(lvals)) && !listp(car(lvals)))
     {
         toplevel_error("Cannot define it: first element must be a symbol or a list");
@@ -314,6 +319,10 @@ Env do_definestat(Object lvals, Env env)
     {
         toplevel_error("Cannot define it: missing few arguments");
     }
+    if (subrp(car(lvals)))
+    {
+        toplevel_error("Cannot change subr value");
+    }
     if (!symbolp(car(lvals)) && !listp(car(lvals)))
     {
         toplevel_error("Cannot define it: first element must be a symbol or a list");
@@ -342,6 +351,11 @@ Env do_definestat(Object lvals, Env env)
 
 void do_setb(Object lvals, Env env)
 {
+    if (null(lvals)) {toplevel_error("Cannot apply set! : Missing few arguments");}
+    if (!symbolp(car(lvals)))
+    {toplevel_error("Can only set variables");}
+    if(null(cadr(lvals)))
+    {toplevel_error("Cannot apply set! : Missing few arguments");}
     replace_binding(car(lvals),cadr(lvals), env);
 }
 
@@ -360,6 +374,10 @@ Object do_let (Object lvals, Env env)
         if (!listp(car(var)))
         {
             toplevel_error("Cannot apply let: arguments must be lists");
+        }
+        if (subrp(car(lvals)))
+        {
+            toplevel_error("Cannot change subr value");
         }
         if (!null(car(var)) && null(cdr(car(var))))
         {
