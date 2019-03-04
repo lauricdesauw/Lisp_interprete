@@ -12,7 +12,7 @@
 #include "env.hh"
 #include "garbage_collector.hh"
 
-Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
+Toplevel::Toplevel() : global_env(nil()), STAT_MODE(false)
 {init_GC();add_to_GC_root(global_env);}
 
 void Toplevel::go()
@@ -31,21 +31,22 @@ void Toplevel::go()
                     && symbolp(car(curr_obj))
                     && (object_to_string(car(curr_obj)) == lisp_define))
             {
-                Object a = cdr(curr_obj);
-                global_env = do_define(a,global_env);
+                Object body = cdr(curr_obj);
+                global_env = do_define(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
                     && (object_to_string(car(curr_obj)) == lisp_definestat))
             {
-                Object a = cdr(curr_obj);
-                global_env = do_definestat(a,global_env);
+                Object body = cdr(curr_obj);
+                global_env = do_definestat(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
-                    && (object_to_string(car(curr_obj)) == lisp_debug))
+                    && (object_to_string(car(curr_obj)) == lisp_setb))
             {
-                 DEBUG_MODE = do_debug(cdr(curr_obj));
+                Object body = cdr(curr_obj);
+                do_setb(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
@@ -123,6 +124,5 @@ void Toplevel::handle_load_from_string(std::string path)
 {
     Object path_o = string_to_object("\"" + path +"\"");
     Object load_o = symbol_to_object("load");
-    Object truc = cons(load_o,cons(path_o,nil()));
     handle_load(cons(load_o,cons(path_o,nil())));
 }

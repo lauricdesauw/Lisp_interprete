@@ -8,7 +8,7 @@
 #include "env.hh"
 #include "subr.hh"
 
-/*------------- Adds to garbage collector root cells----------------------*/
+/********* Adds to garbage collector root cells ***********/
 void init_GC()
 {
     add_to_GC_root(t());
@@ -16,7 +16,7 @@ void init_GC()
     add_to_GC_root(nil());
 }
 
-/*-------------------- Other ------------------------------*/
+/************* Arithmetic operations ***********/
 
 Object do_plus(Object lvals)
 {
@@ -344,6 +344,12 @@ Env do_definestat(Object lvals, Env env)
     std::cout << name << " = " << value << std::endl;
     return add_new_binding_stat(name,value,env);
 }
+
+void do_setb(Object lvals, Env env)
+{
+    replace_binding(car(lvals),cadr(lvals), env);
+}
+
 
 Object do_let (Object lvals, Env env)
 {
