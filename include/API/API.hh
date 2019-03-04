@@ -5,7 +5,7 @@
 #include "globals.hh"
 
 class API {
-  // Object
+  /*********** Object **********/
 
     public:
         static bool is_const_object (Object l);
@@ -49,7 +49,7 @@ class API {
         static const Object object_t;
         static const Object object_f;
 
-    // Env
+/********** Environnement **********/
 
     public:
         static Env make_env();

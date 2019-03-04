@@ -6,7 +6,7 @@
 #include "env.hh"
 #include <iostream>
 
-/*------------- Adds to garbage collector root cells----------------------*/
+/********* Adds to garbage collector root cells ***********/
 void init_GC()
 {
     add_to_GC_root(t());
@@ -14,7 +14,7 @@ void init_GC()
     add_to_GC_root(nil());
 }
 
-/*-------------------- Other ------------------------------*/
+/************* Arithmetic operations ***********/
 
 Object do_plus(Object lvals)
 {
