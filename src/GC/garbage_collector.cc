@@ -71,17 +71,17 @@ void Garbage_collector::remove_last_from_root()
 }
 void Garbage_collector::clean_memory()
 {
-    print_root();
-    print_all();
-    std::cout << "Cleaning Memory" << std::endl;
+    //print_root();
+    //print_all();
+    //std::cout << "Cleaning Memory" << std::endl;
     clean();
-    std::cout << "Marking Reachables" << std::endl;
+    //std::cout << "Marking Reachables" << std::endl;
     mark();
-    std::cout << "Sweeping Unmarked" << std::endl;
+    //std::cout << "Sweeping Unmarked" << std::endl;
     sweep();
-    print_root();
-    print_all();
-    std::cout << "Finished !" << std::endl;
+    //print_root();
+    //print_all();
+    //std::cout << "Finished !" << std::endl;
 }
 
 void Garbage_collector::print_root()
