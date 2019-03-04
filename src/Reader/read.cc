@@ -9,7 +9,8 @@ using namespace std;
 
 extern Object get_read_object();
 extern int yyparse();
-extern FILE* yyin;
+extern FILE* yyget_in();
+extern void yyset_in(FILE* f);
 extern void yyrestart(FILE* f);
 
 void change_lexer_input(FILE* stream)
@@ -20,13 +21,13 @@ void change_lexer_input(FILE* stream)
     }
     else
     {
-        yyin = stream;
+        yyset_in(stream);
     }
 }
 
 FILE* get_lexer_input()
 {
-    return yyin;
+    return yyget_in();
 }
 
 Object read_object() {

@@ -29,6 +29,8 @@ int Cell_number::get_contents () const
     return contents;
 }
 
+// Stats
+
 int Cell_number::get_number_of_cells()
 {
     return number_of_cells;
@@ -61,6 +63,8 @@ std::string Cell_string::get_contents () const
     return contents;
 }
 
+// Stats
+
 int Cell_string::get_number_of_cells()
 {
     return number_of_cells;
@@ -92,6 +96,8 @@ std::string Cell_symbol::get_contents () const
     Cell::check();
     return contents;
 }
+
+// Stats
 
 int Cell_symbol::get_number_of_cells()
 {
@@ -134,10 +140,12 @@ Cell* Cell_pair::get_cdr () const
     return cdr;
 }
 
-void Cell_pair::set_cdr (Cell* new_cdr) 
+void Cell_pair::set_cdr (Cell* new_cdr)
 {
     cdr = new_cdr;
 }
+
+// Stats
 
 int Cell_pair::get_number_of_cells()
 {

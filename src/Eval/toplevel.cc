@@ -77,7 +77,7 @@ void Toplevel::go()
     }
 }
 
-/******************************************************************************/
+/************ Load Functions *************/
 
 bool Toplevel::is_load_directive(Object obj)
 {

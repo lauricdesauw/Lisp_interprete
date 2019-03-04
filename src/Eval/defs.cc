@@ -274,7 +274,7 @@ Object do_not (Object lvals, Env env)
     return bool_to_object(!value);
 }
 
-/****************** Environnement gestion *********************/
+/****************** Environnement management *********************/
 
 Env do_define(Object lvals, Env env)
 {
@@ -413,7 +413,7 @@ Object do_eval(Object lvals, Env env)
     return eval(lvals,env);
 }
 
-/********************* Global gestion ***************/
+/************** Global gestion **************/
 
 Object do_display(Object lvals)
 {
@@ -434,7 +434,7 @@ Object do_newline()
     return nil();
 }
 
-/**************** Debug and stats mode  ***********/
+/********** Debug and stats mode  *********/
 
 bool do_debug(Object l)
 {
