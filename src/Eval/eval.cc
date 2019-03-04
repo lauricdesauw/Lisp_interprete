@@ -115,6 +115,9 @@ Object apply(Object func, Object lvals, Env env) {
   }
   assert(pairp(func));
   if (symbolp(car(func)) && (object_to_string(car(func)) == lisp_lambda)) {
+    if (null(cdr(func)) || null(cdr(func,1))) {
+        toplevel_error("Cannot apply function: missing parameters or body");
+    }
     // The body of the lambda-expression *)
     Object body = car(func, 2);
     // The list of parameters of the lamba-expression *)
