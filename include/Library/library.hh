@@ -8,6 +8,7 @@
 
 
 void check(Object l);
+void add_to_GC_root(Object l);
 
 /********* Constants ***********/
 

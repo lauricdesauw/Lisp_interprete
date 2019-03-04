@@ -9,9 +9,10 @@
 #include "env.hh"
 #include <iostream>
 #include <cassert>
+#include "garbage_collector.hh"
 
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
-{}
+{init_GC();add_to_GC_root(global_env);}
 
 void Toplevel::go()
 {
@@ -26,41 +27,48 @@ void Toplevel::go()
                 handle_load(curr_obj);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_define))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_define))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_definestat))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) ==lisp_definestat))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_definestat(a,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_debug))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_debug))
             {
-                 //DEBUG_MODE = do_debug(cdr(curr_obj));
+                 DEBUG_MODE = do_debug(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_stats))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_stats))
             {
                  STAT_MODE = do_stats(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_printenv))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_printenv))
             {
                 print_env(std::cout,global_env);
             }
             else
             {
-                curr_obj = eval(curr_obj,global_env);
-                std::cout << curr_obj << std::endl;
+                std::cout << eval(curr_obj,global_env) << std::endl;
             }
             std::cout << std::endl << "Miracles des miracles !"
                 << std::endl << std::endl;
 
             if(STAT_MODE){print_stats();}
+            Garbage_collector::remove_last_from_root();
+            add_to_GC_root(global_env);
+            Garbage_collector::clean_memory();
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;

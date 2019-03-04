@@ -1,6 +1,7 @@
 #include "API.hh"
 #include "cell.hh"
 #include "cell_subset.hh"
+#include "garbage_collector.hh"
 #include <cassert>
 
 using namespace std;
@@ -12,7 +13,6 @@ const Object API::object_t = new Cell_symbol("#t");
 const Object API::object_f = new Cell_symbol("#f");
 
 /********** Constants functions **********/
-
 
 Object API::nil()
 {
@@ -129,7 +129,6 @@ Object API::car(Object l)
 
 }
 
-
 Object API::cdr(Object l)
 {
     check(l);
@@ -225,4 +224,11 @@ void API::print_stats()
             "/" << Cell::get_number_of_cells_parent() << endl;
     cout << "Cell_pair : " << Cell_pair::get_number_of_cells() <<
             "/" << Cell::get_number_of_cells_parent() << endl;
+}
+
+/********* Garbage Collector ***********/
+
+void API::add_to_GC_root(Object l)
+{
+    Garbage_collector::add_to_root(l);
 }
