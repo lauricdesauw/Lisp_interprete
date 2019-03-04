@@ -5,6 +5,7 @@
 #include "error.hh"
 
 void check(Object l) {API::check(l);}
+void add_to_GC_root(Object l){API::add_to_GC_root(l);}
 
 /********* Constants ***********/
 

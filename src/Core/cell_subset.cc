@@ -1,12 +1,15 @@
 #include <string>
+#include <iostream>
 #include "cell_subset.hh"
 
-/******* Cell_number *******/
+/******* Initialization of stats *******/
 
 int Cell_number::number_of_cells = 0;
 int Cell_string::number_of_cells = 0;
 int Cell_symbol::number_of_cells = 0;
 int Cell_pair::number_of_cells = 0;
+
+/******* Cell_number *******/
 
 Cell_number::Cell_number (int n) : Cell()
 {
@@ -29,6 +32,18 @@ int Cell_number::get_contents () const
 int Cell_number::get_number_of_cells()
 {
     return number_of_cells;
+}
+
+void Cell_number::print()
+{
+    std::cout << contents << " / used = " << used;
+}
+
+// Garbage collection
+
+void Cell_number::mark_used()
+{
+    Collectable::used = true;
 }
 
 /******* Cell_string *******/
@@ -56,6 +71,18 @@ int Cell_string::get_number_of_cells()
     return number_of_cells;
 }
 
+void Cell_string::print()
+{
+    std::cout << contents << " / used = " << used;
+}
+
+// Garbage collection
+
+void Cell_string::mark_used()
+{
+    Collectable::used = true;
+}
+
 /******* Cell_symbol *******/
 
 Cell_symbol::Cell_symbol (std::string s) : Cell()
@@ -79,6 +106,18 @@ std::string Cell_symbol::get_contents () const
 int Cell_symbol::get_number_of_cells()
 {
     return number_of_cells;
+}
+
+void Cell_symbol::print()
+{
+    std::cout << contents << " / used = " << used;
+}
+
+// Garbage collection
+
+void Cell_symbol::mark_used()
+{
+    Collectable::used = true;
 }
 
 /******* Cell_pair *******/
@@ -113,4 +152,22 @@ Cell* Cell_pair::get_cdr () const
 int Cell_pair::get_number_of_cells()
 {
     return number_of_cells;
+}
+
+void Cell_pair::print()
+{
+    std::cout << "( ";
+    car->print();
+    std::cout << " ";
+    cdr->print();
+    std::cout << " )"  << " / used = " << used;
+}
+
+// Garbage collection
+
+void Cell_pair::mark_used()
+{
+    Collectable::used = true;
+    car -> mark_used();
+    cdr -> mark_used();
 }
