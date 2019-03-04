@@ -1,6 +1,8 @@
 #include "env.hh"
 #include "error.hh"
 
+/********** Test functions **********/
+
 bool bindingp(Object obj)
 {
     if (!pairp(obj)) {return false;}
@@ -9,6 +11,8 @@ bool bindingp(Object obj)
     if (!null(cddr(obj))) {return false;}
     else {return true;}
 }
+
+/********** Update Environnement ***********/
 
 Object binding_value(Object obj)
 {
@@ -96,6 +100,8 @@ Object find_value(Object obj, Env env)
         return(find_value(obj, cdr(env)));
     }
 }
+
+/********** Display functions ***********/
 
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
