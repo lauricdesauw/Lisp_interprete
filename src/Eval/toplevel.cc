@@ -10,6 +10,7 @@
 #include "error.hh"
 #include "globals.hh"
 #include "env.hh"
+#include "garbage_collector.hh"
 
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
 {init_GC();add_to_GC_root(global_env);}
@@ -35,7 +36,7 @@ void Toplevel::go()
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
-                    && (object_to_string(car(curr_obj)) ==lisp_definestat))
+                    && (object_to_string(car(curr_obj)) == lisp_definestat))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_definestat(a,global_env);
