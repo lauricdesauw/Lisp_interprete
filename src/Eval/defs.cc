@@ -352,7 +352,7 @@ Env do_definestat(Object lvals, Env env)
 void do_setb(Object lvals, Env env)
 {
     if (null(lvals) || null(cdr(lvals)))
-        {toplevel_error("Cannot apply setb : Missing few arguments");}
+        {toplevel_error("Cannot apply 'set!' : Missing few arguments");}
     if (!symbolp(car(lvals)))
         {toplevel_error("Can only set variables");}
     replace_binding(car(lvals),cadr(lvals), env);

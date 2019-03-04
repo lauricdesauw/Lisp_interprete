@@ -54,7 +54,7 @@ Object eval (Object l, Env env)
         if (f_str == lisp_definestat)
         {toplevel_error("'definestat' must be used at toplevel");}
         if (f_str == lisp_setb)
-        {toplevel_error("'setb' must be used at toplevel");}
+        {toplevel_error("'set!' must be used at toplevel");}
         if (f_str == lisp_stats)
         {toplevel_error("'stats' must be used at toplevel");}
         if (f_str == lisp_printenv)
