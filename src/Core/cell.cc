@@ -12,7 +12,6 @@ Cell::Cell() : Collectable()
 Cell::~Cell()
 {
     check();
-    -- number_of_cells_parent;
     magic = 0;
 }
 
