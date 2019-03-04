@@ -47,6 +47,24 @@ Env add_new_binding_stat(std::string name, Object value, Env env)
     return cons(res,env);
 }
 
+void replace_binding(Object obj_name, Object new_value, Env env)
+{
+    std::string name = object_to_string(obj_name);
+    if (null(env))
+    {
+        eval_error("'" + name + "' " + "Not found");
+    }
+    Object head = car(env);
+    std::string h_name = binding_name(head);
+    if (h_name == name)
+    {
+        rplacd(head,cons(new_value,nil()));
+    }
+    else
+    {
+        return(replace_binding(obj_name, new_value, cdr(env)));
+    }
+}
 
 Env extend_largs_env(Object lpars, Object lvals, Env env)
 {

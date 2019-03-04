@@ -96,6 +96,11 @@ Object cddr(Object l)
     return cdr(l,1);
 }
 
+void rplacd(Object l, Object new_value)
+{
+    API::rplacd(l,new_value);
+}
+
 std::ostream& print_object_cdr(std::ostream& s, Object l)
 {
     if (null(l))

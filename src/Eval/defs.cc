@@ -331,6 +331,12 @@ Env do_definestat(Object lvals, Env env)
     return add_new_binding_stat(name,value,env);
 }
 
+void do_setb(Object lvals, Env env)
+{
+    replace_binding(car(lvals),cadr(lvals), env);
+}
+
+
 Object do_let (Object lvals, Env env)
 {
     if ( null(lvals) || null(cdr(lvals)))
