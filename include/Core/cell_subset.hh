@@ -16,6 +16,9 @@ class Cell_number : public Cell {
         Cell::type get_type() const override;
         int get_contents() const;
         static int get_number_of_cells();
+        void print() override;
+        // Garbage collection
+        void mark_used() override;
 
     friend class API;
 };
@@ -32,6 +35,9 @@ class Cell_string : public Cell {
         Cell::type get_type() const override;
         std::string get_contents() const;
         static int get_number_of_cells();
+        void print() override;
+        // Garbage collection
+        void mark_used() override;
 
     friend class API;
 };
@@ -48,6 +54,9 @@ class Cell_symbol : public Cell {
         Cell::type get_type() const override;
         std::string get_contents() const;
         static int get_number_of_cells();
+        void print() override;
+        // Garbage collection
+        void mark_used() override;
 
     friend class API;
 };
@@ -67,6 +76,9 @@ class Cell_pair : public Cell {
         Cell* get_cdr() const;
         void set_cdr(Cell* new_cdr);
         static int get_number_of_cells();
+        void print() override;
+        // Garbage collection
+        void mark_used() override;
 
     friend class API;
 };

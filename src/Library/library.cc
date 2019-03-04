@@ -5,17 +5,19 @@
 #include "error.hh"
 
 void check(Object l) {API::check(l);}
+void add_to_GC_root(Object l){API::add_to_GC_root(l);}
+
+/********* Constants ***********/
 
 Object nil() {return API::nil();}
-
-bool null(Object l) {return API::null(l);}
 Object t() {return API::t();}
 Object f() {return API::f();}
+
+/********** List operations **********/
 
 Object cons(Object a, Object l) {return API::cons(a,l);}
 Object car(Object l) {return API::car(l);}
 Object cdr(Object l) {return API::cdr(l);}
-
 bool eq(Object a, Object b)
 {
     check(a);
@@ -31,12 +33,54 @@ bool eq(Object a, Object b)
     return a == b;
 }
 
+
+Object car(Object l, int n)
+{
+     assert(n >= 0);
+     if (n == 0)
+     {
+          return car(l);
+     }
+     else
+     {
+          return car(API::cdr(l),n-1);
+     }
+}
+
+Object cdr(Object l, int n)
+{
+     assert(n >= 0);
+     if (n == 0)
+     {
+          return cdr(l);
+     }
+     else
+     {
+          return cdr(API::cdr(l),n-1);
+     }
+}
+
+Object cadr(Object l)
+{
+     return car(l,1);
+}
+
+Object cddr(Object l)
+{
+     return cdr(l,1);
+}
+
+/********* Type tests *********/
+
+bool null(Object l) {return API::null(l);}
 bool numberp(Object l) {return API::numberp(l);}
 bool stringp(Object l) {return API::stringp(l);}
 bool symbolp(Object l) {return API::symbolp(l);}
 bool boolp(Object l) {return API::boolp(l);}
 bool listp(Object l) {return API::listp(l);}
 bool pairp(Object l) {return API::pairp(l);}
+
+/********* Conversion functions **********/
 
 Object number_to_object(int n) {return API::number_to_object(n);}
 Object string_to_object(std::string s) {return API::string_to_object(s);}
@@ -46,6 +90,8 @@ Object bool_to_object(bool b) {return API::bool_to_object(b);}
 int object_to_number(Object l) {return API::object_to_number(l);}
 std::string object_to_string(Object l) {return API::object_to_string(l);}
 bool object_to_bool(Object l) {return API::object_to_bool(l);}
+
+/********** Static functions **********/
 
 bool is_static(Object obj){
     return (API::is_static(obj));
@@ -60,41 +106,7 @@ void set_closure(Object obj, Env env)
     API::set_closure(obj,env);
 }
 
-Object car(Object l, int n)
-{
-    assert(n >= 0);
-    if (n == 0)
-    {
-        return car(l);
-    }
-    else
-    {
-        return car(API::cdr(l),n-1);
-    }
-}
-
-Object cdr(Object l, int n)
-{
-    assert(n >= 0);
-    if (n == 0)
-    {
-        return cdr(l);
-    }
-    else
-    {
-        return cdr(API::cdr(l),n-1);
-    }
-}
-
-Object cadr(Object l)
-{
-    return car(l,1);
-}
-
-Object cddr(Object l)
-{
-    return cdr(l,1);
-}
+/********** Display functions **********/
 
 void rplacd(Object l, Object new_value)
 {

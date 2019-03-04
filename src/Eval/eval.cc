@@ -35,31 +35,41 @@ Object eval (Object l, Env env)
     }
 
     assert(listp(l));
-    Object func = car(l);
-
-    if (eq(func,lisp_let)) {return do_let(cdr(l),env);}
-    if (eq(func, lisp_lambda)) {return do_lambda(l);}
-    if (eq(func, lisp_quote)) {return do_quote(cdr(l));}
-    if (eq(func, lisp_if)) {return do_if(cdr(l),env);}
-    if (eq(func, lisp_or)) {return do_or(cdr(l),env);}
-    if (eq(func, lisp_and)) {return do_and(cdr(l),env);}
-    if (eq(func, lisp_not)) {return do_not(cdr(l),env);}
-    if (eq(func, lisp_cond)) {return do_cond(cdr(l),env);}
-    if (eq(func, lisp_display)) {return do_display(cdr(l));}
-    if (eq(func,lisp_eval)) {return do_eval(cadr(l),env);}
-    if (eq(func,lisp_define)) {toplevel_error("'define' must be used at toplevel: use 'let' keyword");}
-    if (eq(func,lisp_definestat)) {toplevel_error("'definestat' must be used at toplevel");}
-    if (eq(func,lisp_debug)) {toplevel_error("'debug' must be used at toplevel");}
-    if (eq(func,lisp_stats)) {toplevel_error("'stats' must be used at toplevel");}
-    if (eq(func,lisp_printenv)) {toplevel_error("'printenv' must be used at toplevel");}
-
+    Object function = car(l);
+    if(symbolp(function))
+    {
+        std::string f_str = object_to_string(function);
+        if (f_str == lisp_let) {return do_let(cdr(l),env);}
+        if (f_str == lisp_lambda) {return do_lambda(l);}
+        if (f_str == lisp_quote) {return do_quote(cdr(l));}
+        if (f_str == lisp_if) {return do_if(cdr(l),env);}
+        if (f_str == lisp_or) {return do_or(cdr(l),env);}
+        if (f_str == lisp_and) {return do_and(cdr(l),env);}
+        if (f_str == lisp_not) {return do_not(cdr(l),env);}
+        if (f_str == lisp_cond) {return do_cond(cdr(l),env);}
+        if (f_str == lisp_display) {return do_display(cdr(l));}
+        if (f_str == lisp_eval) {return do_eval(cadr(l),env);}
+        if (f_str == lisp_define)
+        {toplevel_error("'define' must be used at toplevel: use 'let' keyword");}
+        if (f_str == lisp_definestat)
+        {toplevel_error("'definestat' must be used at toplevel");}
+        if (f_str == lisp_debug)
+        {toplevel_error("'debug' must be used at toplevel");}
+        if (f_str == lisp_stats)
+        {toplevel_error("'stats' must be used at toplevel");}
+        if (f_str == lisp_printenv)
+        {toplevel_error("'printenv' must be used at toplevel");}
+    }
     Object eval_parameters = eval_list(cdr(l), env);
-    return apply(func,eval_parameters, env);
+    return apply(function,eval_parameters, env);
 }
+
+/******************************************************************************/
+
 
 Object apply (Object func, Object lvals, Env env)
 {
-    if (eq(func,lisp_quit))
+    if (symbolp(func) && (object_to_string(func) == lisp_quit))
     {
         quit();
     }
@@ -96,7 +106,7 @@ Object apply (Object func, Object lvals, Env env)
         return apply(new_func,lvals,env);
     }
     assert(pairp(func));
-    if(eq(car(func),lisp_lambda))
+    if(symbolp(car(func)) && (object_to_string(car(func)) == lisp_lambda))
     {
         // The body of the lambda-expression *)
         Object body = car(func,2);

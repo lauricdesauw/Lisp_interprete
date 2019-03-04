@@ -1,3 +1,7 @@
+#include <iostream>
+#include <cassert>
+#include <string>
+
 #include "toplevel.hh"
 #include "read.hh"
 #include "eval.hh"
@@ -5,13 +9,11 @@
 #include "defs.hh"
 #include "error.hh"
 #include "globals.hh"
-#include <string>
 #include "env.hh"
-#include <iostream>
-#include <cassert>
+#include "garbage_collector.hh"
 
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
-{}
+{init_GC();add_to_GC_root(global_env);}
 
 void Toplevel::go()
 {
@@ -19,70 +21,78 @@ void Toplevel::go()
     {
         try
         {
-            std::cout << std::endl << "Merveilles des merveilles: " ;
+            std::cout << std::endl << "Merveille des merveilles: " ;
             Object curr_obj = read_object();
             if(Toplevel::is_load_directive(curr_obj))
             {
                 handle_load(curr_obj);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_define))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_define))
             {
                 Object body = cdr(curr_obj);
                 global_env = do_define(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_definestat))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_definestat))
             {
                 Object body = cdr(curr_obj);
                 global_env = do_definestat(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_setb))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_setb))
             {
                 Object body = cdr(curr_obj);
                 do_setb(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_debug))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_debug))
             {
-                 //DEBUG_MODE = do_debug(cdr(curr_obj));
+                 DEBUG_MODE = do_debug(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_stats))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_stats))
             {
                  STAT_MODE = do_stats(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_printenv))
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_printenv))
             {
                 print_env(std::cout,global_env);
             }
             else
             {
-                curr_obj = eval(curr_obj,global_env);
-                std::cout << curr_obj << std::endl;
+                std::cout << eval(curr_obj,global_env) << std::endl;
             }
-            std::cout << std::endl << "Miracles des miracles !"
+            std::cout << std::endl << "Miracle des miracles !"
                 << std::endl << std::endl;
 
             if(STAT_MODE){print_stats();}
+            Garbage_collector::remove_last_from_root();
+            add_to_GC_root(global_env);
+            Garbage_collector::clean_memory();
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
-                cout << "try............................ CATCH! :) :) :) :)" << endl;
                 cout << endl;
             }
     }
 }
 
-// ----------------------------------------------------------//
+/******************************************************************************/
 
 bool Toplevel::is_load_directive(Object obj)
 {
     if(!pairp(obj)){return false;}
     else if (!symbolp(car(obj))) {return false;}
-    else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
+    else if(object_to_string(car(obj)) == lisp_load) {return true;}
+    else {return false;}
 }
 
 void Toplevel::handle_load_core(std::string file_name)
@@ -120,5 +130,6 @@ void Toplevel::handle_load_from_string(std::string path)
 {
     Object path_o = string_to_object("\"" + path +"\"");
     Object load_o = symbol_to_object("load");
+    Object truc = cons(load_o,cons(path_o,nil()));
     handle_load(cons(load_o,cons(path_o,nil())));
 }

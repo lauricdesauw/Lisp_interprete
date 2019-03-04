@@ -11,6 +11,7 @@ class API {
         static bool is_const_object (Object l);
 
         static void check(Object l);
+        static void add_to_GC_root(Object l);
 
         static Object nil();
         static bool null(Object l);
@@ -39,6 +40,7 @@ class API {
         static std::string object_to_string(Object l);
         static bool object_to_bool(Object l);
 
+        static void print_stats();
         static bool is_static(Object l);
         static Env get_closure(Object l);
         static void set_closure(Object l, Env env);
@@ -55,5 +57,4 @@ class API {
         static Env add_new_binding(std::string name, Object value, Env env);
         static Object find_value(std::string name, Env env);
         static std::ostream& print_env(std::ostream& s, Env env);
-        static void print_stats();
 };

@@ -1,12 +1,21 @@
+#include <iostream>
+
 #include "defs.hh"
 #include "read.hh"
 #include "eval.hh"
 #include "error.hh"
 #include "library.hh"
 #include "env.hh"
-#include <iostream>
 
-/************* Arithmetic operations **********/
+/*------------- Adds to garbage collector root cells----------------------*/
+void init_GC()
+{
+    add_to_GC_root(t());
+    add_to_GC_root(f());
+    add_to_GC_root(nil());
+}
+
+/*-------------------- Other ------------------------------*/
 
 Object do_plus(Object lvals)
 {
@@ -288,7 +297,7 @@ Env do_define(Object lvals, Env env)
         name = object_to_string(car(car(lvals)));
         Object param = cdr(car(lvals));
         Object func = cdr(lvals);
-        value = cons(lisp_lambda,cons(param,func));;
+        value = cons(symbol_to_object(lisp_lambda),cons(param,func));;
     }
     else
     {
@@ -317,10 +326,10 @@ Env do_definestat(Object lvals, Env env)
         {
             toplevel_error("Cannot define it: first element cannot be nil");
         }
-        name = object_to_string(car(car(lvals)));
-        Object param = cdr(car(lvals));
-        Object func = cdr(lvals);
-        value = cons(lisp_lambda,cons(param,func));;
+         name = object_to_string(car(car(lvals)));
+         Object param = cdr(car(lvals));
+         Object func = cdr(lvals);
+         value = cons(symbol_to_object(lisp_lambda),cons(param,func));
     }
     else
     {
@@ -367,7 +376,7 @@ Object do_let (Object lvals, Env env)
         }
         var = cdr(var);
     }
-    Object func = cons(lisp_lambda,cons(param,cdr(lvals)));
+    Object func = cons(symbol_to_object(lisp_lambda),cons(param,cdr(lvals)));
     return eval(cons(func,value),env);
 }
 
@@ -397,7 +406,7 @@ Object do_eval(Object lvals, Env env)
     {
         return eval(eval(lvals,env),env);
     }
-    if (listp(lvals) && eq(car(lvals),lisp_quote))
+    if (listp(lvals) && eq(car(lvals),symbol_to_object(lisp_quote)))
     {
         return eval(cadr(lvals),env);
     }
@@ -429,18 +438,10 @@ Object do_newline()
 
 bool do_debug(Object l)
 {
-    if (null(l) || !boolp(car(l)))
-    {
-        toplevel_error("Cannot use debug mode: not a bool");
-    }
     return (object_to_bool(car(l)));
 }
 
 bool do_stats(Object l)
 {
-    if (null(l) || !boolp(car(l)))
-    {
-        toplevel_error("Cannot use stats mode: not a bool");
-    }
     return (object_to_bool(car(l)));
 }

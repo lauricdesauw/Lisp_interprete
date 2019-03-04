@@ -1,48 +1,18 @@
 #include "API.hh"
 #include "cell.hh"
 #include "cell_subset.hh"
+#include "garbage_collector.hh"
 #include <cassert>
 
 using namespace std;
 
-// Consts
+/********** Constants definitions **********/
 
 const Object API::object_nil = new Cell_symbol("nil") ;
 const Object API::object_t = new Cell_symbol("#t");
 const Object API::object_f = new Cell_symbol("#f");
 
-// Else
-
-bool API::const_objectp(Object l)
-{
-    return (l == object_nil || l == object_t || l == object_f);
-}
-
-void API::check(Object l)
-{
-    assert(l != 0);
-    if(!const_objectp(l))
-    {
-        l->check();
-    }
-}
-
-void API::print_stats()
-{
-    cout << "Statistiques de création de cellulles. \n" <<
-            "(Instances de cette classe/Total des  instances)" << endl;
-    cout << "Cell_number : " << Cell_number::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-    cout << "Cell_symbol : " << Cell_symbol::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-    cout << "Cell_string : " << Cell_string::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-    cout << "Cell_pair : " << Cell_pair::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-}
-
-
-// Constants
+/********** Constants functions **********/
 
 Object API::nil()
 {
@@ -65,7 +35,19 @@ Object API::f()
     return object_f;
 }
 
-// Type testers
+/********** check **********/
+
+void API::check(Object l)
+{
+    assert(l != 0);
+    if(!const_objectp(l))
+    {
+        l->check();
+    }
+}
+
+
+/********** Type testers **********/
 
 bool API::numberp(Object l)
 {
@@ -99,7 +81,7 @@ bool API::symbolp(Object l)
 
 bool API::boolp(Object l)
 {
-    return l == object_t || l == object_f;
+    return l == object_f || l == object_f;
 }
 
 bool API::listp(Object l)
@@ -120,10 +102,14 @@ bool API::pairp(Object l)
 {
     check(l);
     return l->get_type() == Cell::type::PAIR;
-
 }
 
-// List Operators
+bool API::const_objectp(Object l)
+{
+    return (l == object_nil || l == object_t || l == object_f);
+}
+
+/********** List operator **********/
 
 Object API::cons(Object a, Object l)
 {
@@ -142,7 +128,6 @@ Object API::car(Object l)
     else {return pair->Cell_pair::get_car();}
 
 }
-
 
 Object API::cdr(Object l)
 {
@@ -234,4 +219,28 @@ Env API::get_closure(Object l){
 
 void API::set_closure(Object l, Env env) {
     l->set_closure(env);
+}
+
+
+/********** Stats **********/
+
+void API::print_stats()
+{
+    cout << "Statistiques de création de cellulles. \n" <<
+            "(Instances de cette classe/Total des  instances)" << endl;
+    cout << "Cell_number : " << Cell_number::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_symbol : " << Cell_symbol::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_string : " << Cell_string::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
+    cout << "Cell_pair : " << Cell_pair::get_number_of_cells() <<
+            "/" << Cell::get_number_of_cells_parent() << endl;
+}
+
+/********* Garbage Collector ***********/
+
+void API::add_to_GC_root(Object l)
+{
+    Garbage_collector::add_to_root(l);
 }

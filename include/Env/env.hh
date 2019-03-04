@@ -7,6 +7,8 @@ bool bindingp(Object obj);
 Object binding_value(Object obj);
 std::string binding_name(Object obj);
 
+/*************************************************/
+
 Env make_env();
 Env add_new_binding(std::string name, Object value, Env env);
 Env add_new_binding_stat(std::string name, Object value, Env env);
