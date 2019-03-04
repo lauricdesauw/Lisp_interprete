@@ -1,6 +1,8 @@
 #include "env.hh"
 #include "error.hh"
 
+/********** Test functions **********/
+
 bool bindingp(Object obj)
 {
     if (!pairp(obj)) {return false;}
@@ -9,6 +11,8 @@ bool bindingp(Object obj)
     if (!null(cddr(obj))) {return false;}
     else {return true;}
 }
+
+/********** Update Environnement ***********/
 
 Object binding_value(Object obj)
 {
@@ -37,7 +41,19 @@ Env add_new_binding(std::string name, Object value, Env env)
     return cons(res,env);
 }
 
-Env extend_largs_env(Object lpars, Object lvals, Env env) {
+Env add_new_binding_stat(std::string name, Object value, Env env)
+{
+    check(value);
+    Object s = string_to_object(name);
+    set_closure(value,env);
+    Object res = cons (s,cons(value,nil()));
+    assert(bindingp(res));
+    return cons(res,env);
+}
+
+
+Env extend_largs_env(Object lpars, Object lvals, Env env)
+{
     if (null(lpars))
     {
         if (!null(lvals))
@@ -62,6 +78,7 @@ Env extend_largs_env(Object lpars, Object lvals, Env env) {
             return extend_largs_env(cdr(lpars),cdr(lvals),new_env);
         }
     }
+    return nil();
 }
 
 Object find_value(Object obj, Env env)
@@ -84,10 +101,18 @@ Object find_value(Object obj, Env env)
     }
 }
 
+/********** Display functions ***********/
+
 std::ostream& print_binding(std::ostream& s, Object obj)
 {
     assert(bindingp(obj));
-    s << "(" << binding_name(obj) << " = " << binding_value(obj) << ")";
+    Object val = binding_value(obj);
+    s << "(" << binding_name(obj) << " = " << val;
+    if(!is_static(val)) {
+        s << " : closure";
+        print_env(s,get_closure(val));
+    }
+    s << ")";
     return s;
 }
 
@@ -102,6 +127,7 @@ std::ostream& print_env_aux(std::ostream& s, Env env)
         s << " | ";
     }
     print_env_aux(s,cdr(env));
+    return s;
 }
 
 std::ostream& print_env(std::ostream& s, Env env)

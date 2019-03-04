@@ -3,6 +3,6 @@
 #include "library.hh"
 #include "defs.hh"
 
-const bool subrp (Object obj);
+bool subrp (Object obj);
 
-const Object apply_subr(Object sub, Object lvals);
+Object apply_subr(Object sub, Object lvals);

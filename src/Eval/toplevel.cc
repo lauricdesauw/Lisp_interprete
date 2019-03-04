@@ -14,7 +14,7 @@
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
 {init_GC();add_to_GC_root(global_env);}
 
-void Toplevel::go(bool use_prompt)
+void Toplevel::go()
 {
     while(true)
     {
@@ -33,11 +33,19 @@ void Toplevel::go(bool use_prompt)
                 Object a = cdr(curr_obj);
                 global_env = do_define(a,global_env);
             }
-            /*else if (listp(curr_obj) && !null(curr_obj)
-                                    && eq(car(curr_obj),lisp_debug))
+            else if (listp(curr_obj) && !null(curr_obj)
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) ==lisp_definestat))
             {
-                 //DEBUG_MODE = do_debug(cdr(curr_obj));
-            }*/
+                Object a = cdr(curr_obj);
+                global_env = do_definestat(a,global_env);
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_debug))
+            {
+                 DEBUG_MODE = do_debug(cdr(curr_obj));
+            }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
                     && (object_to_string(car(curr_obj)) == lisp_stats))
@@ -64,19 +72,19 @@ void Toplevel::go(bool use_prompt)
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
-                cout << "try............................ CATCH! :) :) :) :)" << endl;
                 cout << endl;
             }
     }
 }
 
-// ----------------------------------------------------------//
+/******************************************************************************/
 
 bool Toplevel::is_load_directive(Object obj)
 {
     if(!pairp(obj)){return false;}
     else if (!symbolp(car(obj))) {return false;}
-    else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
+    else if(object_to_string(car(obj)) == lisp_load) {return true;}
+    else {return false;}
 }
 
 void Toplevel::handle_load_core(std::string file_name)
@@ -84,7 +92,7 @@ void Toplevel::handle_load_core(std::string file_name)
     cout << "Loading file " << file_name << "...\n";
     try
     {
-        go(true);
+        go();
     }
     catch(runtime_error e)
     {

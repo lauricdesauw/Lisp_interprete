@@ -7,7 +7,7 @@
 
 #include "globals.hh"
 
-
+/********** Exceptions *********/
 
 class Custom_exception : public std::runtime_error
 {
@@ -38,6 +38,8 @@ class Quit_exception : public std::exception
     public:
         Quit_exception(){};
 };
+
+/********** Throwing functions **********/
 
 void eval_error(std::string s);
 

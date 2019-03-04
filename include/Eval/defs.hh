@@ -7,10 +7,10 @@ void init_GC();
 const std::string lisp_quit = "quit";
 
 const std::string lisp_lambda = "lambda";
-Object do_lambda(Object l, Env env);
+Object do_lambda(Object l);
 
 const std::string lisp_quote = "quote";
-Object do_quote(Object l, Env env);
+Object do_quote(Object l);
 
 const std::string lisp_if = "if";
 Object do_if(Object l, Env env);
@@ -44,10 +44,14 @@ Object do_eq(Object lvals);
 const std::string lisp_inf = "<";
 Object do_inf(Object lvals);
 
-const std::string lisp_concat = "concat";
+/************** String operations ***********/
+
+const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
 
-const std::string lisp_car = "car";
+/************** List operations ************/
+
+const std::string lisp_car = ("car");
 Object do_car(Object lvals);
 
 const std::string lisp_cdr = "cdr";
@@ -60,7 +64,7 @@ const std::string lisp_read = "read";
 Object do_read(Object lvals);
 
 const std::string lisp_newline = "newline";
-Object do_newline(Object lvals);
+Object do_newline();
 
 const std::string lisp_end = "end";
 Object do_end(Object lvals);
@@ -79,6 +83,7 @@ Object do_symbolp(Object lvals);
 
 const std::string lisp_listp = "listp";
 Object do_listp(Object lvals);
+
 
 const std::string lisp_list = "list";
 Object do_list(Object lvals);
@@ -115,6 +120,9 @@ Object do_eval(Object l, Env env);
 
 const std::string lisp_apply = "apply";
 Object do_apply(Object l, Env env);
+
+const std::string lisp_definestat = "definestat";
+Env do_definestat(Object l, Env env);
 
 const std::string lisp_debug = "debug";
 bool do_debug(Object l);

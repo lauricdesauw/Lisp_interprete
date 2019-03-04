@@ -40,8 +40,8 @@ Object eval (Object l, Env env)
     {
         std::string f_str = object_to_string(function);
         if (f_str == lisp_let) {return do_let(cdr(l),env);}
-        if (f_str == lisp_lambda) {return do_lambda(l,env);}
-        if (f_str == lisp_quote) {return do_quote(cdr(l),env);}
+        if (f_str == lisp_lambda) {return do_lambda(l);}
+        if (f_str == lisp_quote) {return do_quote(cdr(l));}
         if (f_str == lisp_if) {return do_if(cdr(l),env);}
         if (f_str == lisp_or) {return do_or(cdr(l),env);}
         if (f_str == lisp_and) {return do_and(cdr(l),env);}
@@ -49,10 +49,23 @@ Object eval (Object l, Env env)
         if (f_str == lisp_cond) {return do_cond(cdr(l),env);}
         if (f_str == lisp_display) {return do_display(cdr(l));}
         if (f_str == lisp_eval) {return do_eval(cadr(l),env);}
+        if (f_str == lisp_define)
+        {toplevel_error("'define' must be used at toplevel: use 'let' keyword");}
+        if (f_str == lisp_definestat)
+        {toplevel_error("'definestat' must be used at toplevel");}
+        if (f_str == lisp_debug)
+        {toplevel_error("'debug' must be used at toplevel");}
+        if (f_str == lisp_stats)
+        {toplevel_error("'stats' must be used at toplevel");}
+        if (f_str == lisp_printenv)
+        {toplevel_error("'printenv' must be used at toplevel");}
     }
     Object eval_parameters = eval_list(cdr(l), env);
     return apply(function,eval_parameters, env);
 }
+
+/******************************************************************************/
+
 
 Object apply (Object func, Object lvals, Env env)
 {
@@ -86,31 +99,32 @@ Object apply (Object func, Object lvals, Env env)
     }
     if(symbolp(func))
     {
-        return apply(eval(func,env),lvals,env);
+        Object new_func = eval(func,env);
+        if(!is_static(new_func)) {
+            return apply(new_func,lvals,get_closure(new_func));
+        }
+        return apply(new_func,lvals,env);
     }
+    assert(pairp(func));
+    if(symbolp(car(func)) && (object_to_string(car(func)) == lisp_lambda))
+    {
+        // The body of the lambda-expression *)
+        Object body = car(func,2);
+        // The list of parameters of the lamba-expression *)
+        Object lpars = cadr(func);
+        try
+        {
+             Env new_env = extend_largs_env(lpars,lvals,env);
+             return eval(body,new_env);
+        } catch(Evaluation_exception& e)
+            {
+             std::string msg = e.what();
+             toplevel_error(object_to_string(func) + " : "+ msg);
+            };
+        }
     else
     {
-        assert(pairp(func));
-        if(symbolp(car(func)) && (object_to_string(car(func)) == lisp_lambda))
-        {
-            // The body of the lambda-expression *)
-            Object body = car(func,2);
-            // The list of parameters of the lamba-expression *)
-            Object lpars = cadr(func);
-            try
-            {
-                 Env new_env = extend_largs_env(lpars,lvals,env);
-                 return eval(body,new_env);
-            } catch(Evaluation_exception& e)
-            {
-                 std::string msg = e.what();
-                 toplevel_error(object_to_string(func) + " : "+ msg);
-            };
-
-        }
-        else
-        {
-            toplevel_error("Cannot apply a list");
-        }
+        toplevel_error("Cannot apply a list");
     }
+    return nil();
 }

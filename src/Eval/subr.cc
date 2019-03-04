@@ -1,7 +1,7 @@
 #include "subr.hh"
 #include <cassert>
 
-const bool subrp(Object obj)
+bool subrp(Object obj)
 {
     check(obj);
     if (!symbolp(obj)) {return false;}
@@ -14,6 +14,7 @@ const bool subrp(Object obj)
             (obj_s == lisp_concat) ||
             (obj_s == lisp_numberp) ||
             (obj_s == lisp_stringp) ||
+            (obj_s == lisp_symbolp) ||
             (obj_s == lisp_listp) ||
             (obj_s == lisp_nullp) ||
             (obj_s == lisp_newline) ||
@@ -22,7 +23,7 @@ const bool subrp(Object obj)
             (obj_s == lisp_cons));
 }
 
-const Object apply_subr(Object sub, Object lvals)
+Object apply_subr(Object sub, Object lvals)
 {
     check(sub);
     check(lvals);
@@ -71,6 +72,10 @@ const Object apply_subr(Object sub, Object lvals)
     {
         return do_stringp(lvals);
     }
+    if (sub_string == lisp_symbolp)
+    {
+        return do_symbolp(lvals);
+    }
     if (sub_string == lisp_listp)
     {
         return do_listp(lvals);
@@ -81,7 +86,7 @@ const Object apply_subr(Object sub, Object lvals)
     }
     if (sub_string == lisp_newline)
     {
-        return do_newline(lvals);
+        return do_newline();
     }
     if (sub_string == lisp_car)
     {
@@ -95,4 +100,5 @@ const Object apply_subr(Object sub, Object lvals)
     {
         return do_cons(lvals);
     }
+    return nil();
 }
