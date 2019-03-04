@@ -56,7 +56,7 @@ void replace_binding(Object obj_name, Object new_value, Env env)
     std::string name = object_to_string(obj_name);
     if (null(env))
     {
-        eval_error("'" + name + "' " + "Not found");
+        toplevel_error("'" + name + "' " + "Not found");
     }
     Object head = car(env);
     std::string h_name = binding_name(head);
