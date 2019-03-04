@@ -14,7 +14,7 @@ HELPER_FILES	:= $(wildcard Makefile* *.mak)
 DIRS	:= $(sort $(dir $(HH_FILES)))
 CCFLAGS	:= -Wall -Wextra -g -std=gnu++14 $(DIRS:%=-I %)
 
-TARGET	:= main
+TARGET	:= cpplisp
 
 ###########################################################
 
@@ -41,7 +41,7 @@ indent: clean
 	-clang-format -verbose -style=Google -i $(CC_FILES) $(HH_FILES)
 
 run: $(TARGET)
-	rlwrap ./main
+	rlwrap ./cpplisp
 
 zip: all clean
 	zip -r lisp.zip $(CC_FILES) $(HH_FILES) \
