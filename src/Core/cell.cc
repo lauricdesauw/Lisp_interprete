@@ -27,7 +27,7 @@ Env Cell::get_closure(){
 }
 
 bool Cell::is_static(){
-    return(closure == nullptr);
+    return(closure != nullptr);
 }
 
  /********** Stats ***********/
