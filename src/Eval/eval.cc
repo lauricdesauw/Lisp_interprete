@@ -100,9 +100,6 @@ Object apply (Object func, Object lvals, Env env)
     if(symbolp(func))
     {
         Object new_func = eval(func,env);
-        if(!is_static(new_func)) {
-            return apply(new_func,lvals,get_closure(new_func));
-        }
         return apply(new_func,lvals,env);
     }
     assert(pairp(func));
@@ -112,16 +109,31 @@ Object apply (Object func, Object lvals, Env env)
         Object body = car(func,2);
         // The list of parameters of the lamba-expression *)
         Object lpars = cadr(func);
-        try
+        Env new_env = Env();
+        if(is_static(func))
         {
-             Env new_env = extend_largs_env(lpars,lvals,env);
-             return eval(body,new_env);
-        } catch(Evaluation_exception& e)
+            try
             {
-             std::string msg = e.what();
-             toplevel_error(object_to_string(func) + " : "+ msg);
-            };
+                new_env = extend_largs_env(lpars,lvals,get_closure(func));
+            } catch(Evaluation_exception& e)
+                {
+                 std::string msg = e.what();
+                 toplevel_error(object_to_string(func) + " : "+ msg);
+                };
         }
+        else
+        {
+            try
+            {
+                new_env = extend_largs_env(lpars,lvals,env);
+            } catch(Evaluation_exception& e)
+                {
+                 std::string msg = e.what();
+                 toplevel_error(object_to_string(func) + " : "+ msg);
+                };
+        }
+        return eval(body,new_env);
+    }
     else
     {
         toplevel_error("Cannot apply a list");

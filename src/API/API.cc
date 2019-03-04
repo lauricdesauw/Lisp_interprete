@@ -4,8 +4,6 @@
 #include "garbage_collector.hh"
 #include <cassert>
 
-using namespace std;
-
 /********** Constants definitions **********/
 
 const Object API::object_nil = new Cell_symbol("nil") ;
@@ -45,7 +43,6 @@ void API::check(Object l)
         l->check();
     }
 }
-
 
 /********** Type testers **********/
 
@@ -145,7 +142,7 @@ void API::rplacd(Object l, Object new_value)
     Cell_pair* pair_cdr = dynamic_cast<Cell_pair*>(new_value);
     if(pair != nullptr && pair_cdr != nullptr)
     {
-        return pair->Cell_pair::set_cdr(pair_cdr);
+        pair->Cell_pair::set_cdr(pair_cdr);
     }
 
 }
@@ -209,6 +206,8 @@ bool API::object_to_bool (Object l)
     return true;
 }
 
+/********** Static environment **********/
+
 bool API::is_static(Object l){
     return l->is_static();
 }
@@ -221,21 +220,20 @@ void API::set_closure(Object l, Env env) {
     l->set_closure(env);
 }
 
-
 /********** Stats **********/
 
 void API::print_stats()
 {
-    cout << "Statistiques de création de cellulles. \n" <<
-            "(Instances de cette classe/Total des  instances)" << endl;
-    cout << "Cell_number : " << Cell_number::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-    cout << "Cell_symbol : " << Cell_symbol::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-    cout << "Cell_string : " << Cell_string::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
-    cout << "Cell_pair : " << Cell_pair::get_number_of_cells() <<
-            "/" << Cell::get_number_of_cells_parent() << endl;
+    std::cout << "Statistiques de création de cellulles." << std::endl <<
+                 "(Instances de cette classe/Total des  instances)" << std::endl;
+    std::cout << "Cell_number : " << Cell_number::get_number_of_cells() <<
+                 "/" << Cell::get_number_of_cells_parent() << std::endl;
+    std::cout << "Cell_symbol : " << Cell_symbol::get_number_of_cells() <<
+                 "/" << Cell::get_number_of_cells_parent() << std::endl;
+    std::cout << "Cell_string : " << Cell_string::get_number_of_cells() <<
+                 "/" << Cell::get_number_of_cells_parent() << std::endl;
+    std::cout << "Cell_pair : " << Cell_pair::get_number_of_cells() <<
+                 "/" << Cell::get_number_of_cells_parent() << std::endl;
 }
 
 /********* Garbage Collector ***********/

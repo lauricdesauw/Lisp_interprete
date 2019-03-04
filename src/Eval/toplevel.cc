@@ -8,7 +8,6 @@
 #include "library.hh"
 #include "defs.hh"
 #include "error.hh"
-#include "globals.hh"
 #include "env.hh"
 #include "garbage_collector.hh"
 
@@ -73,13 +72,12 @@ void Toplevel::go()
             Garbage_collector::clean_memory();
        } catch (Toplevel_exception& e)
             {
-                cout << e.what() << endl;
-                cout << endl;
+                std::cout << e.what() << std::endl << std::endl;
             }
     }
 }
 
-/******************************************************************************/
+/************ Load Functions *************/
 
 bool Toplevel::is_load_directive(Object obj)
 {
@@ -91,21 +89,22 @@ bool Toplevel::is_load_directive(Object obj)
 
 void Toplevel::handle_load_core(std::string file_name)
 {
-    cout << "Loading file " << file_name << "...\n";
+    std::cout << "Loading file " << file_name << "..." << std::endl;
     try
     {
         go();
     }
-    catch(runtime_error e)
+    catch(std::runtime_error e)
     {
-        cout << "File " << file_name << " loaded!\n";
+        std::cout << "File " << file_name << " loaded!" << std::endl;
     }
 }
 
 void Toplevel::handle_load(Object obj)
 {
     Object file_object = cadr( obj);
-    assert(stringp(file_object));
+    if(!stringp(file_object)){throw Toplevel_exception("Argument must be a string");};
+    // Creating new file input stream
     std::string file_path = object_to_string( file_object);
     file_path = file_path.substr(1,file_path.length()-2);
     FILE* new_stream = fopen((file_path).c_str(),"r");

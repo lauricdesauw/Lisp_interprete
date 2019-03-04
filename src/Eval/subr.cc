@@ -1,4 +1,5 @@
 #include "subr.hh"
+#include "defs.hh"
 #include <cassert>
 
 bool subrp(Object obj)

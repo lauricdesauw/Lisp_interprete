@@ -7,7 +7,9 @@ std::vector<Collectable*> Garbage_collector::all = std::vector<Collectable*>();
 
 void Garbage_collector::clean()
 {
-    for(std::vector<Collectable*>::iterator it = Garbage_collector::all.begin(); it != Garbage_collector::all.end(); ++it)
+    for(std::vector<Collectable*>::iterator it = Garbage_collector::all.begin();
+        it != Garbage_collector::all.end();
+        ++it)
     {
         if((*it) != nullptr)
         {
@@ -23,7 +25,9 @@ void Garbage_collector::clean()
 
 void Garbage_collector::mark()
 {
-    for(std::vector<Collectable*>::iterator it = root.begin(); it != root.end(); ++it)
+    for(std::vector<Collectable*>::iterator it = root.begin();
+        it != root.end();
+        ++it)
     {
         if((*it) != nullptr)
         {
@@ -56,7 +60,10 @@ std::vector<Collectable*> Garbage_collector::used_test(std::vector<Collectable*>
             vect_return.push_back(last);
             return vect_return;
         }
-        catch(std::exception &e){ std::cout << "Check invalide" << std::endl; vect.pop_back(); return used_test(vect);}
+        catch(std::exception &e)
+        { std::cout << "Check invalide" << std::endl;
+          vect.pop_back();
+          return used_test(vect);}
     }
     vect.pop_back();
     return used_test(vect);

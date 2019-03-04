@@ -28,7 +28,6 @@ Object do_inf(Object lvals);
 const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
 
-
 /************** List operations ************/
 
 const std::string lisp_car = ("car");
@@ -120,7 +119,6 @@ const std::string lisp_quit = "quit";
 const std::string lisp_load = "load";
 
 /**************** Debug and stats mode  ***********/
-
 
 const std::string lisp_setb = "setb";
 void do_setb(Object l, Env env);

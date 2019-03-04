@@ -5,7 +5,7 @@
 
 class API;
 
-/*****************************/
+/*********** Cells for ints ************/
 class Cell_number : public Cell {
     private:
         int contents;
@@ -13,8 +13,10 @@ class Cell_number : public Cell {
 
     public:
         Cell_number(int n);
+        // Data getters
         Cell::type get_type() const override;
         int get_contents() const;
+        // Stats
         static int get_number_of_cells();
         // Garbage collection
         void mark_used() override;
@@ -22,7 +24,7 @@ class Cell_number : public Cell {
     friend class API;
 };
 
-/*****************************/
+/************ Cells for strings ***********/
 
 class Cell_string : public Cell {
     private:
@@ -31,8 +33,10 @@ class Cell_string : public Cell {
 
     public:
         Cell_string(std::string s);
+        // Data getters
         Cell::type get_type() const override;
         std::string get_contents() const;
+        // Stats
         static int get_number_of_cells();
         // Garbage collection
         void mark_used() override;
@@ -40,7 +44,7 @@ class Cell_string : public Cell {
     friend class API;
 };
 
-/*****************************/
+/************ Cells for symbols ************/
 
 class Cell_symbol : public Cell {
     private:
@@ -49,8 +53,10 @@ class Cell_symbol : public Cell {
 
     public:
         Cell_symbol(std::string s);
+        // Data getters
         Cell::type get_type() const override;
         std::string get_contents() const;
+        // Stats
         static int get_number_of_cells();
         // Garbage collection
         void mark_used() override;
@@ -58,7 +64,7 @@ class Cell_symbol : public Cell {
     friend class API;
 };
 
-/*****************************/
+/*********** Cells for lists ************/
 
 class Cell_pair : public Cell {
     private:
@@ -68,10 +74,13 @@ class Cell_pair : public Cell {
 
     public:
         Cell_pair(Cell* car_p, Cell* cdr_p);
+        // Data getters
         Cell::type get_type() const override;
         Cell* get_car() const;
         Cell* get_cdr() const;
+        // Static environment setter
         void set_cdr(Cell* new_cdr);
+        // Stats
         static int get_number_of_cells();
         // Garbage collection
         void mark_used() override;
