@@ -2,32 +2,11 @@
 
 #include "library.hh"
 
+/********* Adds to garbage collector root cells ***********/
+
 void init_GC();
 
-const std::string lisp_quit = "quit";
-
-const std::string lisp_lambda = "lambda";
-Object do_lambda(Object l);
-
-const std::string lisp_quote = "quote";
-Object do_quote(Object l);
-
-const std::string lisp_if = "if";
-Object do_if(Object l, Env env);
-
-const std::string lisp_printenv = "printenv";
-
-const std::string lisp_display = "display";
-Object do_display(Object lvals);
-
-const std::string lisp_or = "or";
-Object do_or(Object lvals, Env env);
-
-const std::string lisp_and = "and";
-Object do_and(Object lvals, Env env);
-
-const std::string lisp_not = "not";
-Object do_not(Object lvals, Env env);
+/************* Arithmetic operations ***********/
 
 const std::string lisp_plus = "+";
 Object do_plus(Object lvals);
@@ -49,6 +28,7 @@ Object do_inf(Object lvals);
 const std::string lisp_concat = ("concat");
 Object do_concat(Object lvals);
 
+
 /************** List operations ************/
 
 const std::string lisp_car = ("car");
@@ -60,14 +40,7 @@ Object do_cdr(Object lvals);
 const std::string lisp_cons = "cons";
 Object do_cons(Object lvals);
 
-const std::string lisp_read = "read";
-Object do_read(Object lvals);
-
-const std::string lisp_newline = "newline";
-Object do_newline();
-
-const std::string lisp_end = "end";
-Object do_end(Object lvals);
+/********* Type tests ***********/
 
 const std::string lisp_nullp = "nullp";
 Object do_nullp(Object lvals);
@@ -84,17 +57,33 @@ Object do_symbolp(Object lvals);
 const std::string lisp_listp = "listp";
 Object do_listp(Object lvals);
 
-const std::string lisp_list = "list";
-Object do_list(Object lvals);
+/***************** Loops and conditions ************/
 
-const std::string lisp_error = "error";
-Object do_error(Object lvals);
+const std::string lisp_if = "if";
+Object do_if(Object l, Env env);
 
 const std::string lisp_while = "while";
 Object do_while(Object l, Env env);
 
+const std::string lisp_cond = "cond";
+Object do_cond(Object l, Env env);
+
+const std::string lisp_or = "or";
+Object do_or(Object lvals, Env env);
+
+const std::string lisp_and = "and";
+Object do_and(Object lvals, Env env);
+
+const std::string lisp_not = "not";
+Object do_not(Object lvals, Env env);
+
+/****************** Environnement gestion *********************/
+
 const std::string lisp_define = "define";
 Env do_define(Object l, Env env);
+
+const std::string lisp_definestat = "definestat";
+Env do_definestat(Object l, Env env);
 
 const std::string lisp_let = "let";
 Object do_let(Object l, Env env);
@@ -102,26 +91,39 @@ Object do_let(Object l, Env env);
 const std::string lisp_setq = "set!";
 Object do_setq(Object l, Env env);
 
-const std::string lisp_cond = "cond";
-Object do_cond(Object l, Env env);
+/**************** Evaluation ********************/
 
-const std::string lisp_begin = "begin";
-Object do_begin(Object l, Env env);
+const std::string lisp_lambda = "lambda";
+Object do_lambda(Object l);
 
-const std::string lisp_load = "load";
-Object do_load(Object l, Env env);
-
-const std::string lisp_callcc = "call/cc";
-Object do_callcc(Object l, Env env);
+const std::string lisp_quote = "quote";
+Object do_quote(Object l);
 
 const std::string lisp_eval = "eval";
 Object do_eval(Object l, Env env);
 
-const std::string lisp_apply = "apply";
-Object do_apply(Object l, Env env);
+/********************* Global gestion ***************/
 
-const std::string lisp_definestat = "definestat";
-Env do_definestat(Object l, Env env);
+const std::string lisp_display = "display";
+Object do_display(Object lvals);
+
+const std::string lisp_read = "read";
+Object do_read(Object lvals);
+
+const std::string lisp_newline = "newline";
+Object do_newline();
+
+const std::string lisp_printenv = "printenv";
+
+const std::string lisp_quit = "quit";
+
+const std::string lisp_load = "load";
+
+/**************** Debug and stats mode  ***********/
+
+
+const std::string lisp_setb = "setb";
+void do_setb(Object l, Env env);
 
 const std::string lisp_debug = "debug";
 bool do_debug(Object l);

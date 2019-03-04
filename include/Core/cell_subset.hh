@@ -71,6 +71,7 @@ class Cell_pair : public Cell {
         Cell::type get_type() const override;
         Cell* get_car() const;
         Cell* get_cdr() const;
+        void set_cdr(Cell* new_cdr);
         static int get_number_of_cells();
         // Garbage collection
         void mark_used() override;

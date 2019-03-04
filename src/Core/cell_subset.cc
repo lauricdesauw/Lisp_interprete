@@ -134,6 +134,11 @@ Cell* Cell_pair::get_cdr () const
     return cdr;
 }
 
+void Cell_pair::set_cdr (Cell* new_cdr) 
+{
+    cdr = new_cdr;
+}
+
 int Cell_pair::get_number_of_cells()
 {
     return number_of_cells;

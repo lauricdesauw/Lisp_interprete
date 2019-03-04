@@ -33,7 +33,6 @@ clean:
 	-rm */*.o
 	-rm */*/*.o
 	-rm include/Reader/lisp.*.cc include/Reader/lisp.*.hh
-	-rm r- _Doxydoc
 
 mrproper: clean
 	-rm $(TARGET)

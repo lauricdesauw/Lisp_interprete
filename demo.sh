@@ -1,7 +1,14 @@
 make
 echo
 echo Write quit to quit the interpretor
-read a
+read x
 
 ./main init.lsp
-make mrproper
+
+echo
+echo We will now show you the effect of the garbage collector
+read x
+
+valgrind --leak-check=summary ./main
+
+make clean
