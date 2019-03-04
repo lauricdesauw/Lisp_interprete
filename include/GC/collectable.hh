@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <cassert>
+#include <cstdint>
 #include "garbage_collector.hh"
 
 class Collectable {
