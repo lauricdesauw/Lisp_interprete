@@ -1,4 +1,3 @@
-(stats #t)
 
 (define a 1)
 
@@ -15,8 +14,9 @@
 (fact 10)
 (fib 10)
 
-(definestat f (lambda (n) (a)))
+(definestat f (lambda (n) (+ a n)))
 
 (define a 5)
 
-(f 0)
+(stats #t)
+(f a)
