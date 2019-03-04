@@ -58,7 +58,10 @@ bool API::symbolp(Object l) {
   return false;
 }
 
-bool API::boolp(Object l) { return l == object_f || l == object_f; }
+bool API::boolp(Object l)
+{
+    return l == object_t || l == object_f;
+}
 
 bool API::listp(Object l) {
   check(l);

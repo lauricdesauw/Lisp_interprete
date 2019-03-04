@@ -41,19 +41,19 @@ Object do_cons(Object lvals);
 
 /********* Type tests ***********/
 
-const std::string lisp_nullp = "nullp";
+const std::string lisp_nullp = "null?";
 Object do_nullp(Object lvals);
 
-const std::string lisp_stringp = "stringp";
+const std::string lisp_stringp = "string?";
 Object do_stringp(Object lvals);
 
-const std::string lisp_numberp = "numberp";
+const std::string lisp_numberp = "number?";
 Object do_numberp(Object lvals);
 
-const std::string lisp_symbolp = "symbolp";
+const std::string lisp_symbolp = "symbol?";
 Object do_symbolp(Object lvals);
 
-const std::string lisp_listp = "listp";
+const std::string lisp_listp = "list?";
 Object do_listp(Object lvals);
 
 /***************** Loops and conditions ************/
@@ -87,8 +87,8 @@ Env do_definestat(Object l, Env env);
 const std::string lisp_let = "let";
 Object do_let(Object l, Env env);
 
-const std::string lisp_setq = "set!";
-Object do_setq(Object l, Env env);
+const std::string lisp_setb = "set!";
+void do_setb(Object l, Env env);
 
 /**************** Evaluation ********************/
 
@@ -119,9 +119,6 @@ const std::string lisp_quit = "quit";
 const std::string lisp_load = "load";
 
 /**************** Debug and stats mode  ***********/
-
-const std::string lisp_setb = "setb";
-void do_setb(Object l, Env env);
 
 const std::string lisp_debug = "debug";
 bool do_debug(Object l);

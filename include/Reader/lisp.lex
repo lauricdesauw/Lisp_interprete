@@ -20,7 +20,7 @@ NUM [0-9]
 TRUE "#t"
 FALSE "#f"
 NIL ("nil"|\(\))
-SYMBOL ({OPERATION}|({ALPHA}({ALPHA}|{NUM})*)|{TRUE}|{FALSE})
+SYMBOL ({OPERATION}|({ALPHA}({ALPHA}|{NUM})*)|({ALPHA}({ALPHA}|{NUM})*[!?])|{TRUE}|{FALSE})
 NUMBER (-?{NUM}+)
 LPAR \(
 RPAR \)
