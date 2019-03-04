@@ -6,6 +6,7 @@
 #include "error.hh"
 #include "library.hh"
 #include "env.hh"
+#include "subr.hh"
 
 /*------------- Adds to garbage collector root cells----------------------*/
 void init_GC()
@@ -281,6 +282,10 @@ Env do_define(Object lvals, Env env)
     if (null(lvals) || null(cdr(lvals)))
     {
         toplevel_error("Cannot define it: missing few arguments");
+    }
+    if (subrp(car(lvals)))
+    {
+        toplevel_error("Cannot change subr value");
     }
     if (!symbolp(car(lvals)) && !listp(car(lvals)))
     {
