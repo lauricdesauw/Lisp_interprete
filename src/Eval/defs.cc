@@ -1,10 +1,11 @@
+#include <iostream>
+
 #include "defs.hh"
 #include "read.hh"
 #include "eval.hh"
 #include "error.hh"
 #include "library.hh"
 #include "env.hh"
-#include <iostream>
 
 /********* Adds to garbage collector root cells ***********/
 void init_GC()
@@ -431,18 +432,10 @@ Object do_newline()
 
 bool do_debug(Object l)
 {
-    if (null(l) || !boolp(car(l)))
-    {
-        toplevel_error("Cannot use debug mode: not a bool");
-    }
     return (object_to_bool(car(l)));
 }
 
 bool do_stats(Object l)
 {
-    if (null(l) || !boolp(car(l)))
-    {
-        toplevel_error("Cannot use stats mode: not a bool");
-    }
     return (object_to_bool(car(l)));
 }

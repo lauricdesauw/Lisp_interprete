@@ -1,3 +1,7 @@
+#include <iostream>
+#include <cassert>
+#include <string>
+
 #include "toplevel.hh"
 #include "read.hh"
 #include "eval.hh"
@@ -5,10 +9,7 @@
 #include "defs.hh"
 #include "error.hh"
 #include "globals.hh"
-#include <string>
 #include "env.hh"
-#include <iostream>
-#include <cassert>
 #include "garbage_collector.hh"
 
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
@@ -20,7 +21,7 @@ void Toplevel::go()
     {
         try
         {
-            std::cout << std::endl << "Merveilles des merveilles: " ;
+            std::cout << std::endl << "Merveille des merveilles: " ;
             Object curr_obj = read_object();
             if(Toplevel::is_load_directive(curr_obj))
             {
@@ -35,7 +36,7 @@ void Toplevel::go()
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
-                    && (object_to_string(car(curr_obj)) ==lisp_definestat))
+                    && (object_to_string(car(curr_obj)) == lisp_definestat))
             {
                 Object a = cdr(curr_obj);
                 global_env = do_definestat(a,global_env);
@@ -62,7 +63,7 @@ void Toplevel::go()
             {
                 std::cout << eval(curr_obj,global_env) << std::endl;
             }
-            std::cout << std::endl << "Miracles des miracles !"
+            std::cout << std::endl << "Miracle des miracles !"
                 << std::endl << std::endl;
 
             if(STAT_MODE){print_stats();}
@@ -122,5 +123,6 @@ void Toplevel::handle_load_from_string(std::string path)
 {
     Object path_o = string_to_object("\"" + path +"\"");
     Object load_o = symbol_to_object("load");
+    Object truc = cons(load_o,cons(path_o,nil()));
     handle_load(cons(load_o,cons(path_o,nil())));
 }

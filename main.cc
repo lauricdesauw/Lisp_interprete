@@ -2,6 +2,7 @@
 
 #include "toplevel.hh"
 #include "error.hh"
+#include "read.hh"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ int main(int argc,char* argv[]) {
                 break;
             case 2 :
                 toplevel.handle_load_from_string(argv[1]);
+                change_lexer_input(stdin);
                 toplevel.go();
                 break;
             default :
