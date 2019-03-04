@@ -53,8 +53,8 @@ Object eval (Object l, Env env)
         {toplevel_error("'define' must be used at toplevel: use 'let' keyword");}
         if (f_str == lisp_definestat)
         {toplevel_error("'definestat' must be used at toplevel");}
-        if (f_str == lisp_debug)
-        {toplevel_error("'debug' must be used at toplevel");}
+        if (f_str == lisp_setb)
+        {toplevel_error("'setb' must be used at toplevel");}
         if (f_str == lisp_stats)
         {toplevel_error("'stats' must be used at toplevel");}
         if (f_str == lisp_printenv)
