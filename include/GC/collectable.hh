@@ -14,7 +14,6 @@ class Collectable
     public :
         Collectable():used(false), magic((uint64_t) this){Garbage_collector::add_to_all(this);};
         virtual ~Collectable() {};
-        virtual void print(){};
 
     friend class Garbage_collector;
 };

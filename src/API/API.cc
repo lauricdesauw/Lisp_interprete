@@ -145,7 +145,7 @@ void API::rplacd(Object l, Object new_value)
     Cell_pair* pair_cdr = dynamic_cast<Cell_pair*>(new_value);
     if(pair != nullptr && pair_cdr != nullptr)
     {
-        return pair->Cell_pair::set_cdr(pair_cdr);
+        pair->Cell_pair::set_cdr(pair_cdr);
     }
 
 }
