@@ -3,27 +3,16 @@
 
 int Cell::number_of_cells_parent = 0;
 
-Cell::Cell()
+Cell::Cell() : Collectable()
 {
-    magic = (uint64_t) this;
     ++ number_of_cells_parent;
-}
-
-void Cell::check() const
-{
-    assert(magic == (uint64_t) this);
-}
-
-void Cell::clean()
-{
-    check();
-    magic = 0;
 }
 
 Cell::~Cell()
 {
     check();
-    clean();
+    -- number_of_cells_parent;
+    magic = 0;
 }
 
 int Cell::get_number_of_cells_parent()

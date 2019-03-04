@@ -5,6 +5,7 @@
 #include "error.hh"
 
 void check(Object l) {API::check(l);}
+void add_to_GC_root(Object l){API::add_to_GC_root(l);}
 
 Object nil() {return API::nil();}
 
@@ -170,5 +171,5 @@ std::ostream& print_type(std::ostream& s, Object l)
 
 void print_stats()
 {
-    API::print_stats(); 
+    API::print_stats();
 }

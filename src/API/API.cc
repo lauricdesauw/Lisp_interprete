@@ -1,6 +1,7 @@
 #include "API.hh"
 #include "cell.hh"
 #include "cell_subset.hh"
+#include "garbage_collector.hh"
 #include <cassert>
 
 using namespace std;
@@ -25,6 +26,12 @@ void API::check(Object l)
     {
         l->check();
     }
+}
+
+
+void API::add_to_GC_root(Object l)
+{
+    Garbage_collector::add_to_root(l);
 }
 
 void API::print_stats()

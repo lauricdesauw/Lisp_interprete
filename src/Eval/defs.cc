@@ -6,6 +6,16 @@
 #include "env.hh"
 #include <iostream>
 
+/*------------- Adds to garbage collector root cells----------------------*/
+void init_GC()
+{
+    add_to_GC_root(t());
+    add_to_GC_root(f());
+    add_to_GC_root(nil());
+}
+
+/*-------------------- Other ------------------------------*/
+
 Object do_plus(Object lvals)
 {
     if (null(lvals) || null(cdr(lvals)))
@@ -181,7 +191,7 @@ Object do_or (Object lvals, Env env)
     bool first_value = object_to_bool(eval(first_part,env));
     bool second_value = object_to_bool(eval(second_part,env));
     bool value = first_value || second_value;
-    return bool_to_object(value); 
+    return bool_to_object(value);
 }
 
 Object do_and (Object lvals, Env env)
@@ -200,7 +210,7 @@ Object do_and (Object lvals, Env env)
     bool first_value = object_to_bool(eval(first_part,env));
     bool second_value = object_to_bool(eval(second_part,env));
     bool value = first_value && second_value;
-    return bool_to_object(value); 
+    return bool_to_object(value);
  }
 
 Object do_not (Object lvals, Env env)
@@ -213,9 +223,9 @@ Object do_not (Object lvals, Env env)
 
     bool value = object_to_bool(eval(first_part,env));
 
-    return bool_to_object(!value); 
+    return bool_to_object(!value);
 }
-    
+
 Object do_newline(Object lvals)
 {
     std::cout<<std::endl;
@@ -264,7 +274,7 @@ Env do_define(Object lvals, Env env)
          name = object_to_string(car(car(lvals)));
          Object param = cdr(car(lvals));
          Object func = cdr(lvals);
-         value = cons(lisp_lambda,cons(param,func));;
+         value = cons(symbol_to_object(lisp_lambda),cons(param,func));
     }
     else
     {
@@ -305,7 +315,7 @@ Object do_let (Object lvals, Env env)
         }
         var = cdr(var);
     }
-    Object func = cons(lisp_lambda,cons(param,cdr(lvals)));
+    Object func = cons(symbol_to_object(lisp_lambda),cons(param,cdr(lvals)));
     return eval(cons(func,value),env);
 }
 
@@ -319,7 +329,7 @@ Object do_eval(Object lvals, Env env)
     {
         return eval(eval(lvals,env),env);
     }
-    if (listp(lvals) && eq(car(lvals),lisp_quote))
+    if (listp(lvals) && eq(car(lvals),symbol_to_object(lisp_quote)))
     {
         return eval(cadr(lvals),env);
     }

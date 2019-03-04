@@ -8,6 +8,7 @@
 // Object
 
 void check(Object l);
+void add_to_GC_root(Object l);
 
 Object nil();
 bool null(Object l);
