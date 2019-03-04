@@ -1,3 +1,7 @@
+#include <iostream>
+#include <cassert>
+#include <string>
+
 #include "toplevel.hh"
 #include "read.hh"
 #include "eval.hh"
@@ -5,10 +9,7 @@
 #include "defs.hh"
 #include "error.hh"
 #include "globals.hh"
-#include <string>
 #include "env.hh"
-#include <iostream>
-#include <cassert>
 
 Toplevel::Toplevel() : global_env(nil()), DEBUG_MODE(false), STAT_MODE(false)
 {}
@@ -19,7 +20,7 @@ void Toplevel::go()
     {
         try
         {
-            std::cout << std::endl << "Merveilles des merveilles: " ;
+            std::cout << std::endl << "Merveille des merveilles: " ;
             Object curr_obj = read_object();
             if(Toplevel::is_load_directive(curr_obj))
             {
@@ -40,7 +41,7 @@ void Toplevel::go()
             else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_debug))
             {
-                 //DEBUG_MODE = do_debug(cdr(curr_obj));
+                 DEBUG_MODE = do_debug(cdr(curr_obj));
             }
             else if (listp(curr_obj) && !null(curr_obj)
                                     && eq(car(curr_obj),lisp_stats))
@@ -57,7 +58,7 @@ void Toplevel::go()
                 curr_obj = eval(curr_obj,global_env);
                 std::cout << curr_obj << std::endl;
             }
-            std::cout << std::endl << "Miracles des miracles !"
+            std::cout << std::endl << "Miracle des miracles !"
                 << std::endl << std::endl;
 
             if(STAT_MODE){print_stats();}
