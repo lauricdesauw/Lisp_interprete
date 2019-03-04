@@ -138,7 +138,19 @@ Object API::cdr(Object l)
     else{return pair->Cell_pair::get_cdr();}
 }
 
-/********** Object conversion **********/
+
+void API::rplacd(Object l, Object new_value)
+{
+    Cell_pair* pair = dynamic_cast<Cell_pair*>(l);
+    Cell_pair* pair_cdr = dynamic_cast<Cell_pair*>(new_value);
+    if(pair != nullptr && pair_cdr != nullptr)
+    {
+        return pair->Cell_pair::set_cdr(pair_cdr);
+    }
+
+}
+
+// Object conversion
 
 Object API::number_to_object (int n)
 {

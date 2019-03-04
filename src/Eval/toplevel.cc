@@ -31,15 +31,22 @@ void Toplevel::go()
                     && symbolp(car(curr_obj))
                     && (object_to_string(car(curr_obj)) == lisp_define))
             {
-                Object a = cdr(curr_obj);
-                global_env = do_define(a,global_env);
+                Object body = cdr(curr_obj);
+                global_env = do_define(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))
                     && (object_to_string(car(curr_obj)) == lisp_definestat))
             {
-                Object a = cdr(curr_obj);
-                global_env = do_definestat(a,global_env);
+                Object body = cdr(curr_obj);
+                global_env = do_definestat(body,global_env);
+            }
+            else if (listp(curr_obj) && !null(curr_obj)
+                    && symbolp(car(curr_obj))
+                    && (object_to_string(car(curr_obj)) == lisp_setb))
+            {
+                Object body = cdr(curr_obj);
+                do_setb(body,global_env);
             }
             else if (listp(curr_obj) && !null(curr_obj)
                     && symbolp(car(curr_obj))

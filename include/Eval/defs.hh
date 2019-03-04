@@ -122,6 +122,9 @@ const std::string lisp_load = "load";
 /**************** Debug and stats mode  ***********/
 
 
+const std::string lisp_setb = "setb";
+void do_setb(Object l, Env env);
+
 const std::string lisp_debug = "debug";
 bool do_debug(Object l);
 

@@ -27,6 +27,7 @@ Object car(Object l, int n);
 Object cdr(Object l, int n);
 Object cadr(Object l);
 Object cddr(Object l);
+void rplacd(Object l, Object new_value);
 
 Object list2(Object l1, Object l2);
 

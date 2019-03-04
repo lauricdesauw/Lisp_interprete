@@ -29,6 +29,7 @@ class API {
         static Object cons(Object a, Object l);
         static Object car(Object l);
         static Object cdr(Object l);
+        static void rplacd(Object l, Object new_value);
 
         static Object number_to_object(int n);
         static Object string_to_object(std::string s);
