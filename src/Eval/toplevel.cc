@@ -65,19 +65,19 @@ void Toplevel::go()
        } catch (Toplevel_exception& e)
             {
                 cout << e.what() << endl;
-                cout << "try............................ CATCH! :) :) :) :)" << endl;
                 cout << endl;
             }
     }
 }
 
-// ----------------------------------------------------------//
+/******************************************************************************/
 
 bool Toplevel::is_load_directive(Object obj)
 {
     if(!pairp(obj)){return false;}
     else if (!symbolp(car(obj))) {return false;}
-    else if(object_to_string(car(obj)) == lisp_load) {return true;} else {return false;}
+    else if(object_to_string(car(obj)) == lisp_load) {return true;}
+    else {return false;}
 }
 
 void Toplevel::handle_load_core(std::string file_name)

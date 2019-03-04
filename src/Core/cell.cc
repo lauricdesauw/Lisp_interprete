@@ -28,6 +28,8 @@ Cell::~Cell()
     clean();
 }
 
+/********** Static***********/
+
 void Cell::set_closure(Env env){
     closure = env;
 }
@@ -39,6 +41,8 @@ Env Cell::get_closure(){
 bool Cell::is_static(){
     return(closure == nullptr);
 }
+
+ /********** Stats ***********/
 
 int Cell::get_number_of_cells_parent()
 {
