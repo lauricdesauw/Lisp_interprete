@@ -1,8 +1,6 @@
 #pragma once
 
-#include "library.hh"
-
-using namespace std;
+#include "globals.hh"
 
 Object eval(Object l, Env env);
 Object apply(Object f, Object lvals, Env env);
